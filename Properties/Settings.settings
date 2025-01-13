@@ -26,12 +26,6 @@
     <Setting Name="allowComputerControl" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="applicationLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Русский, Россия</Value>
-    </Setting>
-    <Setting Name="voskLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Русский, Россия</Value>
-    </Setting>
     <Setting Name="voiceVol" Type="System.Single" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>

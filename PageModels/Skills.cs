@@ -8,6 +8,6 @@ namespace Leo.PageModels
         public Skills() { InitializeComponent(); }
 
         private void back(object sender, RoutedEventArgs e)
-        { MainWindow.backAboutPage(); }
+        { MainWindow.backPage(); }
     }
 }

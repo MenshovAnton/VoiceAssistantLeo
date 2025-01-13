@@ -1,9 +1,15 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using IWshRuntimeLibrary;
 using Leo.Classes;
-using System.Diagnostics;
+using Leo.WindowModels;
+using Microsoft.Win32;
+using Application = System.Windows.Forms.Application;
+using File = System.IO.File;
 using MessageBox = Leo.WindowModels.MessageBox;
 
 namespace Leo.PageModels
@@ -16,6 +22,10 @@ namespace Leo.PageModels
         private readonly MediaPlayer _player = new();
         private readonly Logger _logger = new();
         private readonly MessageBox _messageBox = new();
+
+        private static readonly string ShortcutPath = 
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Start Menu\Programs\Startup\Лео.lnk";
+
 
         public Settings()
         {
@@ -36,10 +46,10 @@ namespace Leo.PageModels
             
             NotSaveMessageBox.IsChecked = Properties.Settings.Default.notSaveMessages;
             OffLotMessageWarnBox.IsChecked = Properties.Settings.Default.offLotMessageWarn;
+
+            using var key = Registry.CurrentUser.OpenSubKey("Software\\AssistantLeo");
+            ProgramLanguageComboBox.SelectedIndex = (int)key?.GetValue("Language")!;
         }
-        
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        private static extern bool CreateShortcut(string shortcutFilePath, string targetFilePath);
 
         private void voiceVolumeSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -152,39 +162,45 @@ namespace Leo.PageModels
         {
             Properties.Settings.Default.isAutoRun = true;
             Properties.Settings.Default.Save();
-            var message = "Не удалось создать запись в реестре\n\nКод ошибки: 02";
-            var label = "Что-то пошло не так...";
-            
+            const string message = "Не удалось создать запись в реестре\n\nКод ошибки: 02";
+            const string label = "Что-то пошло не так...";
+
             try
             {
-                const string path = @"%AppData%\Microsoft\Windows\Start Menu\Programs\Startup";
-                Environment.ExpandEnvironmentVariables(path);
-
-                const string shortcutFilePath = "Ассистент Лео.lnk";
-                var targetFilePath = Environment.CurrentDirectory + @"\Ассистент Лео.exe";
-
-                CreateShortcut(shortcutFilePath, targetFilePath);
+                WshShell shell = new WshShell();
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(ShortcutPath);
+                shortcut.TargetPath = Application.ExecutablePath;
+                shortcut.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+                shortcut.Save();
             }
-            catch
-            { 
-                _messageBox.showMessage(message, label, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
-                _logger.error("Leo was unable to add himself to autostart.");
+            catch (Exception ex)
+            {
+                _messageBox.showMessage(label, message, MessageBox.MessageBoxType.Error,
+                    MessageBox.MessageBoxButtons.Ok);
+                _logger.error("Leo was unable to add himself from startup.");
+                _logger.error(ex.Message);
             }
+
         }
 
         private void removeToAutoRun(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.isAutoRun = false;
             Properties.Settings.Default.Save();
-            var message = "Не удалось изменить/удалить запись в реестре\n\nКод ошибки: 03";
-            var label = "Что-то пошло не так...";
             
-            try { }
+            const string message = "Не удалось изменить/удалить запись в реестре\n\nКод ошибки: 03";
+            const string label = "Что-то пошло не так...";
+            
+            try
+            {
+                File.Delete(ShortcutPath);
+            }
             catch
-            { 
+            {
                 _messageBox.showMessage(message, label, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
                 _logger.error("Leo was unable to remove himself from startup.");
             }
+
         }
 
         private void openLogs(object sender, RoutedEventArgs e)
@@ -195,6 +211,9 @@ namespace Leo.PageModels
             ChatManager chatManager = new();
             chatManager.clearChat();
         }
+        
+        private void voskSettings(object sender, RoutedEventArgs e)
+        { MainWindow.getVoskSettingsPage(); }
 
         private void settingsReset(object sender, RoutedEventArgs e)
         {
@@ -256,5 +275,12 @@ namespace Leo.PageModels
             Properties.Settings.Default.offLotMessageWarn = false;
             Properties.Settings.Default.Save();
         }
+
+        private void changeLanguage(object sender, SelectionChangedEventArgs e)
+        { Registry.CurrentUser.CreateSubKey("Software\\AssistantLeo").SetValue("Language", ProgramLanguageComboBox.SelectedIndex); }
+        
+        private void programLanguageComboboxClose(object sender, EventArgs e)
+        { _messageBox.showMessage("Уведомление","Перезагрузите приложение для вступления изменений в силу", 
+                MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok); }
     }
 }

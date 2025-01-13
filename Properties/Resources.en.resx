@@ -1,0 +1,119 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="mainWindow_aboutLabel" xml:space="preserve">
+        <value>About</value>
+    </data>
+    <data name="mainWindow_chatLabel" xml:space="preserve">
+        <value>Chat</value>
+    </data>
+    <data name="mainWindow_copyright" xml:space="preserve">
+        <value>@MenshovAnton </value>
+    </data>
+    <data name="mainWindow_homeLabel" xml:space="preserve">
+        <value>Home</value>
+    </data>
+    <data name="mainWindow_settingsLabel" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="program_name" xml:space="preserve">
+        <value>Assistant Leo</value>
+    </data>
+    <data name="program_version" xml:space="preserve">
+        <value>1.1.0 </value>
+    </data>
+    <data name="settingsPage_button_checkUpdate" xml:space="preserve">
+        <value>Check update</value>
+    </data>
+    <data name="settingsPage_button_clearMessages" xml:space="preserve">
+        <value>Clear messages</value>
+    </data>
+    <data name="settingsPage_button_openLogsFolder" xml:space="preserve">
+        <value>Open logs folder</value>
+    </data>
+    <data name="settingsPage_button_settingsReset" xml:space="preserve">
+        <value>Reset settings</value>
+    </data>
+    <data name="settingsPage_button_voskSettings" xml:space="preserve">
+        <value>Vosk settings</value>
+    </data>
+    <data name="settingsPage_groupLabel_accessibility" xml:space="preserve">
+        <value>Accessibility</value>
+    </data>
+    <data name="settingsPage_groupLabel_additionalTools" xml:space="preserve">
+        <value>Additional tools</value>
+    </data>
+    <data name="settingsPage_groupLabel_general" xml:space="preserve">
+        <value>General</value>
+    </data>
+    <data name="settingsPage_groupLabel_permissions" xml:space="preserve">
+        <value>Permissions</value>
+    </data>
+    <data name="settingsPage_groupLabel_sounds" xml:space="preserve">
+        <value>Sound</value>
+    </data>
+    <data name="settingsPage_language_ui" xml:space="preserve">
+        <value>UI Language</value>
+    </data>
+    <data name="settingsPage_language_voice" xml:space="preserve">
+        <value>Voice and dialog language</value>
+    </data>
+    <data name="settingsPage_slider_assistantVoiceVolume" xml:space="preserve">
+        <value>Assistant voice</value>
+    </data>
+    <data name="settingsPage_slider_notificationsVolume" xml:space="preserve">
+        <value>Notifications</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_autorun" xml:space="preserve">
+        <value>Autorun</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_deviceControl" xml:space="preserve">
+        <value>Device controlling</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_devMode" xml:space="preserve">
+        <value>Developer mode</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_dontSaveMessages" xml:space="preserve">
+        <value>Don't save messages</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_minimizeTray" xml:space="preserve">
+        <value>Minimize to tray</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_openWebSites" xml:space="preserve">
+        <value>Open Web-Sites</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_runProgramms" xml:space="preserve">
+        <value>Run programms</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_transparencyEffects" xml:space="preserve">
+        <value>Transparency effects</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_useInternet" xml:space="preserve">
+        <value>Use internet connection</value>
+    </data>
+    <data name="homePage_description" xml:space="preserve">
+        <value>Simple voice assistant for Windows</value>
+    </data>
+    <data name="messageBox_errorSign" xml:space="preserve">
+        <value>Something went wrong...</value>
+    </data>
+    <data name="messageBox_messageSign" xml:space="preserve">
+        <value>Pay attention</value>
+    </data>
+    <data name="chatPage_welcomeLabel" xml:space="preserve">
+        <value>Start communicating right now...</value>
+    </data>
+    <data name="settingsPage_toggleSwitch_limitMessageWarn" xml:space="preserve">
+        <value>Disable message limit warning</value>
+    </data>
+</root>

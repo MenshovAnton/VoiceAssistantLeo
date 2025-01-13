@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
-using Newtonsoft.Json;
 using Leo.PageModels;
 using Leo.Properties;
 using Leo.WindowModels;
+using Newtonsoft.Json;
 using MessageBox = Leo.WindowModels.MessageBox;
 
 namespace Leo.Classes
@@ -37,7 +37,7 @@ namespace Leo.Classes
                 {
                     FileStream file = File.Create(_path);
                     file.Close();
-                    File.SetAttributes(_path, FileAttributes.Hidden);
+                    //File.SetAttributes(_path, FileAttributes.Hidden);
                     Properties.Settings.Default.messagesId = 0;
                     Properties.Settings.Default.nowDate = "01.01.01";
                     Properties.Settings.Default.Save();
@@ -78,17 +78,15 @@ namespace Leo.Classes
         public async void deserializeChat()
         {
             if (Properties.Settings.Default.notSaveMessages)
-            {
-                return;
-            }
+            { return; }
             
             try
             {
-                using StreamReader reader = new StreamReader(_path);
+                using var reader = new StreamReader(_path);
                 while (true)
                 {
-                    string line = "";
-                    for (int i = 0; i <= 7; i++)
+                    var line = "";
+                    for (var i = 0; i <= 7; i++)
                     {
                         line += await reader.ReadLineAsync();
                     }
@@ -100,7 +98,7 @@ namespace Leo.Classes
                     if (int.Parse(md?.Id!) >= 10000 && Properties.Settings.Default.offLotMessageWarn == false)
                     {
                         Logger.message("Chat messages have reached 10,000 and need clearing");
-                        _messageBox.showMessage(Resources.MessageBox_messageSign, Resources.message1,
+                        _messageBox.showMessage(Resources.messageBox_messageSign, Resources.system_message1,
                             MessageBox.MessageBoxType.Info, MessageBox.MessageBoxButtons.OkCancel);
                         await Task.Run(() =>
                         {
@@ -137,7 +135,7 @@ namespace Leo.Classes
             catch (Exception ex)
             {
                 Logger.error("Leo failed to load recent messages " + ex);
-                _messageBox.showMessage(Resources.MessageBox_errorSign, Resources.error4,
+                _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error4,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
         }

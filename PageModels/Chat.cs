@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -10,7 +11,7 @@ namespace Leo.PageModels
     public partial class Chat
     {
         private static Chat? _chat;
-        private static string _textMessage = "";
+        private static string _textMessage = string.Empty;
         public static bool NullMessages = true;
         private static ScrollViewer? _scrollViewer;
 
@@ -24,7 +25,7 @@ namespace Leo.PageModels
             _chat = this;
 
             if (!NullMessages) 
-            { HelloLabel.Visibility = System.Windows.Visibility.Hidden; }
+            { HelloLabel.Visibility = Visibility.Hidden; }
             
             ScrollBox.ScrollToEnd();
             _scrollViewer = ScrollBox;
@@ -58,8 +59,8 @@ namespace Leo.PageModels
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
-            if (_chat!.HelloLabel.Visibility == System.Windows.Visibility.Visible)
-            { _chat.HelloLabel.Visibility = System.Windows.Visibility.Hidden; }
+            if (_chat!.HelloLabel.Visibility == Visibility.Visible)
+            { _chat.HelloLabel.Visibility = Visibility.Hidden; }
 
             var isDateVisible = true;
             if (Properties.Settings.Default.nowDate == DateTime.Now.ToShortDateString())
@@ -102,8 +103,8 @@ namespace Leo.PageModels
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
-            if (_chat!.HelloLabel.Visibility == System.Windows.Visibility.Visible) 
-            { _chat.HelloLabel.Visibility = System.Windows.Visibility.Hidden; }
+            if (_chat!.HelloLabel.Visibility == Visibility.Visible) 
+            { _chat.HelloLabel.Visibility = Visibility.Hidden; }
 
             MainWindow.ChatCollection!.Add(new Messages
             {
@@ -120,6 +121,8 @@ namespace Leo.PageModels
 
         private void send(object sender, MouseButtonEventArgs? e)
         {
+            addMessage(TextBox.Text, "Right");
+            
             var vosk = new Classes.Vosk();
             Classes.Vosk.RecognizedText = TextBox.Text.ToLower();
             vosk.speechRecognized();
@@ -127,6 +130,7 @@ namespace Leo.PageModels
             Console.WriteLine($@"[INPUT] Input > {Classes.Vosk.RecognizedText}");
 
             TextBox.Text = string.Empty;
+            _textMessage = string.Empty;
         }
 
         private void sendBtnMouseEnter(object sender, MouseEventArgs e)

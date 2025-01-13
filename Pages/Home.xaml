@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="850"
       Title="Home" Width="850" Height="560" Background="#FF161616">
@@ -13,9 +14,10 @@
             </Image.Effect>
         </Image>
         
-        <Label Content="Ассистент Лео" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="58" 
-               Margin="0,332,0,0" FontFamily="Montserrat Alternates" FontWeight="Bold" Foreground="White" Width="558"/>
-        <Label Content="Простой голосовой помощник для Windows" HorizontalAlignment="Center" FontSize="14" Foreground="#FFCECECE" 
+        <Label Content="{x:Static res:Resources.program_name}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="58" 
+               Margin="0,332,0,0" FontFamily="Montserrat Alternates" FontWeight="Bold" Foreground="White" Width="568"
+               HorizontalContentAlignment="Center"/>
+        <Label Content="{x:Static res:Resources.homePage_description}" HorizontalAlignment="Center" FontSize="14" Foreground="#FFCECECE" 
                FontFamily="Montserrat Alternates" Margin="0,402,0,0" VerticalAlignment="Top" />
     </Grid>
 </Page>

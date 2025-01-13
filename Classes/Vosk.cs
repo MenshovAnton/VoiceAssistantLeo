@@ -1,17 +1,16 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Windows.Media.Control;
+using Leo.PageModels;
+using Leo.Properties;
+using Leo.WindowModels;
 using NAudio.Wave;
 using Newtonsoft.Json.Linq;
-using Leo.PageModels;
 using Vosk;
 using MessageBox = Leo.WindowModels.MessageBox;
 using Settings = Leo.PageModels.Settings;
-using Leo.WindowModels;
-using Leo.Properties;
 
 namespace Leo.Classes
 {
@@ -47,12 +46,10 @@ namespace Leo.Classes
             WaveIn.DataAvailable += WaveInOnDataAvailable;
 
             // Временный файл записи голоса
-            string tmp = Path.GetTempPath();
-            tmp += "assistant_leo_audio_rec_temp.wav";
-            _writer = new WaveFileWriter(tmp, WaveIn.WaveFormat);
+            _writer = new WaveFileWriter(".\\voice.wav", WaveIn.WaveFormat);
 
             Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
-            _dispatcher = currentDispatcher;
+            _dispatcher = currentDispatcher; 
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
@@ -73,10 +70,7 @@ namespace Leo.Classes
             }
             else
             {
-                try
-                {
-                    WaveIn.StartRecording();
-                }
+                try { WaveIn.StartRecording(); }
                 catch
                 {
                     error1();
@@ -88,7 +82,7 @@ namespace Leo.Classes
 
         public static void error1()
         {
-            MessageBox.showMessage(Resources.MessageBox_errorSign, Resources.error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
         }
 
         private static void WaveInOnDataAvailable(object? sender, WaveInEventArgs e)
@@ -116,9 +110,7 @@ namespace Leo.Classes
         public void speechRecognized()
         {
             if (RecognizedText != string.Empty)
-            {
-                Console.WriteLine($@"[VOSK] Recognized > {RecognizedText}");
-            }
+            { Console.WriteLine($@"[VOSK] Recognized > {RecognizedText}"); }
 
             if (WakeTimer.Elapsed.Seconds >= 15 && _wakeWordStatus)
             {
@@ -138,11 +130,12 @@ namespace Leo.Classes
             {
                 WakeTimer.Reset();
                 WakeTimer.Start();
+                
+                Chat.addMessage(RecognizedText!, "Right");
 
                 if (!_wakeWordStatus)
                 {
                     playSound(@".\Assets\Sounds\start.wav");
-                    initialMessage("Лео", "Right");
 
                     _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)Home.activateAnimation);
                 }
@@ -158,8 +151,6 @@ namespace Leo.Classes
 
                 _busy = true;
                 WakeTimer.Restart();
-
-                initialMessage("Спасибо", "Right");
 
                 playVoice(@".\Assets\Voices\thanksYou.wav");
                 initialMessage("Всегда пожалуйста!", "Left");
@@ -179,8 +170,6 @@ namespace Leo.Classes
                 _busy = true;
                 WakeTimer.Restart();
 
-                initialMessage("Алиса", "Right");
-
                 playVoice(@".\Assets\Voices\denial\alica.wav");
                 initialMessage("Я не Алиса! Я Лео!", "Left");
 
@@ -193,10 +182,7 @@ namespace Leo.Classes
             {
                 _busy = true;
                 WakeTimer.Restart();
-
-                initialMessage("Siri", "Right");
                 
-
                 playVoice(@".\Assets\Voices\denial\siri.wav");
                 initialMessage("Я не Siri! Я Лео!", "Left");
 
@@ -210,8 +196,6 @@ namespace Leo.Classes
                 _busy = true;
                 WakeTimer.Restart();
 
-                initialMessage("Маруся", "Right");
-
                 playVoice(@".\Assets\Voices\denial\marusa.wav");
                 initialMessage("Я не Маруся! Я Лео!", "Left");
 
@@ -224,8 +208,6 @@ namespace Leo.Classes
             {
                 _busy = true;
                 WakeTimer.Restart();
-
-                initialMessage("Очисти корзину", "Right");
 
                 if (Properties.Settings.Default.allowComputerControl)
                 {
@@ -257,8 +239,6 @@ namespace Leo.Classes
                 _busy = true;
                 WakeTimer.Restart();
 
-                initialMessage("Закрой", "Right");
-
                 if (Properties.Settings.Default.allowComputerControl)
                 {
                     playVoice(@".\Assets\Voices\good.wav");
@@ -284,8 +264,7 @@ namespace Leo.Classes
             {
                 string appdt = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                 appdt += @"\Programs\YandexMusic\Яндекс Музыка.exe";
-
-                initialMessage("Открой яндекс музыку", "Right");
+                
                 startProgram(appdt,
                     @".\Assets\Voices\happyListening.wav",
                     @".\Assets\Voices\err3.wav",
@@ -301,7 +280,6 @@ namespace Leo.Classes
                 string appDataFolder = "%APPDATA%\\Telegram Desktop\\Telegram.exe";
                 appDataFolder = Environment.ExpandEnvironmentVariables(appDataFolder);
 
-                initialMessage("Открой телеграм", "Right");
                 startProgram(appDataFolder,
                     $@".\Assets\Voices\open\open{_num}.wav",
                     @".\Assets\Voices\err3.wav",
@@ -311,7 +289,6 @@ namespace Leo.Classes
 
             if (RecognizedText.Contains("открой консоль") && !_busy && _wakeWordStatus)
             {
-                initialMessage("Открой консоль", "Right");
                 startProgram("cmd.exe",
                     $@".\Assets\Voices\open\open{_num}.wav",
                     @".\Assets\Voices\err2.wav",
@@ -321,7 +298,6 @@ namespace Leo.Classes
 
             if (RecognizedText.Contains("открой вконтакте") && !_busy && _wakeWordStatus)
             {
-                initialMessage("Открой ВКонтакте", "Right");
                 openWebsite("https://vk.com",
                     $@".\Assets\Voices\open\open{_num}.wav",
                     @".\Assets\Voices\err1.wav",
@@ -339,7 +315,6 @@ namespace Leo.Classes
 
             if ((RecognizedText.Contains("запусти майнкрафт") || RecognizedText.Contains("открой майн")) && !_busy && _wakeWordStatus)
             {
-                initialMessage("Запусти Minecraft", "Right");
                 startProgram(@"C:\XboxGames\Minecraft Launcher\Content\Minecraft.exe",
                     $@".\Assets\Voices\open\open{_num}.wav",
                     @".\Assets\Voices\err2.wav",
@@ -349,7 +324,6 @@ namespace Leo.Classes
 
             if (RecognizedText.Contains("открой почту") && !_busy && _wakeWordStatus)
             {
-                initialMessage("Открой почту", "Right");
                 openWebsite("https://mail.google.com",
                     $@".\Assets\Voices\open\open{_num}.wav",
                     @".\Assets\Voices\err1.wav",
@@ -364,7 +338,6 @@ namespace Leo.Classes
                 if (Properties.Settings.Default.allowComputerControl)
                 {
                     playVoice(@".\Assets\Voices\good.wav");
-                    initialMessage("Поставь на паузу", "Right");
                     musicInteraction(InteractionVariations.Pause);
                     initialMessage("Хорошо", "Left");
                 }
@@ -386,7 +359,6 @@ namespace Leo.Classes
                 
                 if (Properties.Settings.Default.allowComputerControl)
                 {
-                    initialMessage("Включи обратно", "Right");
                     musicInteraction(InteractionVariations.Play);
                     initialMessage("Приятного прослушивания", "Left");
                 }
@@ -408,7 +380,6 @@ namespace Leo.Classes
                 if (Properties.Settings.Default.allowComputerControl)
                 {
                     playVoice(@".\Assets\Voices\good.wav");
-                    initialMessage("Предыдущий трек", "Right");
                     musicInteraction(InteractionVariations.PreviousTrack);
                     initialMessage("Хорошо", "Left");
                 }
@@ -430,7 +401,6 @@ namespace Leo.Classes
                 if (Properties.Settings.Default.allowComputerControl)
                 {
                     playVoice(@".\Assets\Voices\good.wav");
-                    initialMessage("Следующий трек", "Right");
                     musicInteraction(InteractionVariations.NextTrack);
                     initialMessage("Хорошо", "Left");
                 }
@@ -507,7 +477,7 @@ namespace Leo.Classes
                 catch (System.ComponentModel.Win32Exception)
                 {
                     playVoice(error);
-                    initialMessage("Приложение не найдено на вашем устройстве!", "Right");
+                    initialMessage("Приложение не найдено на вашем устройстве!", "Left");
                     
                     Logger.error("Leo was unable to open the program. The program was not found on the device.");
                     
@@ -566,6 +536,7 @@ namespace Leo.Classes
         {
             _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
             {
+                Chat.addMessage(RecognizedText!, "Right");
                 Chat.addMessage(message, alignment);
             });
         }

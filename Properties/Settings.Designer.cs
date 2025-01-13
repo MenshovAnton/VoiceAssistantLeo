@@ -118,29 +118,6 @@ namespace Leo.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Русский, Россия")]
-        public string applicationLanguage {
-            get {
-                return ((string)(this["applicationLanguage"]));
-            }
-            set {
-                this["applicationLanguage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Русский, Россия")]
-        public string voskLanguage {
-            get {
-                return ((string)(this["voskLanguage"]));
-            }
-            set {
-                this["voskLanguage"] = value;
-            }
-        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:res="clr-namespace:Leo.Properties"
         mc:Ignorable="d"
         Name="AssistantLeo"
         Title="Ассистент Лео" Height="600" Width="1100" Background="#FF1F1F1F" Foreground="White" 
@@ -22,10 +23,10 @@
         <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="1100" Fill="#FF111111" 
                    MouseLeftButtonDown="movingWindow"/>
         <Image HorizontalAlignment="Left" Height="20" Margin="15,9,0,0" VerticalAlignment="Top" Width="20" Source="/Assets/icon.ico"/>
-        <Label Content="Ассистент Лео" HorizontalAlignment="Left" Margin="40,6,0,0" VerticalAlignment="Top" Foreground="White" 
-               FontFamily="Montserrat Alternates" RenderTransformOrigin="0.349,0.585" />
-        <Label Content="1.0.0" HorizontalAlignment="Left" Margin="155,6,0,0" VerticalAlignment="Top" Foreground="#FF313131" 
-               FontFamily="Montserrat Alternates" RenderTransformOrigin="0.349,0.585"/>
+        <Label Content="{x:Static res:Resources.program_name}" HorizontalAlignment="Left" Margin="40,6,0,0" VerticalAlignment="Top" Foreground="White" 
+               FontFamily="Montserrat Alternates" />
+        <Label x:Name="VersionLabel" Content="{x:Static res:Resources.program_version}" HorizontalAlignment="Left" Margin="155,6,0,0" VerticalAlignment="Top" Foreground="#FF313131" 
+               FontFamily="Montserrat Alternates"/>
 
         <tb:TaskbarIcon Name="TaskbarIcon" Visibility="Visible" ToolTipText="Ассистент Лео" IconSource="/assets/icon.ico" 
                         TrayLeftMouseDown="trayIconClick" KeyDown="hotKeys" Margin="1077,573,0,0" OpacityMask="#FF0E0E0E">
@@ -68,7 +69,7 @@
                     <Rectangle x:Name="HomeBtnMarker" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="5" 
                            Margin="-1,0,0,0" Fill="White" Opacity="0"/>
                     <Image HorizontalAlignment="Left" Height="26" Margin="13,0,0,0" VerticalAlignment="Center" Width="25" Source="/assets/images/Home.png"/>
-                    <Label Content="Домашняя" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
+                    <Label Content="{x:Static res:Resources.mainWindow_homeLabel}" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
                        FontSize="12" FontFamily="Montserrat Alternates" Foreground="White"/>
                 </Grid>
             </Border>
@@ -80,7 +81,7 @@
                     <Rectangle x:Name="SettingsBtnMarker" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="5" Margin="-1,0,0,0" 
                            Fill="White" Opacity="0"/>
                     <Image HorizontalAlignment="Left" Height="26" Margin="13,0,0,1" VerticalAlignment="Center" Width="25" Source="/assets/images/settings.png"/>
-                    <Label Content="Настройки" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
+                    <Label Content="{x:Static res:Resources.mainWindow_settingsLabel}" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
                        FontSize="12" FontFamily="Montserrat Alternates" Foreground="White" RenderTransformOrigin="0.348,0.526"/>
                 </Grid>
             </Border>
@@ -92,7 +93,7 @@
                     <Rectangle x:Name="ChatBtnMarker" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="5" Margin="-1,0,0,0" 
                            Fill="White" Opacity="0"/>
                     <Image HorizontalAlignment="Left" Height="26" Margin="13,0,0,1" VerticalAlignment="Center" Width="25" Source="/assets/images/Chat.png"/>
-                    <Label Content="Чат" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
+                    <Label Content="{x:Static res:Resources.mainWindow_chatLabel}" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
                        FontSize="12" FontFamily="Montserrat Alternates" Foreground="White" RenderTransformOrigin="0.348,0.526" />
                 </Grid>
             </Border>
@@ -104,17 +105,17 @@
                     <Rectangle x:Name="AboutBtnMarker" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="5" Margin="-1,0,0,0" 
                            Fill="White" Opacity="0"/>
                     <Image HorizontalAlignment="Left" Height="26" Margin="13,0,0,1" VerticalAlignment="Center" Width="25" Source="/assets/images/Info.png"/>
-                    <Label Content="О проекте" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
+                    <Label Content="{x:Static res:Resources.mainWindow_aboutLabel}" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
                        FontSize="12" FontFamily="Montserrat Alternates" Foreground="White" RenderTransformOrigin="0.348,0.526"/>
                 </Grid>
             </Border>
         </Grid>
 
-        <Image HorizontalAlignment="Left" Height="15" Margin="50,573,0,0" VerticalAlignment="Top" Width="15" Source="/assets/images/avatar.png"/>
-        <Label Content="© WaysoonProgramms" HorizontalAlignment="Left" Margin="70,570,0,0" VerticalAlignment="Top" FontSize="9" Foreground="White"
+        <Image HorizontalAlignment="Left" Height="15" Margin="60,573,0,0" VerticalAlignment="Top" Width="15" Source="/assets/images/avatar.png"/>
+        <Label Content="{x:Static res:Resources.mainWindow_copyright}" HorizontalAlignment="Left" Margin="80,570,0,0" VerticalAlignment="Top" FontSize="9" Foreground="White"
                FontFamily="Montserrat Alternates" FontStyle="Italic"/>
-        <Rectangle x:Name="AuthorLine" HorizontalAlignment="Left" Height="1" Margin="75,587,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="110" Opacity="0"/>
+        <Rectangle x:Name="AuthorLine" HorizontalAlignment="Left" Height="1" Margin="85,587,0,0" Stroke="White" VerticalAlignment="Top" 
+                   Width="80" Opacity="0"/>
         <Rectangle Fill="Transparent" Height="10" Width="140" HorizontalAlignment="Left" Margin="48,575,0,0" VerticalAlignment="Top"
                    MouseEnter="authorMouseEnter" MouseLeave="authorMouseLeave" MouseLeftButtonDown="authorLink"/>
     </Grid>

@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="850"
       Background="#FF161616"
@@ -55,7 +56,7 @@
                          SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" TextChanged="messageBuffer" FontFamily="Montserrat Alternates"/>
             </Grid>
         </Border>
-        <Label x:Name="HelloLabel" Content="Начните общение прямо сейчас..." HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" 
-               Foreground="White" FontFamily="Montserrat Alternates" FontStyle="Italic"/>
+        <Label x:Name="HelloLabel" Content="{x:Static res:Resources.chatPage_welcomeLabel}" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" 
+               Foreground="White" FontFamily="Montserrat Alternates" FontStyle="Italic" Visibility="Visible"/>
     </Grid>
 </Page>

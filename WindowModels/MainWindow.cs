@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Leo.Classes;
 using Leo.PageModels;
+using Microsoft.Win32;
 using static Leo.PageModels.Chat;
 using Control = System.Windows.Forms.Control;
 using Image = System.Windows.Controls.Image;
@@ -22,11 +24,24 @@ namespace Leo.WindowModels
         private static readonly ChatManager ChatManager = new();
         private static MainWindow? Instance { get; set; }
 
+        private static object _previousPage = new Home();
+
         public MainWindow()
         {
+            using var key = Registry.CurrentUser.OpenSubKey("Software\\AssistantLeo");
+            if ((int)key?.GetValue("Language")! == 0)
+            { Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU"); }
+            if ((int)key?.GetValue("Language")! == 1)
+            { Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US"); }
+
             InitializeComponent();
             
-            getChatPage(this, null); // Сдлеано для инициализации коллекции с сообщениями
+            if (CultureInfo.CurrentUICulture.Name == "en-US")
+            {
+                VersionLabel.Margin = new Thickness(130, 6, 0, 0);
+            }
+            
+            getChatPage(this, null);
             ChatManager.deserializeChat();
             getHomePage(this, null);
             Classes.Vosk.main();
@@ -61,9 +76,7 @@ namespace Leo.WindowModels
         }
         
         private void windowLoaded(object sender, RoutedEventArgs e)
-        {
-            opacityAnimation(Name, 0, 1, 0.3, 2);
-        }
+        { opacityAnimation(Name, 0, 1, 0.1, 2); }
 
         private void trayIconClick(object sender, RoutedEventArgs e)
         {
@@ -112,14 +125,10 @@ namespace Leo.WindowModels
         }
 
         private void trayIconClose(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        { Close(); }
 
         private void movingWindow(object sender, MouseButtonEventArgs e) 
-        {
-            DragMove();     
-        }
+        { DragMove(); }
 
         private void opacityAnimation(string target, double at, double to, double time, int operation)
         {
@@ -172,7 +181,7 @@ namespace Leo.WindowModels
 
         private void closeWindow(object sender, EventArgs e)
         {
-            opacityAnimation(Name, 1, 0, 0.3, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0);
+            opacityAnimation(Name, 1, 0, 0.1, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0);
         }
         
         private void minimizeWindow(object sender, EventArgs e)
@@ -210,33 +219,36 @@ namespace Leo.WindowModels
             removeMarkers();
             MainFrame.Content = new Home();
             HomeBtnMarker.Opacity = 1;
+            _previousPage = new Home();
         }
         private void getSettingsPage(object sender, MouseButtonEventArgs? e)
         {
             removeMarkers();
             MainFrame.Content = new Settings();
             SettingsBtnMarker.Opacity = 1;
+            _previousPage = new Settings();
         }
         private void getChatPage(object sender, MouseButtonEventArgs? e)
         { 
             removeMarkers();
             MainFrame.Content = new Chat();
             ChatBtnMarker.Opacity = 1;
+            _previousPage = new Chat();
         }
         private void getAboutPage(object sender, MouseButtonEventArgs? e)
         {
             removeMarkers();
             MainFrame.Content = new About();
             AboutBtnMarker.Opacity = 1;
+            _previousPage = new About();
         }
+
         public static void getSkillsPage()
-        {
-            Instance!.MainFrame.Content = new Skills();
-        }
-        public static void backAboutPage()
-        {
-            Instance!.MainFrame.Content = new About();
-        }
+        { Instance!.MainFrame.Content = new Skills(); }
+        public static void getVoskSettingsPage()
+        { Instance!.MainFrame.Content = new VoskSettings(); }
+        public static void backPage()
+        { Instance!.MainFrame.Content = _previousPage; }
         private void removeMarkers()
         {
             HomeBtnMarker.Opacity = 0;
