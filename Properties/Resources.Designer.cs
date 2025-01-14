@@ -269,5 +269,17 @@
             }
         }
         
+        public static string voskSettingsPage_title {
+            get {
+                return ResourceManager.GetString("voskSettingsPage_title", resourceCulture);
+            }
+        }
+        
+        public static string voskSettingsPage_warn {
+            get {
+                return ResourceManager.GetString("voskSettingsPage_warn", resourceCulture);
+            }
+        }
+        
     }
 }

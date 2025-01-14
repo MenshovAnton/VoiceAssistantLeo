@@ -130,8 +130,6 @@ namespace Leo.Classes
             {
                 WakeTimer.Reset();
                 WakeTimer.Start();
-                
-                Chat.addMessage(RecognizedText!, "Right");
 
                 if (!_wakeWordStatus)
                 {

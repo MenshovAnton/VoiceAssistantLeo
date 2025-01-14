@@ -138,4 +138,10 @@
   <data name="settingsPage_language_voice" xml:space="preserve">
     <value>Язык озвучки и общения</value>
   </data>
+  <data name="voskSettingsPage_title" xml:space="preserve">
+    <value>Настройки Vosk</value>
+  </data>
+  <data name="voskSettingsPage_warn" xml:space="preserve">
+    <value>Внимание! Изменяйте только те настройки, функции которых понимаете!</value>
+  </data>
 </root>

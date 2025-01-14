@@ -116,4 +116,7 @@
     <data name="settingsPage_toggleSwitch_limitMessageWarn" xml:space="preserve">
         <value>Disable message limit warning</value>
     </data>
+    <data name="voskSettingsPage_title" xml:space="preserve">
+        <value>Vosk settings</value>
+    </data>
 </root>

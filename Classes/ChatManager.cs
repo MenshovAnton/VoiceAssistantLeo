@@ -37,7 +37,7 @@ namespace Leo.Classes
                 {
                     FileStream file = File.Create(_path);
                     file.Close();
-                    //File.SetAttributes(_path, FileAttributes.Hidden);
+                    File.SetAttributes(_path, FileAttributes.Hidden);
                     Properties.Settings.Default.messagesId = 0;
                     Properties.Settings.Default.nowDate = "01.01.01";
                     Properties.Settings.Default.Save();

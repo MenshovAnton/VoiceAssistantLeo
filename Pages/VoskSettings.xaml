@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" Background="#FF161616"
       Title="VoskSettings" Width="850" Height="560">
     <Page.Resources>
@@ -12,7 +13,10 @@
         <Button Style="{StaticResource FrameButtonsStyle}" Width="40" Height="40" Margin="60,60,0,0" VerticalAlignment="Top" 
                 HorizontalAlignment="Left" Content="{StaticResource BackImage}" Click="back"/>
             
-        <Label Content="Настройки Vosk" HorizontalAlignment="Left" FontFamily="Montserrat Alternates" Margin="110,60,0,0" FontSize="24" FontWeight="ExtraBold"
+        <Label Content="{x:Static res:Resources.voskSettingsPage_title}" HorizontalAlignment="Left" FontFamily="Montserrat Alternates" Margin="110,60,0,0" FontSize="24" FontWeight="ExtraBold"
+               Foreground="White" VerticalAlignment="Top"/>
+        
+        <Label Content="{x:Static res:Resources.voskSettingsPage_warn}" HorizontalAlignment="Left" FontFamily="Montserrat Alternates" Margin="110,90,0,0"
                Foreground="White" VerticalAlignment="Top"/>
     </Grid>
 </Page>
