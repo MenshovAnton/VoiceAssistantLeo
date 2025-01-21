@@ -16,6 +16,7 @@ namespace Leo.Classes
 {
     public class Vosk
     {
+        
         private static Dispatcher? _dispatcher;
 
         private static VoskRecognizer? _recognizer; // Объект распознавания VOSK
@@ -49,7 +50,7 @@ namespace Leo.Classes
             _writer = new WaveFileWriter(".\\voice.wav", WaveIn.WaveFormat);
 
             Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
-            _dispatcher = currentDispatcher; 
+            _dispatcher = currentDispatcher;
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
@@ -60,7 +61,7 @@ namespace Leo.Classes
 
         [DllImport("user32", SetLastError = true)]
         private static extern int GetWindowThreadProcessId([In] IntPtr hwnd, [Out] out int lProcessId);
-        
+
         public static void update()
         {
             if (Properties.Settings.Default.isMuted)
@@ -70,7 +71,10 @@ namespace Leo.Classes
             }
             else
             {
-                try { WaveIn.StartRecording(); }
+                try
+                {
+                    WaveIn.StartRecording();
+                }
                 catch
                 {
                     error1();
@@ -106,7 +110,7 @@ namespace Leo.Classes
                 vosk.speechRecognized(); // Проверка результатов
             }
         }
-
+        
         public void speechRecognized()
         {
             if (RecognizedText != string.Empty)
@@ -131,7 +135,7 @@ namespace Leo.Classes
                 WakeTimer.Reset();
                 WakeTimer.Start();
                 
-                Chat.addMessage(RecognizedText!, "Right");
+                Chat.addMessage(RecognizedText, "Right");
 
                 if (!_wakeWordStatus)
                 {
@@ -540,5 +544,12 @@ namespace Leo.Classes
                 Chat.addMessage(message, alignment);
             });
         }
+    }
+
+    public class CommandTemplate
+    {
+        public string? KeyPhrase { get; set; }
+        public string? Link { get; set; }
+        public string? Comment { get; set; }
     }
 }

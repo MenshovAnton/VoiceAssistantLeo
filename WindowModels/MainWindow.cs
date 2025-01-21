@@ -59,7 +59,7 @@ namespace Leo.WindowModels
 
             Classes.Vosk.update();
             ChatCollection = new ObservableCollection<Messages>();
-            Console.WriteLine(@"(C) Copyright Menshov Anton Romanovich (WaysoonProgramms) 2023-2024");
+            Console.WriteLine(@"(C) Copyright Menshov Anton Romanovich (MenshovAnton) 2023-2025");
 
             if (MicAccess == false)
             {

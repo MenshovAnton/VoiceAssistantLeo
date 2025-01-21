@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Голосовой ассистент Лео"
-#define MyAppVersion "1.0.0"
-#define MyAppPublisher "WaysoonProgramms"
+#define MyAppVersion "1.1.0"
+#define MyAppPublisher "MenshovAnton"
 #define MyAppURL "http://voiceassistantleo.tilda.ws/ru/home"
 #define MyAppExeName "Ассистент Лео.exe"
 
@@ -33,7 +33,7 @@ LicenseFile=C:\Users\Waysoon\Documents\LICENSE.txt
 ;PrivilegesRequired=lowest
 OutputDir=C:\Users\Waysoon\Desktop
 OutputBaseFilename=LeoSetup-1.0.0
-SetupIconFile=D:\CSharpProjects\AssistantLeo\Assets\icon.ico
+SetupIconFile=E:\CSharpProjects\AssistantLeo\Assets\icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -45,38 +45,41 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Registry]
+Root: HKCU; Subkey: "Software\AssistantLeo"; ValueType: dword; ValueName: "Language"; ValueData: "0"
+
 [Files]
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.deps.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.dll.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Ассистент Лео.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Logs"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\VoskModel\*"; DestDir: "{app}\VoskModel"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Caliburn.Micro.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Hardcodet.NotifyIcon.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\libvosk.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Microsoft.Windows.SDK.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.Asio.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.Midi.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.Wasapi.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.WinForms.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\NAudio.WinMM.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Shellify.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\Vosk.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo-0.0.1\WinRT.Runtime.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-Regular.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "D:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-Light.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates Light"; Flags: onlyifdoesntexist uninsneveruninstall
-Source: "D:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-SemiBold.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.deps.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.dll.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Ассистент Лео.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Assets\*"; DestDir: "{app}\Assets"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Logs"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\VoskModel\*"; DestDir: "{app}\VoskModel"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\en\*"; DestDir: "{app}\VoskModel"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Caliburn.Micro.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Hardcodet.NotifyIcon.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\libvosk.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Microsoft.Windows.SDK.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.Asio.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.Midi.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.Wasapi.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.WinForms.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\NAudio.WinMM.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\Vosk.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\bin\Release\AssistantLeo\WinRT.Runtime.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "E:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-Regular.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "E:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-Light.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates Light"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "E:\CSharpProjects\AssistantLeo\Assets\Fonts\MontserratAlternates-SemiBold.ttf"; DestDir: "{autofonts}"; FontInstall: "Montserrat Alternates SemiBold"; Flags: onlyifdoesntexist uninsneveruninstall
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
