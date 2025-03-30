@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Leo.Classes;
 using Leo.WindowModels;
 
@@ -16,6 +17,7 @@ namespace Leo.PageModels
         private static ScrollViewer? _scrollViewer;
 
         private static readonly ChatManager ChatManager = new();
+        private static Dispatcher? _dispatcher;
         
         public Chat()
         {
@@ -23,6 +25,9 @@ namespace Leo.PageModels
             TextBox.Text = _textMessage;
             ChatList.ItemsSource = MainWindow.ChatCollection;
             _chat = this;
+            
+            Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
+            _dispatcher = currentDispatcher;
 
             if (!NullMessages) 
             { HelloLabel.Visibility = Visibility.Hidden; }
@@ -60,7 +65,9 @@ namespace Leo.PageModels
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
             if (_chat!.HelloLabel.Visibility == Visibility.Visible)
-            { _chat.HelloLabel.Visibility = Visibility.Hidden; }
+            {
+                _dispatcher?.BeginInvoke(DispatcherPriority.Normal, () => _chat.HelloLabel.Visibility = Visibility.Hidden);
+            }
 
             var isDateVisible = true;
             if (Properties.Settings.Default.nowDate == DateTime.Now.ToShortDateString())

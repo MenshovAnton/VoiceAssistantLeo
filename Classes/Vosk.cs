@@ -134,14 +134,15 @@ namespace Leo.Classes
             {
                 WakeTimer.Reset();
                 WakeTimer.Start();
-                
-                Chat.addMessage(RecognizedText, "Right");
 
                 if (!_wakeWordStatus)
                 {
                     playSound(@".\Assets\Sounds\start.wav");
-
-                    _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)Home.activateAnimation);
+                    _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
+                    {
+                        Home.activateAnimation();
+                        Chat.addMessage("Лео", "Right");
+                    });
                 }
 
                 _wakeWordStatus = true; 

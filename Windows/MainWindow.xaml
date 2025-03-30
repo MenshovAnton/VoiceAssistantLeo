@@ -8,8 +8,9 @@
         mc:Ignorable="d"
         Name="AssistantLeo"
         Title="Ассистент Лео" Height="600" Width="1100" Background="#FF1F1F1F" Foreground="White" 
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico" PreviewKeyDown="hotKeys" WindowStyle="None" 
-        AllowsTransparency="True" Loaded="windowLoaded">
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico" 
+        PreviewKeyDown="hotKeys" Loaded="windowLoaded" 
+        WindowStyle="None">
     <Window.Resources>
         <!-- ReSharper disable Xaml.RedundantResource -->
         <Image x:Key="CloseImage" Source="/Assets/images/close.png"/>
