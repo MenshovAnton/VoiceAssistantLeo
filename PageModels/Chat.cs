@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,8 +11,22 @@ using Leo.WindowModels;
 
 namespace Leo.PageModels
 {
+    public class MessageData
+    {
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+        public string? Message { get; set; }
+        public string? Time { get; set; }
+        public int Length { get; set; }
+        public string? Alignment { get; set; }
+        public string? DateMessage { get; set; }
+        public bool IsDateVisible { get; set; }
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
+    }
+    
     public partial class Chat
     {
+        public static ObservableCollection<MessageData>? ChatItems { get; set; }
+        
         private static Chat? _chat;
         private static string _textMessage = string.Empty;
         public static bool NullMessages = true;
@@ -23,7 +39,7 @@ namespace Leo.PageModels
         {
             InitializeComponent();
             TextBox.Text = _textMessage;
-            ChatList.ItemsSource = MainWindow.ChatCollection;
+            ChatList.ItemsSource = ChatItems;
             _chat = this;
             
             Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
@@ -36,18 +52,6 @@ namespace Leo.PageModels
             _scrollViewer = ScrollBox;
 
             TextBox.Focus();
-        }
-
-        public class Messages
-        {
-            // ReSharper disable UnusedAutoPropertyAccessor.Global
-            public string? Message { get; set; }
-            public string? Time { get; set; }
-            public int Length { get; set; }
-            public string? Alignment { get; set; }
-            public string? DateMessage { get; set; }
-            public bool IsDateVisible { get; set; }
-            // ReSharper restore UnusedAutoPropertyAccessor.Global
         }
         
         public static void addMessage(string text, string alignment)
@@ -78,7 +82,7 @@ namespace Leo.PageModels
                 Properties.Settings.Default.Save();
             }
 
-            MainWindow.ChatCollection!.Add(new Messages
+            ChatItems!.Add(new MessageData
             {
                 Message = text,
                 Time = DateTime.Now.ToShortTimeString(),
@@ -91,7 +95,7 @@ namespace Leo.PageModels
             Properties.Settings.Default.messagesId += 1;
             Properties.Settings.Default.Save();
             
-            ChatManager.serializeChat(text, alignment, DateTime.Now.ToShortTimeString(), 
+            ChatManager.serialize(text, alignment, DateTime.Now.ToShortTimeString(), 
                 DateTime.Now.ToShortDateString(), isDateVisible, Properties.Settings.Default.messagesId);
             _scrollViewer?.ScrollToEnd();
         }
@@ -113,7 +117,7 @@ namespace Leo.PageModels
             if (_chat!.HelloLabel.Visibility == Visibility.Visible) 
             { _chat.HelloLabel.Visibility = Visibility.Hidden; }
 
-            MainWindow.ChatCollection!.Add(new Messages
+            ChatItems!.Add(new MessageData
             {
                 Message = text,
                 Time = time,
@@ -164,5 +168,17 @@ namespace Leo.PageModels
 
         private void messageBuffer(object sender, TextChangedEventArgs e)
         { if (TextBox.Text != "") { _textMessage = TextBox.Text; } }
+        
+        public static void clearChat()
+        {
+            Properties.Settings.Default.messagesId = 0;
+            Properties.Settings.Default.nowDate = "01.01.01";
+            Properties.Settings.Default.Save();
+            File.Delete(ChatManager.getFilePath());
+            FileStream file = File.Create(ChatManager.getFilePath());
+            file.Close();
+            ChatItems = new ObservableCollection<MessageData>();
+            NullMessages = true;
+        }
     }
 }

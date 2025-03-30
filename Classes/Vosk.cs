@@ -85,9 +85,7 @@ namespace Leo.Classes
         }
 
         public static void error1()
-        {
-            MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
-        }
+        { MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok); }
 
         private static void WaveInOnDataAvailable(object? sender, WaveInEventArgs e)
         {
@@ -140,8 +138,9 @@ namespace Leo.Classes
                     playSound(@".\Assets\Sounds\start.wav");
                     _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
                     {
+                        if (RecognizedText!.Length > 3)
+                        { Chat.addMessage("Лео", "Right"); }
                         Home.activateAnimation();
-                        Chat.addMessage("Лео", "Right");
                     });
                 }
 
@@ -539,9 +538,11 @@ namespace Leo.Classes
 
         private void initialMessage(string message, string alignment)
         {
+            string recognizedText = RecognizedText![..1].ToUpper() + (RecognizedText.Length > 1 ? RecognizedText[1..] : "");
+            
             _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
             {
-                Chat.addMessage(RecognizedText!, "Right");
+                Chat.addMessage(recognizedText, "Right");
                 Chat.addMessage(message, alignment);
             });
         }

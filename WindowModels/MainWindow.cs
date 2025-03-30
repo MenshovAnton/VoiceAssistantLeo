@@ -18,7 +18,6 @@ namespace Leo.WindowModels
 {
     public partial class MainWindow
     {
-        public static ObservableCollection<Messages>? ChatCollection { get; set; }
         public static bool MicAccess = true;
 
         private static readonly ChatManager ChatManager = new();
@@ -42,8 +41,9 @@ namespace Leo.WindowModels
             }
             
             getChatPage(this, null);
-            ChatManager.deserializeChat();
+            ChatManager.deserialize();
             getHomePage(this, null);
+            
             Classes.Vosk.main();
 
             if (Properties.Settings.Default.isMuted)
@@ -58,7 +58,7 @@ namespace Leo.WindowModels
             }
 
             Classes.Vosk.update();
-            ChatCollection = new ObservableCollection<Messages>();
+            ChatItems = new ObservableCollection<MessageData>();
             Console.WriteLine(@"(C) Copyright Menshov Anton Romanovich (MenshovAnton) 2023-2025");
 
             if (MicAccess == false)
@@ -81,15 +81,10 @@ namespace Leo.WindowModels
         private void trayIconClick(object sender, RoutedEventArgs e)
         {
             if (Equals(sender, TrayIconChatBtn))
-            {
-                getChatPage(TrayIconChatBtn, null);
-            }
+            { getChatPage(TrayIconChatBtn, null); }
             if (Equals(sender, TrayIconSettingsBtn))
-            {
-                getSettingsPage(TrayIconSettingsBtn, null);
-            }
-
-
+            { getSettingsPage(TrayIconSettingsBtn, null); }
+            
             Show();
             WindowState = WindowState.Normal;
 
@@ -175,19 +170,13 @@ namespace Leo.WindowModels
         }
 
         private void animationCompletedHide(object? sender, EventArgs e)
-        {
-            Hide();
-        }
+        { Hide(); }
 
         private void closeWindow(object sender, EventArgs e)
-        {
-            opacityAnimation(Name, 1, 0, 0.1, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0);
-        }
+        { opacityAnimation(Name, 1, 0, 0.1, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0); }
         
         private void minimizeWindow(object sender, EventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+        { WindowState = WindowState.Minimized; }
 
         private void mute(object sender, EventArgs? e)
         {
@@ -245,10 +234,13 @@ namespace Leo.WindowModels
 
         public static void getSkillsPage()
         { Instance!.MainFrame.Content = new Skills(); }
+        
         public static void getVoskSettingsPage()
         { Instance!.MainFrame.Content = new VoskSettings(); }
+        
         public static void backPage()
         { Instance!.MainFrame.Content = _previousPage; }
+        
         private void removeMarkers()
         {
             HomeBtnMarker.Opacity = 0;

@@ -207,10 +207,7 @@ namespace Leo.PageModels
         { Process.Start("explorer.exe", @".\Logs"); }
 
         private void clearMessages(object sender, RoutedEventArgs e)
-        {
-            ChatManager chatManager = new();
-            chatManager.clearChat();
-        }
+        { Chat.clearChat(); }
         
         private void voskSettings(object sender, RoutedEventArgs e)
         { MainWindow.getVoskSettingsPage(); }

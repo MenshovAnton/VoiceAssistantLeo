@@ -8,7 +8,7 @@ using MessageBox = Leo.WindowModels.MessageBox;
 
 namespace Leo.Classes
 {
-    public class MessageData
+    public class MessagesJsonFormat
     {
         public string? Text { get; init; }
         public string? Time { get; init; }
@@ -41,19 +41,22 @@ namespace Leo.Classes
                     Properties.Settings.Default.messagesId = 0;
                     Properties.Settings.Default.nowDate = "01.01.01";
                     Properties.Settings.Default.Save();
-                    MainWindow.ChatCollection = new ObservableCollection<Chat.Messages>();
+                    Chat.ChatItems = new ObservableCollection<MessageData>();
                     Chat.NullMessages = true;
                 }
             }
             else
             {
-                MainWindow.ChatCollection = new ObservableCollection<Chat.Messages>();
+                Chat.ChatItems = new ObservableCollection<MessageData>();
                 Chat.NullMessages = true;
             }
             
         }
 
-        public async void serializeChat(string? text, string? alignment, string? time, string? date, bool isDateVisible, int id)
+        public string getFilePath()
+        { return _path; }
+
+        public async void serialize(string? text, string? alignment, string? time, string? date, bool isDateVisible, int id)
         {
             if (Properties.Settings.Default.notSaveMessages)
             {
@@ -61,7 +64,7 @@ namespace Leo.Classes
             }
             
             await using StreamWriter writer = new StreamWriter(_path, true);
-            MessageData messageData = new MessageData()
+            MessagesJsonFormat messagesJsonFormat = new MessagesJsonFormat()
             {
                 Text = text,
                 Time = time,
@@ -70,12 +73,12 @@ namespace Leo.Classes
                 IsDateVisible = isDateVisible,
                 Id = id.ToString()
             };
-            string json = JsonConvert.SerializeObject(messageData, Formatting.Indented);
+            string json = JsonConvert.SerializeObject(messagesJsonFormat, Formatting.Indented);
             
             await writer.WriteLineAsync(json);
         }
 
-        public async void deserializeChat()
+        public async void deserialize()
         {
             if (Properties.Settings.Default.notSaveMessages)
             { return; }
@@ -94,7 +97,7 @@ namespace Leo.Classes
                     {
                         break;
                     }
-                    MessageData? md = JsonConvert.DeserializeObject<MessageData>(line);
+                    MessagesJsonFormat? md = JsonConvert.DeserializeObject<MessagesJsonFormat>(line);
                     if (int.Parse(md?.Id!) >= 10000 && Properties.Settings.Default.offLotMessageWarn == false)
                     {
                         Logger.message("Chat messages have reached 10,000 and need clearing");
@@ -107,7 +110,7 @@ namespace Leo.Classes
                                 if (_messageBox.Results == 1)
                                 {
                                     reader.Close();
-                                    clearChat();
+                                    Chat.clearChat();
                                 }
                                 else
                                 {
@@ -138,18 +141,6 @@ namespace Leo.Classes
                 _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error4,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
-        }
-
-        public void clearChat()
-        {
-            Properties.Settings.Default.messagesId = 0;
-            Properties.Settings.Default.nowDate = "01.01.01";
-            Properties.Settings.Default.Save();
-            File.Delete(_path);
-            FileStream file = File.Create(_path);
-            file.Close();
-            MainWindow.ChatCollection = new ObservableCollection<Chat.Messages>();
-            Chat.NullMessages = true;
         }
     }
 }
