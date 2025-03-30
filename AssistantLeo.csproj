@@ -221,6 +221,10 @@
     <None Remove="Assets\deafult_settings.config" />
     <None Remove="Assets\Images\back.png" />
     <Resource Include="Assets\Images\back.png" />
+    <None Remove="commands.json" />
+    <AdditionalFiles Include="commands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
@@ -242,10 +246,6 @@
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

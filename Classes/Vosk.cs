@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -14,8 +15,19 @@ using Settings = Leo.PageModels.Settings;
 
 namespace Leo.Classes
 {
+    public class CommandData
+    {
+        public string? Phrase { get; init; }
+        public string? Reference { get; init; }
+        public string? Type { get; init; }
+        public string? VoiceFile { get; init; }
+        public string? ErrorNumber { get; init; }
+        public string? ReplyMessage { get; init; }
+    }
+    
     public class Vosk
     {
+        public static ObservableCollection<CommandData>? Commands { get; set; }
         
         private static Dispatcher? _dispatcher;
 
@@ -25,7 +37,6 @@ namespace Leo.Classes
 
         public static string? RecognizedText;
         private static bool _wakeWordStatus;
-        private static int _num = 1;
         
         private static readonly Logger Logger = new();
         private static readonly Stopwatch WakeTimer = new();
@@ -49,8 +60,10 @@ namespace Leo.Classes
             // Временный файл записи голоса
             _writer = new WaveFileWriter(".\\voice.wav", WaveIn.WaveFormat);
 
-            Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
+            var currentDispatcher = Dispatcher.CurrentDispatcher;
             _dispatcher = currentDispatcher;
+            
+            Commands = [];
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
@@ -83,9 +96,24 @@ namespace Leo.Classes
                 }
             }
         }
+        
+        public static void addCommand(string type, string methodRef, string? phrase, string? voiceFile, string? errorNumber, string? replyMessage)
+        {
+            Commands!.Add(new CommandData()
+            {
+                Phrase = phrase,
+                Reference = methodRef,
+                Type = type,
+                VoiceFile = voiceFile,
+                ErrorNumber = errorNumber,
+                ReplyMessage = replyMessage
+            });
+        }
 
         public static void error1()
-        { MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok); }
+        {
+            MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+        }
 
         private static void WaveInOnDataAvailable(object? sender, WaveInEventArgs e)
         {
@@ -112,7 +140,9 @@ namespace Leo.Classes
         public void speechRecognized()
         {
             if (RecognizedText != string.Empty)
-            { Console.WriteLine($@"[VOSK] Recognized > {RecognizedText}"); }
+            {
+                Console.WriteLine($@"[VOSK] Recognized > {RecognizedText}");
+            }
 
             if (WakeTimer.Elapsed.Seconds >= 15 && _wakeWordStatus)
             {
@@ -149,10 +179,36 @@ namespace Leo.Classes
                 Logger.message("Assistant activated");
             }
 
-            // Спасибо
+            if (_wakeWordStatus)
+            {
+                foreach (var command in Commands!)
+                {
+                    if (RecognizedText.Contains(command.Phrase!.ToLower()))
+                    {
+                        switch (command.Type)
+                        {
+                            case "1":
+                                string folder = Environment.ExpandEnvironmentVariables(command.Reference!);
+
+                                startProgram(folder,
+                                    command.VoiceFile!,
+                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
+                                    4,
+                                    command.ReplyMessage!);
+                                break;
+                            case "2":
+                                openWebsite(command.Reference!,
+                                    command.VoiceFile!,
+                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
+                                    command.ReplyMessage!);
+                                break;
+                        }
+                    }
+                }
+            }
+            
             if (RecognizedText == "спасибо" && !_busy && _wakeWordStatus)
             {
-
                 _busy = true;
                 WakeTimer.Restart();
 
@@ -167,44 +223,19 @@ namespace Leo.Classes
                 _busy = false;
             }
 
-            // Алиса
             if (RecognizedText == "алиса" && !_busy)
             {
-
-                _busy = true;
-                WakeTimer.Restart();
-
-                playVoice(@".\Assets\Voices\denial\alica.wav");
-                initialMessage("Я не Алиса! Я Лео!", "Left");
-
-                _recognizer?.Reset();
-                _busy = false;
+                incorrectWakeWord(@".\Assets\Voices\denial\alica.wav", "Алиса");
             }
 
-            // Siri
             if (RecognizedText == "сири" && !_busy)
             {
-                _busy = true;
-                WakeTimer.Restart();
-                
-                playVoice(@".\Assets\Voices\denial\siri.wav");
-                initialMessage("Я не Siri! Я Лео!", "Left");
-
-                _recognizer?.Reset();
-                _busy = false;
+                incorrectWakeWord(@".\Assets\Voices\denial\siri.wav", "Siri");
             }
 
-            // Маруся
             if (RecognizedText == "маруся" && !_busy)
             {
-                _busy = true;
-                WakeTimer.Restart();
-
-                playVoice(@".\Assets\Voices\denial\marusa.wav");
-                initialMessage("Я не Маруся! Я Лео!", "Left");
-
-                _recognizer?.Reset();
-                _busy = false;
+                incorrectWakeWord(@".\Assets\Voices\denial\marusa.wav", "Маруся");
             }
 
             // Очистка корзины
@@ -236,8 +267,7 @@ namespace Leo.Classes
                 _busy = false;
 
             }
-
-            // Закрытие процесса в фокусе
+            
             if (RecognizedText.Contains("закрой") && !_busy && _wakeWordStatus)
             {
                 _busy = true;
@@ -263,159 +293,24 @@ namespace Leo.Classes
                 _busy = false;
             }
 
-            // Музыка
-            if (RecognizedText.Contains("открой яндекс музыку") && !_busy && _wakeWordStatus)
-            {
-                string appdt = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                appdt += @"\Programs\YandexMusic\Яндекс Музыка.exe";
-                
-                startProgram(appdt,
-                    @".\Assets\Voices\happyListening.wav",
-                    @".\Assets\Voices\err3.wav",
-                    1,
-                    "Открываю! [Yandex Music]");
-            }
-
-            // Запуск ТГ
-            if ((RecognizedText.Contains("открой телеграмм") 
-                 || RecognizedText.Contains("открой телеграм")
-                 || RecognizedText.Contains("открой телегу")) && !_busy && _wakeWordStatus)
-            {
-                string appDataFolder = "%APPDATA%\\Telegram Desktop\\Telegram.exe";
-                appDataFolder = Environment.ExpandEnvironmentVariables(appDataFolder);
-
-                startProgram(appDataFolder,
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err3.wav",
-                    4,
-                    "Открываю! [Telegram Desktop]");
-            }
-
-            if (RecognizedText.Contains("открой консоль") && !_busy && _wakeWordStatus)
-            {
-                startProgram("cmd.exe",
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err2.wav",
-                    3,
-                    "Открываю! [Console]");
-            }
-
-            if (RecognizedText.Contains("открой вконтакте") && !_busy && _wakeWordStatus)
-            {
-                openWebsite("https://vk.com",
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err1.wav",
-                    "Открываю! [vk.com]");
-            }
-
-            if (RecognizedText.Contains("открой ютуб") && !_busy && _wakeWordStatus)
-            {
-                initialMessage("Открой YouTube", "Right");
-                openWebsite("https://youtube.com",
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err1.wav",
-                    "Открываю! [youtube.com]");
-            }
-
-            if ((RecognizedText.Contains("запусти майнкрафт") || RecognizedText.Contains("открой майн")) && !_busy && _wakeWordStatus)
-            {
-                startProgram(@"C:\XboxGames\Minecraft Launcher\Content\Minecraft.exe",
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err2.wav",
-                    3,
-                    "Открываю! [Minecraft Launcher]");
-            }
-
-            if (RecognizedText.Contains("открой почту") && !_busy && _wakeWordStatus)
-            {
-                openWebsite("https://mail.google.com",
-                    $@".\Assets\Voices\open\open{_num}.wav",
-                    @".\Assets\Voices\err1.wav",
-                    "Открываю! [mail.google.com]");
-            }
-
             if (RecognizedText.Contains("поставь на паузу") && !_busy && _wakeWordStatus)
             {
-                _busy = true;
-                WakeTimer.Restart();
-
-                if (Properties.Settings.Default.allowComputerControl)
-                {
-                    playVoice(@".\Assets\Voices\good.wav");
-                    musicInteraction(InteractionVariations.Pause);
-                    initialMessage("Хорошо", "Left");
-                }
-                else
-                {
-                    playVoice(@".\Assets\Voices\errors\err1.wav");
-                    initialMessage("Мне запрещено делать это", "Left");
-                }
-                
-                _recognizer?.Reset();
-                _busy = false;
+                musicInteraction(InteractionVariations.Pause);
             }
-            
+
             if (RecognizedText.Contains("включи обратно") && !_busy && _wakeWordStatus)
             {
-                _busy = true;
-                WakeTimer.Restart();
-                playVoice(@".\Assets\Voices\happyListening.wav");
-                
-                if (Properties.Settings.Default.allowComputerControl)
-                {
-                    musicInteraction(InteractionVariations.Play);
-                    initialMessage("Приятного прослушивания", "Left");
-                }
-                else
-                {
-                    playVoice(@".\Assets\Voices\errors\err1.wav");
-                    initialMessage("Мне запрещено делать это", "Left");
-                }
-                
-                _recognizer?.Reset();
-                _busy = false;
+                musicInteraction(InteractionVariations.Play);
             }
-            
+
             if (RecognizedText.Contains("предыдущий трек") && !_busy && _wakeWordStatus)
             {
-                _busy = true;
-                WakeTimer.Restart();
-                
-                if (Properties.Settings.Default.allowComputerControl)
-                {
-                    playVoice(@".\Assets\Voices\good.wav");
-                    musicInteraction(InteractionVariations.PreviousTrack);
-                    initialMessage("Хорошо", "Left");
-                }
-                else
-                {
-                    playVoice(@".\Assets\Voices\errors\err1.wav");
-                    initialMessage("Мне запрещено делать это", "Left");
-                }
-                
-                _recognizer?.Reset();
-                _busy = false;
+                musicInteraction(InteractionVariations.PreviousTrack);
             }
-            
+
             if (RecognizedText.Contains("следующий трек") && !_busy && _wakeWordStatus)
             {
-                _busy = true;
-                WakeTimer.Restart();
-                
-                if (Properties.Settings.Default.allowComputerControl)
-                {
-                    playVoice(@".\Assets\Voices\good.wav");
-                    musicInteraction(InteractionVariations.NextTrack);
-                    initialMessage("Хорошо", "Left");
-                }
-                else
-                {
-                    playVoice(@".\Assets\Voices\errors\err1.wav");
-                    initialMessage("Мне запрещено делать это", "Left");
-                }
-                
-                _recognizer?.Reset();
-                _busy = false;
+                musicInteraction(InteractionVariations.NextTrack);
             }
         }
 
@@ -427,34 +322,66 @@ namespace Leo.Classes
             NextTrack
         }
         
-        private static async void musicInteraction(Enum interactionVariations)
+        private async void musicInteraction(Enum interactionVariations)
         {
-            var mediaTransportManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-            var mediaSession = mediaTransportManager.GetCurrentSession();
+            _busy = true;
+            WakeTimer.Restart();
 
-            try
+            if (Properties.Settings.Default.allowComputerControl)
             {
-                switch (interactionVariations.ToString())
+                playVoice(@".\Assets\Voices\good.wav");
+                
+                var mediaTransportManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                var mediaSession = mediaTransportManager.GetCurrentSession();
+
+                try
                 {
-                    case "Play":
-                        await mediaSession.TryPlayAsync();
-                        break;
-                    case "Pause":
-                        await mediaSession.TryPauseAsync();
-                        break;
-                    case "PreviousTrack":
-                        await mediaSession.TrySkipPreviousAsync();
-                        break;
-                    case "NextTrack":
-                        await mediaSession.TrySkipNextAsync();
-                        break;
+                    switch (interactionVariations.ToString())
+                    {
+                        case "Play":
+                            await mediaSession.TryPlayAsync();
+                            break;
+                        case "Pause":
+                            await mediaSession.TryPauseAsync();
+                            break;
+                        case "PreviousTrack":
+                            await mediaSession.TrySkipPreviousAsync();
+                            break;
+                        case "NextTrack":
+                            await mediaSession.TrySkipNextAsync();
+                            break;
+                    }
                 }
+                catch
+                {
+                    System.Media.SystemSounds.Exclamation.Play();
+                }
+                
+                initialMessage("Хорошо", "Left");
             }
-            catch
+            else
             {
-                System.Media.SystemSounds.Exclamation.Play();
+                playVoice(@".\Assets\Voices\errors\err1.wav");
+                initialMessage("Мне запрещено делать это", "Left");
             }
+                
+            _recognizer?.Reset();
+            _busy = false;
         }
+        
+
+        private void incorrectWakeWord(string voiceFile, string wakeWord)
+        {
+            _busy = true;
+            WakeTimer.Restart();
+                
+            playVoice(voiceFile);
+            initialMessage($"Я не {wakeWord}! Я Лео!", "Left");
+
+            _recognizer?.Reset();
+            _busy = false;
+        }
+        
         
         private void startProgram(string target, string media, string error, int rndInt, string mesText)
         {
@@ -465,9 +392,6 @@ namespace Leo.Classes
             {
                 try
                 {
-                    Random rnd = new Random();
-                    _num = rnd.Next(1, rndInt);
-
                     playVoice(media);
                     initialMessage(mesText, "Left");
 
@@ -475,7 +399,6 @@ namespace Leo.Classes
                     p.StartInfo.FileName = target;
                     p.Start();
                     RecognizedText = "";
-                    _num = 1;
 
                 }
                 catch (System.ComponentModel.Win32Exception)
@@ -536,9 +459,9 @@ namespace Leo.Classes
             _player.Play();
         }
 
-        private void initialMessage(string message, string alignment)
+        private static void initialMessage(string message, string alignment)
         {
-            string recognizedText = RecognizedText![..1].ToUpper() + (RecognizedText.Length > 1 ? RecognizedText[1..] : "");
+            var recognizedText = RecognizedText![..1].ToUpper() + (RecognizedText.Length > 1 ? RecognizedText[1..] : "");
             
             _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
             {
@@ -546,12 +469,6 @@ namespace Leo.Classes
                 Chat.addMessage(message, alignment);
             });
         }
-    }
-
-    public class CommandTemplate
-    {
-        public string? KeyPhrase { get; set; }
-        public string? Link { get; set; }
-        public string? Comment { get; set; }
+        
     }
 }

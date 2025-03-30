@@ -269,5 +269,17 @@
             }
         }
         
+        public static string system_error6 {
+            get {
+                return ResourceManager.GetString("system_error6", resourceCulture);
+            }
+        }
+        
+        public static string system_error7 {
+            get {
+                return ResourceManager.GetString("system_error7", resourceCulture);
+            }
+        }
+        
     }
 }

@@ -138,4 +138,14 @@
   <data name="settingsPage_language_voice" xml:space="preserve">
     <value>Язык озвучки и общения</value>
   </data>
+  <data name="system_error6" xml:space="preserve">
+    <value>Лео не удалось сохранить команды. 
+
+Код ошибки: 6</value>
+  </data>
+  <data name="system_error7" xml:space="preserve">
+    <value>Лео не удалось загрузить команды. 
+
+Код ошибки: 7</value>
+  </data>
 </root>

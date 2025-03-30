@@ -7,8 +7,12 @@ namespace Leo.PageModels;
 public partial class VoskSettings : Page
 {
     public VoskSettings()
-    { InitializeComponent(); }
-    
+    {
+        InitializeComponent();
+    }
+
     private void back(object sender, RoutedEventArgs e)
-    { MainWindow.backPage(); }
+    {
+        MainWindow.backPage();
+    }
 }

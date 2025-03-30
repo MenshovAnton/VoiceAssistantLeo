@@ -204,13 +204,19 @@ namespace Leo.PageModels
         }
 
         private void openLogs(object sender, RoutedEventArgs e)
-        { Process.Start("explorer.exe", @".\Logs"); }
+        {
+            Process.Start("explorer.exe", @".\Logs");
+        }
 
         private void clearMessages(object sender, RoutedEventArgs e)
-        { Chat.clearChat(); }
-        
+        {
+            Chat.clearChat();
+        }
+
         private void voskSettings(object sender, RoutedEventArgs e)
-        { MainWindow.getVoskSettingsPage(); }
+        {
+            MainWindow.getVoskSettingsPage();
+        }
 
         private void settingsReset(object sender, RoutedEventArgs e)
         {
@@ -274,10 +280,15 @@ namespace Leo.PageModels
         }
 
         private void changeLanguage(object sender, SelectionChangedEventArgs e)
-        { Registry.CurrentUser.CreateSubKey("Software\\AssistantLeo").SetValue("Language", ProgramLanguageComboBox.SelectedIndex); }
+        {
+            Registry.CurrentUser.CreateSubKey("Software\\AssistantLeo").SetValue("Language", ProgramLanguageComboBox.SelectedIndex);
+        }
         
         private void programLanguageComboboxClose(object sender, EventArgs e)
-        { _messageBox.showMessage("Уведомление","Перезагрузите приложение для вступления изменений в силу", 
-                MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok); }
+        { 
+            _messageBox.showMessage("Уведомление","Перезагрузите приложение для вступления изменений в силу", 
+                MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            
+        }
     }
 }

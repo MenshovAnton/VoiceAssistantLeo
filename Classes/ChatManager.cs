@@ -37,7 +37,6 @@ namespace Leo.Classes
                 {
                     FileStream file = File.Create(_path);
                     file.Close();
-                    //File.SetAttributes(_path, FileAttributes.Hidden);
                     Properties.Settings.Default.messagesId = 0;
                     Properties.Settings.Default.nowDate = "01.01.01";
                     Properties.Settings.Default.Save();
@@ -50,11 +49,12 @@ namespace Leo.Classes
                 Chat.ChatItems = new ObservableCollection<MessageData>();
                 Chat.NullMessages = true;
             }
-            
         }
 
         public string getFilePath()
-        { return _path; }
+        {
+            return _path;
+        }
 
         public async void serialize(string? text, string? alignment, string? time, string? date, bool isDateVisible, int id)
         {
@@ -81,7 +81,9 @@ namespace Leo.Classes
         public async void deserialize()
         {
             if (Properties.Settings.Default.notSaveMessages)
-            { return; }
+            {
+                return;
+            }
             
             try
             {

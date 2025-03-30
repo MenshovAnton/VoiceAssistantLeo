@@ -9,6 +9,7 @@ using Leo.Classes;
 using Leo.PageModels;
 using Microsoft.Win32;
 using static Leo.PageModels.Chat;
+using CommandManager = Leo.Classes.CommandManager;
 using Control = System.Windows.Forms.Control;
 using Image = System.Windows.Controls.Image;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -21,19 +22,36 @@ namespace Leo.WindowModels
         public static bool MicAccess = true;
 
         private static readonly ChatManager ChatManager = new();
+        private static readonly CommandManager CommandManager = new();
         private static MainWindow? Instance { get; set; }
 
         private static object _previousPage = new Home();
 
         public MainWindow()
         {
-            using var key = Registry.CurrentUser.OpenSubKey("Software\\AssistantLeo");
-            if ((int)key?.GetValue("Language")! == 0)
-            { Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU"); }
-            if ((int)key?.GetValue("Language")! == 1)
-            { Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US"); }
+            try
+            {
+                using var key = Registry.CurrentUser.OpenSubKey("Software\\AssistantLeo");
+                if ((int)key?.GetValue("Language")! == 0)
+                {
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+                }
+
+                if ((int)key?.GetValue("Language")! == 1)
+                {
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                }
+            }
+            catch
+            {
+                var regKey = Registry.CurrentUser.CreateSubKey("Software\\AssistantLeo");
+                regKey.SetValue("Language", 0);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            }
 
             InitializeComponent();
+            
+            CommandManager.deserialize();
             
             if (CultureInfo.CurrentUICulture.Name == "en-US")
             {
@@ -74,16 +92,23 @@ namespace Leo.WindowModels
             
             Instance = this;
         }
-        
+
         private void windowLoaded(object sender, RoutedEventArgs e)
-        { opacityAnimation(Name, 0, 1, 0.1, 2); }
+        {
+            opacityAnimation(Name, 0, 1, 0.1, 2);
+        }
 
         private void trayIconClick(object sender, RoutedEventArgs e)
         {
             if (Equals(sender, TrayIconChatBtn))
-            { getChatPage(TrayIconChatBtn, null); }
+            {
+                getChatPage(TrayIconChatBtn, null);
+            }
+
             if (Equals(sender, TrayIconSettingsBtn))
-            { getSettingsPage(TrayIconSettingsBtn, null); }
+            {
+                getSettingsPage(TrayIconSettingsBtn, null);
+            }
             
             Show();
             WindowState = WindowState.Normal;
@@ -120,10 +145,14 @@ namespace Leo.WindowModels
         }
 
         private void trayIconClose(object sender, RoutedEventArgs e)
-        { Close(); }
+        {
+            Close();
+        }
 
-        private void movingWindow(object sender, MouseButtonEventArgs e) 
-        { DragMove(); }
+        private void movingWindow(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
 
         private void opacityAnimation(string target, double at, double to, double time, int operation)
         {
@@ -170,13 +199,19 @@ namespace Leo.WindowModels
         }
 
         private void animationCompletedHide(object? sender, EventArgs e)
-        { Hide(); }
+        {
+            Hide();
+        }
 
         private void closeWindow(object sender, EventArgs e)
-        { opacityAnimation(Name, 1, 0, 0.1, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0); }
-        
+        {
+            opacityAnimation(Name, 1, 0, 0.1, Properties.Settings.Default.isMinimizeToTrayTrue ? 1 : 0);
+        }
+
         private void minimizeWindow(object sender, EventArgs e)
-        { WindowState = WindowState.Minimized; }
+        {
+            WindowState = WindowState.Minimized;
+        }
 
         private void mute(object sender, EventArgs? e)
         {
@@ -192,7 +227,8 @@ namespace Leo.WindowModels
                 Properties.Settings.Default.Save();
 
                 Mute.Content = (Image)TryFindResource("MicrophoneImage");
-            } else
+            } 
+            else
             {
                 Properties.Settings.Default.isMuted = true;
                 Properties.Settings.Default.Save();
@@ -233,13 +269,19 @@ namespace Leo.WindowModels
         }
 
         public static void getSkillsPage()
-        { Instance!.MainFrame.Content = new Skills(); }
-        
+        {
+            Instance!.MainFrame.Content = new Skills();
+        }
+
         public static void getVoskSettingsPage()
-        { Instance!.MainFrame.Content = new VoskSettings(); }
-        
+        {
+            Instance!.MainFrame.Content = new VoskSettings();
+        }
+
         public static void backPage()
-        { Instance!.MainFrame.Content = _previousPage; }
+        {
+            Instance!.MainFrame.Content = _previousPage;
+        }
         
         private void removeMarkers()
         {
@@ -251,8 +293,10 @@ namespace Leo.WindowModels
         
         private void authorLink(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(new ProcessStartInfo 
-            { FileName = "https://github.com/WaysoonProgramms", UseShellExecute = true });
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://github.com/WaysoonProgramms", UseShellExecute = true
+            });
         }
 
         private void homeBtnMouseEnter(object sender, MouseEventArgs e)
@@ -310,14 +354,14 @@ namespace Leo.WindowModels
 
         private void hotKeys(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.M)
+            switch (e.Key)
             {
-                mute(this, null);
-            }
-
-            if (e.Key == Key.L && Control.ModifierKeys == Keys.Control)
-            {
-                Process.Start("explorer.exe", ".\\logs");
+                case Key.M:
+                    mute(this, null);
+                    break;
+                case Key.L when Control.ModifierKeys == Keys.Control:
+                    Process.Start("explorer.exe", ".\\logs");
+                    break;
             }
         }
     }

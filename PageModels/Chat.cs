@@ -45,8 +45,10 @@ namespace Leo.PageModels
             Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
             _dispatcher = currentDispatcher;
 
-            if (!NullMessages) 
-            { HelloLabel.Visibility = Visibility.Hidden; }
+            if (!NullMessages)
+            {
+                HelloLabel.Visibility = Visibility.Hidden;
+            }
             
             ScrollBox.ScrollToEnd();
             _scrollViewer = ScrollBox;
@@ -56,8 +58,15 @@ namespace Leo.PageModels
         
         public static void addMessage(string text, string alignment)
         {
-            if (text == string.Empty) { return; }
-            if (NullMessages) { NullMessages = false; }
+            if (text == string.Empty)
+            {
+                return;
+            }
+
+            if (NullMessages)
+            {
+                NullMessages = false;
+            }
 
             var ft = new FormattedText(text, 
                 CultureInfo.CurrentCulture, 
@@ -102,8 +111,15 @@ namespace Leo.PageModels
         
         public static void addMessage(string? text, string? alignment, string? time, string? date, bool isDateVisible)
         {
-            if (text == string.Empty) { return; }
-            if (NullMessages) { NullMessages = false; }
+            if (text == string.Empty)
+            {
+                return;
+            }
+
+            if (NullMessages)
+            {
+                NullMessages = false;
+            }
 
             var ft = new FormattedText(text, 
                 CultureInfo.CurrentCulture, 
@@ -114,8 +130,10 @@ namespace Leo.PageModels
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
-            if (_chat!.HelloLabel.Visibility == Visibility.Visible) 
-            { _chat.HelloLabel.Visibility = Visibility.Hidden; }
+            if (_chat!.HelloLabel.Visibility == Visibility.Visible)
+            {
+                _chat.HelloLabel.Visibility = Visibility.Hidden;
+            }
 
             ChatItems!.Add(new MessageData
             {
@@ -145,10 +163,14 @@ namespace Leo.PageModels
         }
 
         private void sendBtnMouseEnter(object sender, MouseEventArgs e)
-        { SendButtonBackground.Opacity = 0.2; }
+        {
+            SendButtonBackground.Opacity = 0.2;
+        }
 
         private void sendBtnMouseLeave(object sender, MouseEventArgs e)
-        { SendButtonBackground.Opacity = 0; }
+        {
+            SendButtonBackground.Opacity = 0;
+        }
 
         private void hotKeys(object sender, KeyEventArgs e)
         {
@@ -167,7 +189,12 @@ namespace Leo.PageModels
         }
 
         private void messageBuffer(object sender, TextChangedEventArgs e)
-        { if (TextBox.Text != "") { _textMessage = TextBox.Text; } }
+        {
+            if (TextBox.Text != "")
+            {
+                _textMessage = TextBox.Text;
+            }
+        }
         
         public static void clearChat()
         {

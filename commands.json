@@ -1,0 +1,66 @@
+{
+	"Id": "1",
+	"Name": "Телеграм",
+	"Description": "[ВСТРОЕНО] Открывает телеграм на компьютере",
+	"Phrase": "Открой телеграм",
+	"Type": "1",
+	"Reference": "%APPDATA%\\Telegram Desktop\\Telegram.exe",
+	"VoiceFile": ".\\Assets\\Voices\\open\\open1.wav",
+	"ErrorNumber": "3",
+	"ReplyMessage": "Открываю! [Telegram Desktop]"
+}
+{
+	"Id": "2",
+	"Name": "ЯМузыка",
+	"Description": "Открывает ЯМузыку на компьютере",
+	"Phrase": "Открой яндекс музыку",
+	"Type": "1",
+	"Reference": "%LOCALAPPDATA%\\Programs\\YandexMusic\\Яндекс Музыка.exe",
+	"VoiceFile": ".\\Assets\\Voices\\happyListening.wav",
+	"ErrorNumber": "3",
+	"ReplyMessage": "Открываю! [Yandex Music]"
+}
+{
+	"Id": "3",
+	"Name": "Терминал",
+	"Description": "Открывает cmd.exe",
+	"Phrase": "Открой консоль",
+	"Type": "1",
+	"Reference": "cmd.exe",
+	"VoiceFile": ".\\Assets\\Voices\\open\\open1.wav",
+	"ErrorNumber": "2",
+	"ReplyMessage": "Открываю! [CMD]"
+}
+{
+	"Id": "4",
+	"Name": "Youtube",
+	"Description": "Открывает веб-сайт Youtube",
+	"Phrase": "Открой ютуб",
+	"Type": "2",
+	"Reference": "https://youtube.com",
+	"VoiceFile": ".\\Assets\\Voices\\open\\open1.wav",
+	"ErrorNumber": "2",
+	"ReplyMessage": "Открываю! [youtube.com]"
+}
+{
+	"Id": "5",
+	"Name": "ВКонтакте",
+	"Description": "Открывает веб-сайт ВК",
+	"Phrase": "Открой вконтакте",
+	"Type": "2",
+	"Reference": "https://vk.com",
+	"VoiceFile": ".\\Assets\\Voices\\open\\open1.wav",
+	"ErrorNumber": "2",
+	"ReplyMessage": "Открываю! [vk.com]"
+}
+{
+	"Id": "6",
+	"Name": "Gmail",
+	"Description": "Открывает веб-сайт Gmail",
+	"Phrase": "Открой почту",
+	"Type": "2",
+	"Reference": "https://mail.google.com",
+	"VoiceFile": ".\\Assets\\Voices\\open\\open1.wav",
+	"ErrorNumber": "2",
+	"ReplyMessage": "Открываю! [mail.google.com]"
+}
