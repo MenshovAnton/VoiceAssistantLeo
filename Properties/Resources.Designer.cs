@@ -41,6 +41,54 @@
             }
         }
         
+        public static string commandsViewerPage_button_add {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_button_add", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_button_delete {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_button_delete", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_button_edit {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_button_edit", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_button_import {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_button_import", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_button_openJson {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_button_openJson", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_label_description {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_label_description", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_label_name {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_label_name", resourceCulture);
+            }
+        }
+        
+        public static string commandsViewerPage_label_phrase {
+            get {
+                return ResourceManager.GetString("commandsViewerPage_label_phrase", resourceCulture);
+            }
+        }
+        
         public static string homePage_description {
             get {
                 return ResourceManager.GetString("homePage_description", resourceCulture);
@@ -56,6 +104,12 @@
         public static string mainWindow_chatLabel {
             get {
                 return ResourceManager.GetString("mainWindow_chatLabel", resourceCulture);
+            }
+        }
+        
+        public static string mainWindow_commandEditorLabel {
+            get {
+                return ResourceManager.GetString("mainWindow_commandEditorLabel", resourceCulture);
             }
         }
         

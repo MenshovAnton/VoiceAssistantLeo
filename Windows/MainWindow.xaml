@@ -55,8 +55,9 @@
 
         <Frame Name="MainFrame" Margin="250,40,0,0" NavigationUIVisibility="Hidden" IsTabStop="False"/>
 
-        <Grid Width="249" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0">
+        <Grid Width="249" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -98,8 +99,20 @@
                        FontSize="12" FontFamily="Montserrat Alternates" Foreground="White" RenderTransformOrigin="0.348,0.526" />
                 </Grid>
             </Border>
+            
+            <Border Grid.Row="3" BorderThickness="1" MouseLeftButtonDown="getCommandsEditorPage" MouseEnter="commandsEditorBtnMouseEnter" 
+                    MouseLeave="commandsEditorBtnMouseLeave" Cursor="Hand">
+                <Grid>
+                    <Rectangle x:Name="CommandsEditorBtnFillMarker" HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="249" Fill="White" Opacity="0"/>
+                    <Rectangle x:Name="CommandsEditorBtnMarker" HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="5" Margin="-1,0,0,0" 
+                               Fill="White" Opacity="0"/>
+                    <Image HorizontalAlignment="Left" Height="26" Margin="13,0,0,1" VerticalAlignment="Center" Width="25" Source="/assets/images/commands.png"/>
+                    <Label Content="{x:Static res:Resources.mainWindow_commandEditorLabel}" HorizontalAlignment="Left" Margin="43,0,0,0" VerticalAlignment="Center" 
+                           FontSize="12" FontFamily="Montserrat Alternates" Foreground="White" RenderTransformOrigin="0.348,0.526" />
+                </Grid>
+            </Border>
 
-            <Border Grid.Row="3" BorderThickness="1" MouseLeftButtonDown="getAboutPage" MouseEnter="aboutBtnMouseEnter" 
+            <Border Grid.Row="4" BorderThickness="1" MouseLeftButtonDown="getAboutPage" MouseEnter="aboutBtnMouseEnter" 
                 MouseLeave="aboutBtnMouseLeave" Cursor="Hand">
                 <Grid>
                     <Rectangle x:Name="AboutBtnFillMarker" HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="249" Fill="White" Opacity="0"/>

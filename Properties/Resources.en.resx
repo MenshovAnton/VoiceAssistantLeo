@@ -116,4 +116,31 @@
     <data name="settingsPage_toggleSwitch_limitMessageWarn" xml:space="preserve">
         <value>Disable message limit warning</value>
     </data>
+    <data name="mainWindow_commandEditorLabel" xml:space="preserve">
+        <value>Commands</value>
+    </data>
+    <data name="commandsViewerPage_button_import" xml:space="preserve">
+        <value>Import</value>
+    </data>
+    <data name="commandsViewerPage_button_openJson" xml:space="preserve">
+        <value>Open file commands.json</value>
+    </data>
+    <data name="commandsViewerPage_button_add" xml:space="preserve">
+        <value>Add command</value>
+    </data>
+    <data name="commandsViewerPage_button_delete" xml:space="preserve">
+        <value>Delete</value>
+    </data>
+    <data name="commandsViewerPage_button_edit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="commandsViewerPage_label_description" xml:space="preserve">
+        <value>Description: </value>
+    </data>
+    <data name="commandsViewerPage_label_name" xml:space="preserve">
+        <value>Name: </value>
+    </data>
+    <data name="commandsViewerPage_label_phrase" xml:space="preserve">
+        <value>Pharse: </value>
+    </data>
 </root>

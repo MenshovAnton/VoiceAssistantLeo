@@ -22,9 +22,9 @@ namespace Leo.Classes
 
     public class CommandManager
     {
-        private readonly string _path = @".\commands.json";
+        private const string Path = @".\commands.json";
         private static readonly Logger Logger = new();
-        private readonly MessageBox _messageBox = new();
+        private static readonly MessageBox _messageBox = new();
 
         public CommandManager()
         {
@@ -32,12 +32,12 @@ namespace Leo.Classes
             {
                 try
                 {
-                    FileStream file = File.Open(_path, FileMode.Open);
+                    FileStream file = File.Open(Path, FileMode.Open);
                     file.Close();
                 }
                 catch
                 {
-                    FileStream file = File.Create(_path);
+                    FileStream file = File.Create(Path);
                     file.Close();
                 }
             }
@@ -48,30 +48,35 @@ namespace Leo.Classes
             }
         }
         
-        public async void serialize(int id, string name, string? methodRef)
+        public static async void serialize(int id, string name, string? description, string? type, string? reference, string? voiceFile, string? errorNumber, string? replyMessage)
         {
             if (Properties.Settings.Default.notSaveMessages)
             {
                 return;
             }
             
-            await using StreamWriter writer = new StreamWriter(_path, true);
+            await using StreamWriter writer = new StreamWriter(Path, true);
             CommandJsonFormat commandJson = new CommandJsonFormat()
             {
                 Id = id.ToString(),
                 Name = name,
-                Reference = methodRef
+                Description = description,
+                Type = type,
+                Reference = reference,
+                VoiceFile = voiceFile,
+                ErrorNumber = errorNumber,
+                ReplyMessage = replyMessage
             };
             string json = JsonConvert.SerializeObject(commandJson, Formatting.Indented);
             
             await writer.WriteLineAsync(json);
         }
 
-        public async void deserialize()
+        public static async void deserialize()
         {
             try
             {
-                using var reader = new StreamReader(_path);
+                using var reader = new StreamReader(Path);
                 while (true)
                 {
                     var line = "";
@@ -84,7 +89,7 @@ namespace Leo.Classes
                         break;
                     }
                     CommandJsonFormat? md = JsonConvert.DeserializeObject<CommandJsonFormat>(line);
-                    Vosk.addCommand(md?.Type!, md?.Reference!, md?.Phrase, md?.VoiceFile!, md?.ErrorNumber!, md?.ReplyMessage!);
+                    Vosk.addCommand(md?.Name, md?.Description, md?.Type!, md?.Reference!, md?.Phrase, md?.VoiceFile!, md?.ErrorNumber!, md?.ReplyMessage!);
                 }
             }
             catch (Exception ex)

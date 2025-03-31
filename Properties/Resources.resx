@@ -148,4 +148,31 @@
 
 Код ошибки: 7</value>
   </data>
+  <data name="mainWindow_commandEditorLabel" xml:space="preserve">
+    <value>Команды</value>
+  </data>
+  <data name="commandsViewerPage_button_add" xml:space="preserve">
+    <value>Добавить команду</value>
+  </data>
+  <data name="commandsViewerPage_button_openJson" xml:space="preserve">
+    <value>Открыть файл commands.json</value>
+  </data>
+  <data name="commandsViewerPage_button_import" xml:space="preserve">
+    <value>Импорт</value>
+  </data>
+  <data name="commandsViewerPage_label_name" xml:space="preserve">
+    <value>Название: </value>
+  </data>
+  <data name="commandsViewerPage_label_description" xml:space="preserve">
+    <value>Описание: </value>
+  </data>
+  <data name="commandsViewerPage_label_phrase" xml:space="preserve">
+    <value>Фраза: </value>
+  </data>
+  <data name="commandsViewerPage_button_edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="commandsViewerPage_button_delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
 </root>

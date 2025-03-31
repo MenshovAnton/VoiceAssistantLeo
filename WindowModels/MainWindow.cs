@@ -278,6 +278,14 @@ namespace Leo.WindowModels
             Instance!.MainFrame.Content = new VoskSettings();
         }
 
+        private void getCommandsEditorPage(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            removeMarkers();
+            MainFrame.Content = new CommandsViewer();
+            CommandsEditorBtnMarker.Opacity = 1;
+            _previousPage = new CommandsViewer();
+        }
+
         public static void backPage()
         {
             Instance!.MainFrame.Content = _previousPage;
@@ -289,6 +297,7 @@ namespace Leo.WindowModels
             SettingsBtnMarker.Opacity = 0;
             ChatBtnMarker.Opacity = 0;
             AboutBtnMarker.Opacity = 0;
+            CommandsEditorBtnMarker.Opacity = 0;
         }
         
         private void authorLink(object sender, MouseButtonEventArgs e)
@@ -330,6 +339,17 @@ namespace Leo.WindowModels
         {
             opacityAnimation(ChatBtnFillMarker.Name, 0.1, 0, 0.1, 2);
             ChatBtnFillMarker.Opacity = 0;
+        }
+        
+        private void commandsEditorBtnMouseEnter(object sender, MouseEventArgs e)
+        {
+            opacityAnimation(CommandsEditorBtnFillMarker.Name, 0, 0.1, 0.1, 2);
+            CommandsEditorBtnFillMarker.Opacity = 0.1;
+        }
+        private void commandsEditorBtnMouseLeave(object sender, MouseEventArgs e)
+        {
+            opacityAnimation(CommandsEditorBtnFillMarker.Name, 0.1, 0, 0.1, 2); 
+            CommandsEditorBtnFillMarker.Opacity = 0;
         }
 
         private void aboutBtnMouseEnter(object sender, MouseEventArgs e)

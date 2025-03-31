@@ -17,6 +17,8 @@ namespace Leo.Classes
 {
     public class CommandData
     {
+        public string? Name { get; set; }
+        public string? Description { get; set; }
         public string? Phrase { get; init; }
         public string? Reference { get; init; }
         public string? Type { get; init; }
@@ -97,10 +99,12 @@ namespace Leo.Classes
             }
         }
         
-        public static void addCommand(string type, string methodRef, string? phrase, string? voiceFile, string? errorNumber, string? replyMessage)
+        public static void addCommand(string? name, string? description,string type, string methodRef, string? phrase, string? voiceFile, string? errorNumber, string? replyMessage)
         {
             Commands!.Add(new CommandData()
             {
+                Name = name,
+                Description = description,
                 Phrase = phrase,
                 Reference = methodRef,
                 Type = type,
