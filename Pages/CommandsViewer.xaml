@@ -10,7 +10,7 @@
     <Grid>
         <Button Margin="20,30,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
                 Content="{x:Static res:Resources.commandsViewerPage_button_add}" FontFamily="Montserrat Alternates"
-                HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="getCommandsEditor"/>
         <Button Margin="220,30,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="250" 
                 Content="{x:Static res:Resources.commandsViewerPage_button_openJson}" FontFamily="Montserrat Alternates"
                 HorizontalAlignment="Left" VerticalAlignment="Top"/>

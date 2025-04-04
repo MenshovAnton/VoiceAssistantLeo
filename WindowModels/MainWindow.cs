@@ -278,6 +278,11 @@ namespace Leo.WindowModels
             Instance!.MainFrame.Content = new VoskSettings();
         }
 
+        public static void getCommandsEditorPage()
+        {
+            Instance!.MainFrame.Content = new CommandsEditor();
+        }
+
         private void getCommandsEditorPage(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             removeMarkers();
