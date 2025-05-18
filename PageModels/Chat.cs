@@ -1,48 +1,30 @@
-﻿using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Leo.Classes;
-using Leo.WindowModels;
 
 namespace Leo.PageModels
 {
-    public class MessageData
-    {
-        // ReSharper disable UnusedAutoPropertyAccessor.Global
-        public string? Message { get; set; }
-        public string? Time { get; set; }
-        public int Length { get; set; }
-        public string? Alignment { get; set; }
-        public string? DateMessage { get; set; }
-        public bool IsDateVisible { get; set; }
-        // ReSharper restore UnusedAutoPropertyAccessor.Global
-    }
     
     public partial class Chat
     {
-        public static ObservableCollection<MessageData>? ChatItems { get; set; }
-        
-        private static Chat? _chat;
+        private static Chat? _instance;
         private static string _textMessage = string.Empty;
         public static bool NullMessages = true;
         private static ScrollViewer? _scrollViewer;
-
-        private static readonly ChatManager ChatManager = new();
         private static Dispatcher? _dispatcher;
         
         public Chat()
         {
             InitializeComponent();
             TextBox.Text = _textMessage;
-            ChatList.ItemsSource = ChatItems;
-            _chat = this;
+            ChatList.ItemsSource = Message.MessagesCollection;
+            _instance = this;
             
-            Dispatcher currentDispatcher = Dispatcher.CurrentDispatcher;
+            var currentDispatcher = Dispatcher.CurrentDispatcher;
             _dispatcher = currentDispatcher;
 
             if (!NullMessages)
@@ -56,7 +38,7 @@ namespace Leo.PageModels
             TextBox.Focus();
         }
         
-        public static void addMessage(string text, string alignment)
+        public static void addMessageItem(string text, string alignment)
         {
             if (text == string.Empty)
             {
@@ -77,9 +59,9 @@ namespace Leo.PageModels
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
-            if (_chat!.HelloLabel.Visibility == Visibility.Visible)
+            if (_instance!.HelloLabel.Visibility == Visibility.Visible)
             {
-                _dispatcher?.BeginInvoke(DispatcherPriority.Normal, () => _chat.HelloLabel.Visibility = Visibility.Hidden);
+                _dispatcher?.BeginInvoke(DispatcherPriority.Normal, () => _instance.HelloLabel.Visibility = Visibility.Hidden);
             }
 
             var isDateVisible = true;
@@ -91,25 +73,12 @@ namespace Leo.PageModels
                 Properties.Settings.Default.Save();
             }
 
-            ChatItems!.Add(new MessageData
-            {
-                Message = text,
-                Time = DateTime.Now.ToShortTimeString(),
-                Length = length,
-                Alignment = alignment,
-                DateMessage = DateTime.Now.ToShortDateString(),
-                IsDateVisible = isDateVisible
-            });
-
-            Properties.Settings.Default.messagesId += 1;
-            Properties.Settings.Default.Save();
+            Message.addMessage(text, length, alignment, isDateVisible);
             
-            ChatManager.serialize(text, alignment, DateTime.Now.ToShortTimeString(), 
-                DateTime.Now.ToShortDateString(), isDateVisible, Properties.Settings.Default.messagesId);
             _scrollViewer?.ScrollToEnd();
         }
         
-        public static void addMessage(string? text, string? alignment, string? time, string? date, bool isDateVisible)
+        public static void addMessageItem(string? text, string? alignment, string? time, string? date, bool isDateVisible)
         {
             if (text == string.Empty)
             {
@@ -130,27 +99,19 @@ namespace Leo.PageModels
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
 
-            if (_chat!.HelloLabel.Visibility == Visibility.Visible)
+            if (_instance!.HelloLabel.Visibility == Visibility.Visible)
             {
-                _chat.HelloLabel.Visibility = Visibility.Hidden;
+                _instance.HelloLabel.Visibility = Visibility.Hidden;
             }
-
-            ChatItems!.Add(new MessageData
-            {
-                Message = text,
-                Time = time,
-                Length = length,
-                Alignment = alignment,
-                DateMessage = date,
-                IsDateVisible = isDateVisible
-            });
+            
+            Message.addMessage(text!, time!, length, alignment!, date!, isDateVisible);
             
             _scrollViewer?.ScrollToEnd();
         }
 
         private void send(object sender, MouseButtonEventArgs? e)
         {
-            addMessage(TextBox.Text, "Right");
+            addMessageItem(TextBox.Text, "Right");
             
             var vosk = new Classes.Vosk();
             Classes.Vosk.RecognizedText = TextBox.Text.ToLower();
@@ -194,18 +155,6 @@ namespace Leo.PageModels
             {
                 _textMessage = TextBox.Text;
             }
-        }
-        
-        public static void clearChat()
-        {
-            Properties.Settings.Default.messagesId = 0;
-            Properties.Settings.Default.nowDate = "01.01.01";
-            Properties.Settings.Default.Save();
-            File.Delete(ChatManager.getFilePath());
-            FileStream file = File.Create(ChatManager.getFilePath());
-            file.Close();
-            ChatItems = new ObservableCollection<MessageData>();
-            NullMessages = true;
         }
     }
 }

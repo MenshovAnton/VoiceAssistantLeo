@@ -41,6 +41,18 @@
             }
         }
         
+        public static string commandsEditorPage_button_save {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_button_save", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditor_fileDialog_filter {
+            get {
+                return ResourceManager.GetString("commandsEditor_fileDialog_filter", resourceCulture);
+            }
+        }
+        
         public static string commandsViewerPage_button_add {
             get {
                 return ResourceManager.GetString("commandsViewerPage_button_add", resourceCulture);
@@ -86,6 +98,12 @@
         public static string commandsViewerPage_label_phrase {
             get {
                 return ResourceManager.GetString("commandsViewerPage_label_phrase", resourceCulture);
+            }
+        }
+        
+        public static string commandsView_import_fileDialog_filter {
+            get {
+                return ResourceManager.GetString("commandsView_import_fileDialog_filter", resourceCulture);
             }
         }
         
@@ -317,12 +335,6 @@
             }
         }
         
-        public static string system_message1 {
-            get {
-                return ResourceManager.GetString("system_message1", resourceCulture);
-            }
-        }
-        
         public static string system_error6 {
             get {
                 return ResourceManager.GetString("system_error6", resourceCulture);
@@ -335,5 +347,22 @@
             }
         }
         
+        public static string system_message1 {
+            get {
+                return ResourceManager.GetString("system_message1", resourceCulture);
+            }
+        }
+        
+        public static string system_message2 {
+            get {
+                return ResourceManager.GetString("system_message2", resourceCulture);
+            }
+        }
+        
+        public static string system_message3 {
+            get {
+                return ResourceManager.GetString("system_message3", resourceCulture);
+            }
+        }
     }
 }

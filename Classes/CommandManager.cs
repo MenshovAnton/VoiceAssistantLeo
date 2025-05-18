@@ -7,24 +7,11 @@ using Newtonsoft.Json;
 
 namespace Leo.Classes
 {
-    public class CommandJsonFormat
-    {
-        public string? Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? Phrase { get; set; }
-        public string? Type { get; set; }
-        public string? Reference { get; set; }
-        public string? VoiceFile { get; set; }
-        public string? ErrorNumber { get; set; }
-        public string? ReplyMessage { get; set; }
-    }
-
     public class CommandManager
     {
         private const string Path = @".\commands.json";
         private static readonly Logger Logger = new();
-        private static readonly MessageBox _messageBox = new();
+        private static readonly MessageBox MessageBox = new();
 
         public CommandManager()
         {
@@ -32,44 +19,54 @@ namespace Leo.Classes
             {
                 try
                 {
-                    FileStream file = File.Open(Path, FileMode.Open);
+                    var file = File.Open(Path, FileMode.Open);
                     file.Close();
                 }
                 catch
                 {
-                    FileStream file = File.Create(Path);
+                    var file = File.Create(Path);
                     file.Close();
                 }
             }
             else
             {
-                Vosk.Commands = new ObservableCollection<CommandData>();
+                Command.CommandsCollection = [];
                 Chat.NullMessages = true;
             }
         }
-        
-        public static async void serialize(int id, string name, string? description, string? type, string? reference, string? voiceFile, string? errorNumber, string? replyMessage)
+
+        public static void saveCommands(Collection<CommandDataFormat> commands)
         {
-            if (Properties.Settings.Default.notSaveMessages)
+            File.Delete(Path);
+            var file = File.Open(Path, FileMode.Create);
+            file.Close();
+            foreach (var command in commands)
             {
-                return;
+                serialize(command.Id, command.Name, command.Description, command.Phrase!, command.Type, command.Reference, 
+                    command.VoiceFile, command.ErrorNumber, command.ReplyMessage);
             }
-            
-            await using StreamWriter writer = new StreamWriter(Path, true);
-            CommandJsonFormat commandJson = new CommandJsonFormat()
+        }
+
+        private static async void serialize(string? id, string? name, string? description, string phrase, string? type, 
+            string? reference, string? voiceFile, string? errorNumber, string? replyMessage)
+        {
+            await using var writer = new StreamWriter(Path, true);
+            var commandDataFormat = new CommandDataFormat()
             {
-                Id = id.ToString(),
+                Id = id,
                 Name = name,
                 Description = description,
+                Phrase = phrase,
                 Type = type,
                 Reference = reference,
                 VoiceFile = voiceFile,
                 ErrorNumber = errorNumber,
                 ReplyMessage = replyMessage
             };
-            string json = JsonConvert.SerializeObject(commandJson, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(commandDataFormat, Formatting.Indented);
             
             await writer.WriteLineAsync(json);
+            writer.Close();
         }
 
         public static async void deserialize()
@@ -88,14 +85,15 @@ namespace Leo.Classes
                     {
                         break;
                     }
-                    CommandJsonFormat? md = JsonConvert.DeserializeObject<CommandJsonFormat>(line);
-                    Vosk.addCommand(md?.Name, md?.Description, md?.Type!, md?.Reference!, md?.Phrase, md?.VoiceFile!, md?.ErrorNumber!, md?.ReplyMessage!);
+                    var md = JsonConvert.DeserializeObject<CommandDataFormat>(line);
+                    Command.addCommand(md?.Id!, md?.Name, md?.Description, md?.Type!, md?.Reference!, 
+                        md?.Phrase, md?.VoiceFile!, md?.ErrorNumber!, md?.ReplyMessage!);
                 }
             }
             catch (Exception ex)
             {
                 Logger.error("Leo failed to load commands " + ex);
-                _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error7,
+                MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error7,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
         }

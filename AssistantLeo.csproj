@@ -12,13 +12,13 @@
     <ApplicationIcon>assets/icon.ico</ApplicationIcon>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <Configurations>Debug;Release</Configurations>
-    <Copyright>(c) Антон Меньшов 2023-2024</Copyright>
-    <Description>Простой голосовой помощник для Windows</Description>
+    <Copyright>(c) Меньшов Антон Романович 2023-2025</Copyright>
+    <Description>Лео — голосовой помощник для Windows. Написанный на C#. Четко распознает голос с помощью Vosk API.</Description>
     <Company>MenshovAnton</Company>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <ProductVersion>1.1.0</ProductVersion>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
+    <FileVersion>1.2.0</FileVersion>
     <NeutralLanguage>ru</NeutralLanguage>
   </PropertyGroup>
 
@@ -224,12 +224,14 @@
     <Resource Include="Assets\Images\back.png" />
     <None Remove="commands.json" />
     <AdditionalFiles Include="commands.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AdditionalFiles>
     <None Remove="Assets\Images\Commands.png" />
     <Resource Include="Assets\Images\Commands.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <None Remove="Assets\Images\folder.png" />
+    <Resource Include="Assets\Images\folder.png" />
   </ItemGroup>
 
   <ItemGroup>

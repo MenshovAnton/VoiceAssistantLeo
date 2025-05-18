@@ -14,41 +14,34 @@ namespace Leo.Classes
 
             try
             {
-                FileStream file = File.Open(_path, FileMode.Open);
+                var file = File.Open(_path, FileMode.Open);
                 file.Close();
             }
             catch
             {
-                FileStream file = File.Create(_path);
+                var file = File.Create(_path);
                 file.Close();
-            };
+            }
         }
         
         public async void message(string message)
         {
-            await using StreamWriter writer = new StreamWriter(_path, true);
+            await using var writer = new StreamWriter(_path, true);
             var str = $"[MESSAGE] {_thisDay:HH:mm:ss} - " + message;
             await writer.WriteLineAsync(str);
         }
         
         public async void warn(string message)
         {
-            await using StreamWriter writer = new StreamWriter(_path, true);
+            await using var writer = new StreamWriter(_path, true);
             var str = $"[WARNING] {_thisDay:HH:mm:ss} -  " + message;
             await writer.WriteLineAsync(str);
         }
         
         public async void error(string message)
         {
-            await using StreamWriter writer = new StreamWriter(_path, true);
+            await using var writer = new StreamWriter(_path, true);
             var str = $"[ERROR] {_thisDay:HH:mm:ss} -  " + message;
-            await writer.WriteLineAsync(str);
-        }
-        
-        public async void critical(string message)
-        {
-            await using StreamWriter writer = new StreamWriter(_path, true);
-            var str = $"[CRITICAL ERROR] {_thisDay:HH:mm:ss} - " + message;
             await writer.WriteLineAsync(str);
         }
     }

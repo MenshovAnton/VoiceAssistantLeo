@@ -210,7 +210,7 @@ namespace Leo.PageModels
 
         private void clearMessages(object sender, RoutedEventArgs e)
         {
-            Chat.clearChat();
+            Message.clearMessages();
         }
 
         private void voskSettings(object sender, RoutedEventArgs e)

@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -14,23 +13,9 @@ using MessageBox = Leo.WindowModels.MessageBox;
 using Settings = Leo.PageModels.Settings;
 
 namespace Leo.Classes
-{
-    public class CommandData
-    {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-        public string? Phrase { get; init; }
-        public string? Reference { get; init; }
-        public string? Type { get; init; }
-        public string? VoiceFile { get; init; }
-        public string? ErrorNumber { get; init; }
-        public string? ReplyMessage { get; init; }
-    }
-    
+{ 
     public class Vosk
     {
-        public static ObservableCollection<CommandData>? Commands { get; set; }
-        
         private static Dispatcher? _dispatcher;
 
         private static VoskRecognizer? _recognizer; // Объект распознавания VOSK
@@ -51,21 +36,16 @@ namespace Leo.Classes
 
         public static void main()
         {
-            // Инициализация модели
             var model = new Model(".\\VoskModel");
             _recognizer = new VoskRecognizer(model, 16000f);
-
-            // Инициализация записи
+            
             WaveIn.WaveFormat = new WaveFormat(16000, 1);
             WaveIn.DataAvailable += WaveInOnDataAvailable;
-
-            // Временный файл записи голоса
+            
             _writer = new WaveFileWriter(".\\voice.wav", WaveIn.WaveFormat);
 
             var currentDispatcher = Dispatcher.CurrentDispatcher;
             _dispatcher = currentDispatcher;
-            
-            Commands = [];
         }
 
         [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
@@ -98,21 +78,6 @@ namespace Leo.Classes
                 }
             }
         }
-        
-        public static void addCommand(string? name, string? description,string type, string methodRef, string? phrase, string? voiceFile, string? errorNumber, string? replyMessage)
-        {
-            Commands!.Add(new CommandData()
-            {
-                Name = name,
-                Description = description,
-                Phrase = phrase,
-                Reference = methodRef,
-                Type = type,
-                VoiceFile = voiceFile,
-                ErrorNumber = errorNumber,
-                ReplyMessage = replyMessage
-            });
-        }
 
         public static void error1()
         {
@@ -127,17 +92,15 @@ namespace Leo.Classes
 
             if (_recognizer!.AcceptWaveform(e.Buffer, e.BytesRecorded))
             {
-                // Парсинг объекта с текстом
                 var pResult = JObject.Parse(_recognizer.Result());
                 RecognizedText = pResult["text"]!.ToString();
-                vosk.speechRecognized(); // Проверка результатов
+                vosk.speechRecognized();
             }
             else
             {
-                // Парсинг объекта с текстом
                 var pResult = JObject.Parse(_recognizer.PartialResult());
                 RecognizedText = pResult["partial"]!.ToString();
-                vosk.speechRecognized(); // Проверка результатов
+                vosk.speechRecognized();
             }
         }
         
@@ -161,6 +124,33 @@ namespace Leo.Classes
                 WakeTimer.Reset();
             }
 
+            if (_wakeWordStatus)
+            {
+                foreach (var command in Command.CommandsCollection!)
+                {
+                    if (RecognizedText!.Contains(command.Phrase!, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        switch (command.Type)
+                        {
+                            case "1":
+                                var folder = Environment.ExpandEnvironmentVariables(command.Reference!);
+
+                                startProgram(folder,
+                                    command.VoiceFile!,
+                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
+                                    command.ReplyMessage!);
+                                break;
+                            case "2":
+                                openWebsite(command.Reference!,
+                                    command.VoiceFile!,
+                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
+                                    command.ReplyMessage!);
+                                break;
+                        }
+                    }
+                }
+            }
+            
             // WAKE WORD
             if (RecognizedText!.Contains("лео") || RecognizedText == "лео")
             {
@@ -173,7 +163,7 @@ namespace Leo.Classes
                     _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
                     {
                         if (RecognizedText!.Length > 3)
-                        { Chat.addMessage("Лео", "Right"); }
+                        { Chat.addMessageItem("Лео", "Right"); }
                         Home.activateAnimation();
                     });
                 }
@@ -181,34 +171,6 @@ namespace Leo.Classes
                 _wakeWordStatus = true; 
 
                 Logger.message("Assistant activated");
-            }
-
-            if (_wakeWordStatus)
-            {
-                foreach (var command in Commands!)
-                {
-                    if (RecognizedText.Contains(command.Phrase!.ToLower()))
-                    {
-                        switch (command.Type)
-                        {
-                            case "1":
-                                string folder = Environment.ExpandEnvironmentVariables(command.Reference!);
-
-                                startProgram(folder,
-                                    command.VoiceFile!,
-                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
-                                    4,
-                                    command.ReplyMessage!);
-                                break;
-                            case "2":
-                                openWebsite(command.Reference!,
-                                    command.VoiceFile!,
-                                    $@".\Assets\Voices\errors\err{command.ErrorNumber}.wav",
-                                    command.ReplyMessage!);
-                                break;
-                        }
-                    }
-                }
             }
             
             if (RecognizedText == "спасибо" && !_busy && _wakeWordStatus)
@@ -387,7 +349,7 @@ namespace Leo.Classes
         }
         
         
-        private void startProgram(string target, string media, string error, int rndInt, string mesText)
+        private void startProgram(string target, string media, string error, string mesText)
         {
             _busy = true;
             WakeTimer.Restart();
@@ -469,8 +431,8 @@ namespace Leo.Classes
             
             _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
             {
-                Chat.addMessage(recognizedText, "Right");
-                Chat.addMessage(message, alignment);
+                Chat.addMessageItem(recognizedText, "Right");
+                Chat.addMessageItem(message, alignment);
             });
         }
         

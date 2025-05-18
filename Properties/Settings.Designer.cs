@@ -225,5 +225,17 @@ namespace Leo.Properties {
                 this["offLotMessageWarn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int lastCommandId {
+            get {
+                return ((int)(this["lastCommandId"]));
+            }
+            set {
+                this["lastCommandId"] = value;
+            }
+        }
     }
 }

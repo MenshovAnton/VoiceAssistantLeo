@@ -13,15 +13,21 @@
                 HorizontalAlignment="Left" VerticalAlignment="Top" Click="getCommandsEditor"/>
         <Button Margin="220,30,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="250" 
                 Content="{x:Static res:Resources.commandsViewerPage_button_openJson}" FontFamily="Montserrat Alternates"
-                HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="openJson"/>
         <Button Margin="490,30,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
                 Content="{x:Static res:Resources.commandsViewerPage_button_import}" FontFamily="Montserrat Alternates"
-                HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ScrollViewer Name="ScrollBox" Margin="20,80,0,20">
-            <ItemsControl x:Name="CommandsList" Background="#FF161616" BorderBrush="#FF161616" >
-                <ItemsControl.ItemTemplate>
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="importCommandsFromFile"/>
+        <Button x:Name="DeleteCommandButton" Margin="20,75,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="120" 
+                Content="{x:Static res:Resources.commandsViewerPage_button_delete}" FontFamily="Montserrat Alternates"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="deleteCommandAction" IsEnabled="False"/>
+        <Button x:Name="EditCommandButton" Margin="160,75,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="120" 
+                Content="{x:Static res:Resources.commandsViewerPage_button_edit}" FontFamily="Montserrat Alternates"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="editCommandAction" IsEnabled="False"/>
+        <Grid Margin="0,135,0,40">
+            <ListBox x:Name="CommandsList" Background="#FF161616" BorderBrush="#FF161616" SelectionChanged="selectedNewItem">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,10,0,30">
+                        <Grid Margin="20,10,0,30">
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
@@ -44,17 +50,10 @@
                                        Foreground="White" Text="{x:Static res:Resources.commandsViewerPage_label_phrase}"/>
                             <TextBlock Grid.Row="2" Grid.Column="1" Name="CommandPhrase" FontFamily="Montserrat Alternates" FontSize="14" 
                                        Foreground="White" Text="{Binding Path=Phrase}"/>
-                            
-                            <Button Grid.Row="0" Grid.Column="2" Margin="0,0,0,5" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
-                                    Content="{x:Static res:Resources.commandsViewerPage_button_edit}" FontFamily="Montserrat Alternates"
-                                    HorizontalAlignment="Left"/>
-                            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
-                                    Content="{x:Static res:Resources.commandsViewerPage_button_delete}" FontFamily="Montserrat Alternates"
-                                    HorizontalAlignment="Left"/>
                         </Grid>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </Page>

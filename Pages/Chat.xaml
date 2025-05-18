@@ -14,13 +14,15 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="30,0,30,10" d:DataContext="{d:SampleData}">
-                            <TextBlock Name="DateMessage" FontFamily="Montserrat Alternates" Foreground="White" FontSize="12" Text="{Binding Path=DateMessage}" 
-                                       HorizontalAlignment="Center" Margin="0,2,0,0" Visibility="Hidden"/>
+                            <TextBlock Name="DateMessage" FontFamily="Montserrat Alternates" Foreground="White" FontSize="12" 
+                                       Text="{Binding Path=DateMessage}" HorizontalAlignment="Center" 
+                                       Margin="0,2,0,0" Visibility="Hidden"/>
                             <Grid Name="Grid" Margin="0,0,0,0">
-                                <Rectangle Name="messageCloud" RadiusX="10" RadiusY="10" Fill="White" StrokeThickness="3" HorizontalAlignment="{Binding Path=Alignment}" 
-                                           Stroke="White" Height="50" Width="{Binding Path=Length}"/>
+                                <Rectangle Name="messageCloud" RadiusX="10" RadiusY="10" Fill="White" StrokeThickness="3" 
+                                           HorizontalAlignment="{Binding Path=Alignment}" Stroke="White" Height="50" 
+                                           Width="{Binding Path=Length}"/>
                                 <StackPanel Name="Block" Margin="5">
-                                    <TextBlock Name="Message" FontFamily="Montserrat Alternates" FontSize="14" Text="{Binding Path=Message}" 
+                                    <TextBlock Name="Message" FontFamily="Montserrat Alternates" FontSize="14" Text="{Binding Path=MessageText}" 
                                                HorizontalAlignment="{Binding Path=Alignment}" Margin="4,2,4,0" />
                                     <TextBlock Name="Time" FontSize="9" FontFamily="Montserrat Alternates" Text="{Binding Path=Time}" 
                                                HorizontalAlignment="{Binding Path=Alignment}" Margin="4,2,4,0"/>
@@ -51,12 +53,15 @@
                         <Image Name="SendButton" HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="/assets/images/send.png"/>
                     </Grid>
                 </Border>
-                <TextBox x:Name="TextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="732" 
-                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="White" CaretBrush="White"  BorderThickness="0,0,0,0" 
-                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" TextChanged="messageBuffer" FontFamily="Montserrat Alternates"/>
+                <TextBox x:Name="TextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
+                         VerticalAlignment="Center" Width="732" Background="{x:Null}" BorderBrush="{x:Null}" 
+                         Foreground="White" SelectionBrush="White" CaretBrush="White"  BorderThickness="0,0,0,0" 
+                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
+                         TextChanged="messageBuffer" FontFamily="Montserrat Alternates"/>
             </Grid>
         </Border>
-        <Label x:Name="HelloLabel" Content="{x:Static res:Resources.chatPage_welcomeLabel}" HorizontalAlignment="Center" Margin="0,253,0,0" VerticalAlignment="Top" 
-               Foreground="White" FontFamily="Montserrat Alternates" FontStyle="Italic" Visibility="Visible"/>
+        <Label x:Name="HelloLabel" Content="{x:Static res:Resources.chatPage_welcomeLabel}" HorizontalAlignment="Center" 
+               Margin="0,253,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Montserrat Alternates" 
+               FontStyle="Italic" Visibility="Visible"/>
     </Grid>
 </Page>

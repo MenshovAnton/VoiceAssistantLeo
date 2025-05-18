@@ -13,6 +13,7 @@ using CommandManager = Leo.Classes.CommandManager;
 using Control = System.Windows.Forms.Control;
 using Image = System.Windows.Controls.Image;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using Message = Leo.Classes.Message;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 
 namespace Leo.WindowModels
@@ -51,6 +52,7 @@ namespace Leo.WindowModels
 
             InitializeComponent();
             
+            Command.CommandsCollection = [];
             CommandManager.deserialize();
             
             if (CultureInfo.CurrentUICulture.Name == "en-US")
@@ -76,7 +78,7 @@ namespace Leo.WindowModels
             }
 
             Classes.Vosk.update();
-            ChatItems = new ObservableCollection<MessageData>();
+            Message.MessagesCollection = [];
             Console.WriteLine(@"(C) Copyright Menshov Anton Romanovich (MenshovAnton) 2023-2025");
 
             if (MicAccess == false)
@@ -290,6 +292,13 @@ namespace Leo.WindowModels
             CommandsEditorBtnMarker.Opacity = 1;
             _previousPage = new CommandsViewer();
         }
+        
+        public static void getCommandsEditorPage(int id, string name, string description, string Phrase, string Reference, string Reply)
+        {
+            CommandsEditor editor = new CommandsEditor();
+            Instance!.MainFrame.Content = editor;
+            editor.setCommandData(id, name, description, Phrase, Reference, Reply);
+        }
 
         public static void backPage()
         {
@@ -309,7 +318,7 @@ namespace Leo.WindowModels
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://github.com/WaysoonProgramms", UseShellExecute = true
+                FileName = "https://github.com/MenshovAnton", UseShellExecute = true
             });
         }
 

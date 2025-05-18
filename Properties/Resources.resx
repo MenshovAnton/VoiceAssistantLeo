@@ -55,7 +55,7 @@
     <value>О проекте</value>
   </data>
   <data name="program_version" xml:space="preserve">
-    <value>1.1.0</value>
+    <value>1.2.0</value>
   </data>
   <data name="mainWindow_copyright" xml:space="preserve">
     <value>@MenshovAnton</value>
@@ -174,5 +174,20 @@
   </data>
   <data name="commandsViewerPage_button_delete" xml:space="preserve">
     <value>Удалить</value>
+  </data>
+  <data name="commandsEditorPage_button_save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="system_message2" xml:space="preserve">
+    <value>Заполните все поля!</value>
+  </data>
+  <data name="commandsEditor_fileDialog_filter" xml:space="preserve">
+    <value>Исполняемый файл</value>
+  </data>
+  <data name="system_message3" xml:space="preserve">
+    <value>Вы точно хотите удалить команду?</value>
+  </data>
+  <data name="commandsView_import_fileDialog_filter" xml:space="preserve">
+    <value>JSON-файл</value>
   </data>
 </root>

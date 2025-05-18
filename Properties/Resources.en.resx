@@ -30,7 +30,7 @@
         <value>Assistant Leo</value>
     </data>
     <data name="program_version" xml:space="preserve">
-        <value>1.1.0 </value>
+        <value>1.2.0 </value>
     </data>
     <data name="settingsPage_button_checkUpdate" xml:space="preserve">
         <value>Check update</value>
@@ -142,5 +142,20 @@
     </data>
     <data name="commandsViewerPage_label_phrase" xml:space="preserve">
         <value>Pharse: </value>
+    </data>
+    <data name="commandsEditorPage_button_save" xml:space="preserve">
+        <value>Save</value>
+    </data>
+    <data name="commandsEditor_fileDialog_filter" xml:space="preserve">
+        <value>Executable file</value>
+    </data>
+    <data name="system_message3" xml:space="preserve">
+        <value>Are you sure you want to delete command?</value>
+    </data>
+    <data name="system_message2" xml:space="preserve">
+        <value>Please fill in all fields!</value>
+    </data>
+    <data name="commandsView_import_fileDialog_filter" xml:space="preserve">
+        <value>JSON-File</value>
     </data>
 </root>
