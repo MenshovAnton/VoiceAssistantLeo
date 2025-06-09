@@ -1,7 +1,7 @@
 {
  "Id": "1",
  "Name": "Телеграм",
- "Description": "[ВСТРОЕНО] Открывает телеграм на компьютере",
+ "Description": "Открывает телеграм на компьютере",
  "Phrase": "Открой телеграм",
  "Type": "1",
  "Reference": "%APPDATA%\\Telegram Desktop\\Telegram.exe",
@@ -54,8 +54,7 @@
  "ReplyMessage": "Открываю! [vk.com]"
 }
 {
- "Id": "6",
- "Name": "Gmail",
+ "Id": "6", "Name": "Gmail",
  "Description": "Открывает веб-сайт Gmail",
  "Phrase": "Открой почту",
  "Type": "2",

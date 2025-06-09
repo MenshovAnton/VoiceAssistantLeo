@@ -61,7 +61,7 @@
     <value>@MenshovAnton</value>
   </data>
   <data name="homePage_description" xml:space="preserve">
-    <value>Простой голосовой помощник для Windows</value>
+    <value>Ваш персональный голосовой помощник</value>
   </data>
   <data name="chatPage_welcomeLabel" xml:space="preserve">
     <value>Начните общение прямо сейчас...</value>
@@ -93,7 +93,7 @@
   <data name="settingsPage_toggleSwitch_transparencyEffects" xml:space="preserve">
     <value>Эффекты прозрачности</value>
   </data>
-  <data name="settingsPage_toggleSwitch_runProgramms" xml:space="preserve">
+  <data name="settingsPage_toggleSwitch_runPrograms" xml:space="preserve">
     <value>Запуск приложений на устройстве</value>
   </data>
   <data name="settingsPage_toggleSwitch_useInternet" xml:space="preserve">
@@ -121,7 +121,7 @@
     <value>Очистить сообщения</value>
   </data>
   <data name="settingsPage_button_openLogsFolder" xml:space="preserve">
-    <value>Открыть папку логов</value>
+    <value>Показать логи</value>
   </data>
   <data name="settingsPage_button_voskSettings" xml:space="preserve">
     <value>Настройки Vosk</value>
@@ -181,13 +181,61 @@
   <data name="system_message2" xml:space="preserve">
     <value>Заполните все поля!</value>
   </data>
-  <data name="commandsEditor_fileDialog_filter" xml:space="preserve">
+  <data name="commandsEditorPage_fileDialog_filter" xml:space="preserve">
     <value>Исполняемый файл</value>
   </data>
   <data name="system_message3" xml:space="preserve">
     <value>Вы точно хотите удалить команду?</value>
   </data>
-  <data name="commandsView_import_fileDialog_filter" xml:space="preserve">
+  <data name="commandsViewerPage_import_fileDialog_filter" xml:space="preserve">
     <value>JSON-файл</value>
+  </data>
+  <data name="commandsEditorPage_button_cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="commandsEditorPage_addVoice_fileDialog_filter" xml:space="preserve">
+    <value>Waveform Audio File</value>
+  </data>
+  <data name="system_message4" xml:space="preserve">
+    <value>Поле "Ссылка на сайт или приложение" содержит неверный путь</value>
+  </data>
+  <data name="commandsEditorPage_inputField_name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="commandsEditorPage_inputField_description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="commandsEditorPage_inputField_ref" xml:space="preserve">
+    <value>Путь или ссылка</value>
+  </data>
+  <data name="commandsEditorPage_inputField_phrase" xml:space="preserve">
+    <value>Ключевая фраза</value>
+  </data>
+  <data name="commandsEditorPage_inputField_reply" xml:space="preserve">
+    <value>Ответ ассистента</value>
+  </data>
+  <data name="commandsEditorPage_inputField_type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="commandsEditorPage_inputField_voice" xml:space="preserve">
+    <value>Файл озвучки</value>
+  </data>
+  <data name="commandsEditorPage_button_openVoice" xml:space="preserve">
+    <value>Папка озвучки</value>
+  </data>
+  <data name="commandsEditorPage_button_addVoice" xml:space="preserve">
+    <value>Добавить файл</value>
+  </data>
+  <data name="system_message5" xml:space="preserve">
+    <value>Произошла непредвиденная ошибка!</value>
+  </data>
+  <data name="voskSettingsPage_title" xml:space="preserve">
+    <value>Настройки Vosk</value>
+  </data>
+  <data name="voskSettingsPage_inputField_modelLocate" xml:space="preserve">
+    <value>Расположение модели</value>
+  </data>
+  <data name="voskSettingsPage_inputField_audioDevice" xml:space="preserve">
+    <value>Устройство ввода</value>
   </data>
 </root>

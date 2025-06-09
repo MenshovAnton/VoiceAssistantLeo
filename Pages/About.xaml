@@ -2,90 +2,131 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="560" d:DesignWidth="850"
-      Title="About" Width="850" Height="560" Background="#FF161616">
-    <Grid>
-        <Image HorizontalAlignment="Left" Height="356" Margin="-92,315,0,0" VerticalAlignment="Top" Width="319" Source="/assets/images/dragon.png" 
-            Opacity="0.2" StretchDirection="DownOnly"/>
-        <Rectangle HorizontalAlignment="Left" Height="234" Margin="-67,332,0,0" VerticalAlignment="Top" Width="66" Fill="#FF151515"/>
-
-        <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" VerticalAlignment="Top" 
-                   Foreground="White" FontSize="14" Width="474" Height="154" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
-            <Bold xml:space="preserve">Лео </Bold>— простой голосовой помощник для Windows. Написанный на C#. 
-            Создается на полном энтузиазме без спонсорской поддержки. Четко 
-            распознает команды с помощью Vosk API. В начале разработки он не 
-            планировался как полноценный проект. Изначально он был начат как 
-            проект для себя, для изучения .NET и С#. Немного позже стало 
-            понятно, что<Italic xml:space="preserve"> Лео имеет большой потенциал</Italic>, в качестве моего 
-            первого крупного проекта.
-        </TextBlock>
-
-        <TextBlock HorizontalAlignment="Left" Margin="30,220,0,0" VerticalAlignment="Top" 
-                    Foreground="White" FontSize="14" Width="474" Height="151" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
-            Проект начался внезапно в  начале лета <Italic xml:space="preserve"> 2023 года</Italic>. Первоначальное
-            название ассистента было<Bold xml:space="preserve"> Popping Cat</Bold> (<Italic>Отсылка на мем</Italic>). 
-            Идеей послужил пост в телеграм канале с кастомной иконкой корзины в виде знаменитого 
-            кота. Позже, ближе к концу мая, переименован, так как хотелось внедрить
-            WakeWord, а с таким сложным именем было сложно к нему обращаться.
-            Уже за идею иконки и лица проекта был взят дракон.
-        </TextBlock>
-
-        <TextBlock HorizontalAlignment="Left" Margin="30,362,0,0" VerticalAlignment="Top" 
-                Foreground="White" FontSize="14" Width="474" Height="59" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
-            А вот сама идея создать своего голосового помощника появилась
-            после того, как я посмотрел видео, где писали своего ассистента —<Bold xml:space="preserve"> Jarvis</Bold>.
-        </TextBlock>
-
-        <TextBlock HorizontalAlignment="Left" Margin="30,420,0,0" VerticalAlignment="Top" 
-                Foreground="White" FontSize="14" Width="474" Height="59" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
-            Хочу поблагодарить моих<Italic xml:space="preserve"> родителей</Italic> и<Italic xml:space="preserve"> учителя информатики</Italic>, за помощь и
-            поддержку в создании этого проекта.
-        </TextBlock>
-
-        <Image HorizontalAlignment="Left" Height="70" Margin="636,77,0,0" VerticalAlignment="Top" Width="70" Source="/Assets/images/dragon.png"/>
-        <Label Content="Ассистент Лео" HorizontalAlignment="Left" Margin="587,149,0,0" VerticalAlignment="Top" 
-               FontFamily="Montserrat Alternates" Foreground="White" FontSize="18"/>
-        <Label Content="Версия 1.0.0" HorizontalAlignment="Left" Margin="629,172,0,0" VerticalAlignment="Top" FontFamily="Montserrat Alternates" 
-               Foreground="#FF656565"/>
+      d:DesignHeight="740" d:DesignWidth="850"
+      Title="About" Background="#ff131313">
+    <ScrollViewer>
+        <Grid Height="740">
+            <Label Content="{x:Static res:Resources.program_name}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="38"
+                   FontFamily="Montserrat Alternates" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Center" Margin="0,30,0,0">
+                <Label.Effect>
+                    <DropShadowEffect x:Name="LogoEffect" BlurRadius="990" Color="#FFFF" Opacity="1"/>
+                </Label.Effect>
+            </Label>
+            <Label Content="Ваш персональный голосовой ассистент" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Center" Margin="0,80,0,0"/>
         
-        <Label Content="Лицензия" HorizontalAlignment="Left" Margin="571,212,0,0" VerticalAlignment="Top" 
-               Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
-        <Rectangle x:Name="LicenseLink" HorizontalAlignment="Left" Height="1" Margin="576,233,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="72" Visibility="Hidden"/>
-        <Rectangle Fill="Transparent" Margin="571,220,0,0" Width="80" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   MouseEnter="licLinkMouseEnter" MouseLeave="licLinkMouseLeave" MouseDown="licLinkClick"/>
-
-        <Label Content="Исходный код" HorizontalAlignment="Left" Margin="664,212,0,0" VerticalAlignment="Top" Foreground="White" 
-               FontFamily="Montserrat Alternates" FontSize="14"/>
-        <Rectangle x:Name="RepoLink" HorizontalAlignment="Left" Height="1" Margin="670,233,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="103" Visibility="Hidden"/>
-        <Rectangle Fill="Transparent" Margin="665,220,0,0" Width="110" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   MouseEnter="repoLinkMouseEnter" MouseLeave="repoLinkMouseLeave" MouseDown="repoLinkClick"/>
-
-        <Label Content="Сообщить об ошибке" HorizontalAlignment="Left" Margin="588,248,0,0" VerticalAlignment="Top"
-               Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
-        <Rectangle x:Name="IssuesLink" HorizontalAlignment="Left" Height="1" Margin="595,269,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="162" Visibility="Hidden"/>
-        <Rectangle Fill="Transparent" Margin="589,255,0,0" Width="170" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   MouseEnter="issuesLinkMouseEnter" MouseLeave="issuesLinkMouseLeave" MouseDown="issuesLinkClick"/>
-        
-        <Label Content="Официальный сайт" HorizontalAlignment="Left" Margin="595,289,0,0" VerticalAlignment="Top"
-               Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
-        <Rectangle x:Name="SiteLink" HorizontalAlignment="Left" Height="1" Margin="599,311,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="155" Visibility="Hidden"/>
-        <Rectangle Fill="Transparent" Margin="597,296,0,0" Width="157" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   MouseEnter="siteLinkMouseEnter" MouseLeave="siteLinkMouseLeave" MouseDown="siteLinkClick"/>
-        
-        <Label Content="Умения" HorizontalAlignment="Left" Margin="640,330,0,0" VerticalAlignment="Top" 
-               Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
-        <Rectangle x:Name="SkillsLink" HorizontalAlignment="Left" Height="1" Margin="644,352,0,0" Stroke="White" VerticalAlignment="Top" 
-                   Width="60" Visibility="Hidden"/>
-        <Rectangle Fill="Transparent" Margin="640,337,0,0" Width="67" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                   MouseEnter="skillsLinkMouseEnter" MouseLeave="skillsLinkMouseLeave" MouseDown="skillsLinkClick"/>
-        
-        <Label Content="В проекте используются иконки Icons8" HorizontalAlignment="Left" Margin="30,534,0,0" VerticalAlignment="Top" FontSize="9" 
-            Foreground="White" FontFamily="Montserrat Alternates" FontStyle="Italic"/>
-    </Grid>
+            <Label Content="Описание" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Black"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="50,140,0,0"/>
+            
+            <TextBlock HorizontalAlignment="Left" Margin="60,180,0,0" VerticalAlignment="Top" 
+                       Foreground="White" FontSize="14" Width="350" Height="154" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
+                <Bold xml:space="preserve">Лео </Bold>— простой голосовой помощник для Windows. Написанный на C#. 
+                Создается на полном энтузиазме без спонсорской поддержки. Четко 
+                распознает команды с помощью Vosk API. В начале разработки он не 
+                планировался как полноценный проект. Изначально он был начат как 
+                проект для себя, для изучения .NET и С#. Немного позже стало 
+                понятно, что<Italic xml:space="preserve"> Лео имеет большой потенциал</Italic>, в качестве моего 
+                первого крупного проекта.
+            </TextBlock>
+            
+            <Label Content="История" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18" FontWeight="Black"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="0,140,320,0"/>
+            
+            <TextBlock HorizontalAlignment="Right" Margin="0,180,60,0" VerticalAlignment="Top" 
+                       Foreground="White" FontSize="14" Width="350" Height="301" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
+                Проект начался внезапно в  начале лета <Italic xml:space="preserve"> 2023 года</Italic>. Первоначальное
+                название ассистента было<Bold xml:space="preserve"> Popping Cat</Bold> (<Italic>Отсылка на мем</Italic>). 
+                Идеей послужил пост в телеграм канале с кастомной иконкой корзины в виде знаменитого 
+                кота. Позже, ближе к концу мая, переименован, так как хотелось внедрить
+                WakeWord, а с таким сложным именем было сложно к нему обращаться.
+                Уже за идею иконки и лица проекта был взят дракон.
+                В 2025 году Лео участвовал в конкурсе "Большие вызовы" и занял 3 место 
+                в региональном этапе.
+            </TextBlock>
+            
+            <Label Content="Благодарности" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Black"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="50,350,0,0"/>
+            
+            <TextBlock HorizontalAlignment="Left" Margin="60,390,0,0" VerticalAlignment="Top" 
+                       Foreground="White" FontSize="14" Width="350" Height="59" FontFamily="Montserrat Alternates" TextWrapping="Wrap">
+                Хочу поблагодарить моих<Italic xml:space="preserve"> родителей</Italic> и<Italic xml:space="preserve"> учителя информатики</Italic>, за помощь и
+                поддержку в создании этого проекта.
+            </TextBlock>
+            
+            <Label Content="Обратная связь" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="18" FontWeight="Black"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="0,410,245,0"/>
+            
+            <Label Content="Telegram:" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="14"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="0,450,330,0"/>
+            
+            <Border HorizontalAlignment="Right" Margin="0,450,210,0" VerticalAlignment="Top"
+                    MouseEnter="telegramLinkMouseEnter" MouseLeave="telegramLinkMouseLeave" MouseDown="telegramLinkClick">
+                   <Grid>
+                          <Label Content="@ant0nio___Way" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" 
+                                 Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
+                          <Rectangle x:Name="TelegramTag" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                                     Width="110" Visibility="Hidden"/>
+                   </Grid>
+            </Border>
+            
+            <Label Content="Почта: antrome@yandex.ru" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="14"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="0,480,194,0"/>
+            
+            <Label Content="Полезные ссылки" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Black"
+                   FontFamily="Montserrat Alternates" Foreground="White" HorizontalContentAlignment="Left" Margin="50,460,0,0"/>
+            
+            <Border HorizontalAlignment="Left" Margin="60,500,0,0" VerticalAlignment="Top" 
+                    MouseEnter="licLinkMouseEnter" MouseLeave="licLinkMouseLeave" MouseDown="licLinkClick">
+                <Grid>
+                    <Label Content="Лицензия" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" 
+                           Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
+                    <Rectangle x:Name="LicenseLink" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                               Width="72" Visibility="Hidden"/>
+                </Grid>
+            </Border>
+            
+            <Border HorizontalAlignment="Left" Margin="60,530,0,0" VerticalAlignment="Top"
+                    MouseEnter="repoLinkMouseEnter" MouseLeave="repoLinkMouseLeave" MouseDown="repoLinkClick">
+                <Grid>
+                       <Label Content="Исходный код" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" 
+                              FontFamily="Montserrat Alternates" FontSize="14"/>
+                       <Rectangle x:Name="RepoLink" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                                  Width="103" Visibility="Hidden"/>
+                </Grid>
+            </Border>
+            
+            <Border HorizontalAlignment="Left" Margin="60,560,0,0" VerticalAlignment="Top"
+                    MouseEnter="issuesLinkMouseEnter" MouseLeave="issuesLinkMouseLeave" MouseDown="issuesLinkClick">
+                   <Grid>
+                          <Label Content="Сообщить об ошибке" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"
+                                 Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
+                          <Rectangle x:Name="IssuesLink" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                                     Width="162" Visibility="Hidden"/>
+                   </Grid>
+            </Border>
+            
+            <Border HorizontalAlignment="Left" Margin="60,590,0,0" VerticalAlignment="Top" 
+                    MouseEnter="siteLinkMouseEnter" MouseLeave="siteLinkMouseLeave" MouseDown="siteLinkClick">
+                   <Grid>
+                          <Label Content="Официальный сайт" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"
+                                 Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
+                          <Rectangle x:Name="SiteLink" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                                     Width="155" Visibility="Hidden"/>
+                   </Grid>
+            </Border>
+            
+            <Border HorizontalAlignment="Left" Margin="60,620,0,0" VerticalAlignment="Top"
+                    MouseEnter="skillsLinkMouseEnter" MouseLeave="skillsLinkMouseLeave" MouseDown="skillsLinkClick">
+                   <Grid>
+                          <Label Content="Умения" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" 
+                                 Foreground="White" FontFamily="Montserrat Alternates" FontSize="14"/>
+                          <Rectangle x:Name="SkillsLink" HorizontalAlignment="Left" Height="1" Margin="5,20,0,0" Stroke="White" VerticalAlignment="Top" 
+                                     Width="60" Visibility="Hidden"/>
+                   </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>

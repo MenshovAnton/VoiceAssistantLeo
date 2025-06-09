@@ -2,8 +2,9 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:res="clr-namespace:Leo.Properties"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      mc:Ignorable="d" Background="#FF161616"
+      mc:Ignorable="d" Background="#ff131313"
       Title="VoskSettings" Width="850" Height="560">
     <Page.Resources>
         <Image x:Key="BackImage" Source="/Assets/images/back.png"/>
@@ -12,7 +13,27 @@
         <Button Style="{StaticResource FrameButtonsStyle}" Width="40" Height="40" Margin="60,60,0,0" VerticalAlignment="Top" 
                 HorizontalAlignment="Left" Content="{StaticResource BackImage}" Click="back"/>
             
-        <Label Content="Настройки Vosk" HorizontalAlignment="Left" FontFamily="Montserrat Alternates" Margin="110,60,0,0" FontSize="24" FontWeight="ExtraBold"
+        <Label Content="{x:Static res:Resources.voskSettingsPage_title}" HorizontalAlignment="Left" FontFamily="Montserrat Alternates" Margin="110,60,0,0" FontSize="24" FontWeight="ExtraBold"
                Foreground="White" VerticalAlignment="Top"/>
+        
+        <Label Content="{x:Static res:Resources.voskSettingsPage_inputField_modelLocate}" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,120,0,0" 
+               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,150,25,20" 
+                Background="#FF0E0E0E" CornerRadius="5" Height="20" Width="320">
+            <Grid>
+                <TextBox Name="ModelLocateTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" 
+                         TextWrapping="Wrap" VerticalAlignment="Center" Width="320" 
+                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="White" 
+                         CaretBrush="White"  BorderThickness="0,0,0,0" 
+                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
+                         FontFamily="Montserrat Alternates"/>
+            </Grid>
+        </Border>
+        
+        <Label Content="{x:Static res:Resources.voskSettingsPage_inputField_audioDevice}" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,180,0,0" 
+               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox Name="CommandTypeComboBox" HorizontalAlignment="Left" Margin="65,210,0,20" 
+                  VerticalAlignment="Top" Width="320" BorderThickness="0,0,0,0" 
+                  IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
     </Grid>
 </Page>

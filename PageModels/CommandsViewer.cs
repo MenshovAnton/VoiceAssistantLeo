@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using Leo.Classes;
 using Leo.WindowModels;
-using WinRT;
 using MessageBox = Leo.WindowModels.MessageBox;
 
 namespace Leo.PageModels
@@ -13,6 +12,7 @@ namespace Leo.PageModels
     public partial class CommandsViewer
     {
         private readonly MessageBox _messageBox = new();
+        private readonly Logger _logger = new();
         private static Dispatcher? _dispatcher;
         
         public CommandsViewer()
@@ -47,28 +47,36 @@ namespace Leo.PageModels
 
         private async void deleteCommandAction(object sender, RoutedEventArgs e)
         {
-            _messageBox.showMessage(Properties.Resources.messageBox_messageSign, Properties.Resources.system_message3,
-                MessageBox.MessageBoxType.Info, MessageBox.MessageBoxButtons.OkCancel);
-            await Task.Run(() =>
+            try
             {
-                while (_messageBox.IsOpened)
+                _messageBox.showMessage(Properties.Resources.messageBox_messageSign, Properties.Resources.system_message3,
+                    MessageBox.MessageBoxType.Info, MessageBox.MessageBoxButtons.OkCancel);
+                await Task.Run(() =>
                 {
-                    if (_messageBox.Results == 1)
+                    while (_messageBox.IsOpened)
                     {
-                        _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
+                        if (_messageBox.Results == 1)
                         {
-                            Command.deleteCommand(CommandsList.SelectedIndex);
-                            changeEditorButtonsStatus(false);
-                        });
+                            _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
+                            {
+                                Command.deleteCommand(CommandsList.SelectedIndex);
+                                changeEditorButtonsStatus(false);
+                            });
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        break;
                     }
-                    else
-                    {
-                        continue;
-                    }
-                    break;
-                }
-            });
-           
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.error("Async error in serialize commands\n" + ex);
+                _messageBox.showMessage( Properties.Resources.messageBox_errorSign, Properties.Resources.system_message5,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
 
         private void editCommandAction(object sender, RoutedEventArgs e)
@@ -78,7 +86,9 @@ namespace Leo.PageModels
                 (CommandsList.SelectedItem as CommandDataFormat)!.Description!,
                 (CommandsList.SelectedItem as CommandDataFormat)!.Phrase!,
                 (CommandsList.SelectedItem as CommandDataFormat)!.Reference!,
-                (CommandsList.SelectedItem as CommandDataFormat)!.ReplyMessage!);
+                (CommandsList.SelectedItem as CommandDataFormat)!.ReplyMessage!,
+                Convert.ToInt32((CommandsList.SelectedItem as CommandDataFormat)!.Type),
+                (CommandsList.SelectedItem as CommandDataFormat)!.VoiceFile);
         }
 
         private void importCommandsFromFile(object sender, RoutedEventArgs args)
@@ -86,7 +96,7 @@ namespace Leo.PageModels
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
                 DefaultExt = ".json",
-                Filter = $"{Properties.Resources.commandsView_import_fileDialog_filter}|*.json"
+                Filter = $"{Properties.Resources.commandsViewerPage_import_fileDialog_filter}|*.json"
             };
 
             var result = dialog.ShowDialog();
@@ -95,7 +105,7 @@ namespace Leo.PageModels
             File.Delete(".\\commands.json");
             Command.CommandsCollection = [];
             File.Copy(dialog.FileName, ".\\commands.json");
-            CommandManager.deserialize();
+            CommandDataManager.deserialize();
             CommandsList.ItemsSource = Command.CommandsCollection;
         }
     }

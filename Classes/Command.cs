@@ -39,6 +39,6 @@ public abstract class Command
     public static void deleteCommand(int id)
     {
         CommandsCollection!.RemoveAt(id);
-        CommandManager.saveCommands(CommandsCollection);
+        CommandDataManager.saveCommands(CommandsCollection);
     }
 }

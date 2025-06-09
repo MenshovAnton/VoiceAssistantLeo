@@ -2,8 +2,6 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using IWshRuntimeLibrary;
 using Leo.Classes;
 using Leo.WindowModels;
@@ -16,10 +14,9 @@ namespace Leo.PageModels
 {
     public partial class Settings
     {
-        public static float VoiceVolume = Properties.Settings.Default.voiceVol;
-        public static float SoundVolume = Properties.Settings.Default.soundVol;
-
-        private readonly MediaPlayer _player = new();
+        private static float _voiceVolume = Properties.Settings.Default.voiceVol;
+        private static float _soundVolume = Properties.Settings.Default.soundVol;
+        
         private readonly Logger _logger = new();
         private readonly MessageBox _messageBox = new();
 
@@ -53,32 +50,20 @@ namespace Leo.PageModels
 
         private void voiceVolumeSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            VoiceVolume = (float)VoiceVolumeSlider.Value;
+            _voiceVolume = (float)VoiceVolumeSlider.Value;
+            Sounds.updateVolume();
 
-            Properties.Settings.Default.voiceVol = VoiceVolume;
+            Properties.Settings.Default.voiceVol = (int)_voiceVolume;
             Properties.Settings.Default.Save();
-        }
-
-        private void voiceVolumeTest(object sender, MouseEventArgs e)
-        {
-            _player.Open(new Uri(@".\voices\test.wav", UriKind.Relative));
-            _player.Volume = VoiceVolume / 100.0f;
-            _player.Play();
         }
 
         private void soundVolumeSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            SoundVolume = (float)SoundVolumeSlider.Value;
+            _soundVolume = (float)SoundVolumeSlider.Value;
+            Sounds.updateVolume();
 
-            Properties.Settings.Default.soundVol = SoundVolume;
+            Properties.Settings.Default.soundVol = (int)_soundVolume;
             Properties.Settings.Default.Save();
-        }
-
-        private void soundVolumeTest(object sender, MouseEventArgs e)
-        {
-            _player.Open(new Uri(@".\sounds\start.wav", UriKind.Relative));
-            _player.Volume = SoundVolume / 100.0f;
-            _player.Play();
         }
 
         private void devModeBoxChecked(object sender, RoutedEventArgs e)
@@ -230,8 +215,8 @@ namespace Leo.PageModels
             Properties.Settings.Default.allowNetworkUsing = true;
             Properties.Settings.Default.allowComputerControl = true;
 
-            Properties.Settings.Default.voiceVol = 100.0f;
-            Properties.Settings.Default.soundVol = 100.0f;
+            Properties.Settings.Default.voiceVol = 1;
+            Properties.Settings.Default.soundVol = 1;
 
             Properties.Settings.Default.notSaveMessages = false;
             Properties.Settings.Default.offLotMessageWarn = false;
@@ -281,14 +266,13 @@ namespace Leo.PageModels
 
         private void changeLanguage(object sender, SelectionChangedEventArgs e)
         {
+            if ((int)Registry.CurrentUser.OpenSubKey("Software\\AssistantLeo")!.GetValue("Language")! !=
+                ProgramLanguageComboBox.SelectedIndex)
+            {
+                _messageBox.showMessage("Уведомление","Перезагрузите приложение для вступления изменений в силу", 
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
             Registry.CurrentUser.CreateSubKey("Software\\AssistantLeo").SetValue("Language", ProgramLanguageComboBox.SelectedIndex);
-        }
-        
-        private void programLanguageComboboxClose(object sender, EventArgs e)
-        { 
-            _messageBox.showMessage("Уведомление","Перезагрузите приложение для вступления изменений в силу", 
-                MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
-            
         }
     }
 }

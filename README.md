@@ -47,9 +47,18 @@ WakeWord, а с таким сложным именем было сложно к 
 распазноет голос <a href="https://github.com/alphacep/vosk-api">Voks API</a>.
 </p>
 
-<h1> Скриншот приложения </h1>
+<h1> Скриншоты приложения </h1>
 <picture>
-    <img src="./Assets/Repo/screenshot.png" alt="Screenshot">
+    <img src="./Assets/Repo/Home.png" alt="Home Page Screenshot">
+</picture>
+<picture>
+    <img src="./Assets/Repo/Settings.png" alt="Settings Page Screenshot">
+</picture>
+<picture>
+    <img src="./Assets/Repo/Chat.png" alt="Chat Page Screenshot">
+</picture>
+<picture>
+    <img src="./Assets/Repo/Commands.png" alt="Commands Viewer Page Screenshot">
 </picture>
 
 <h1> Голосовые Команды </h1>
@@ -62,6 +71,7 @@ WakeWord, а с таким сложным именем было сложно к 
 <ul>
     <li><code>Открой Телеграм</code> - Запускает Telegram Desktop.</li>
     <li><code>Открой консоль</code> - Запускает CMD</li>
+    <li><code>Открой Яндекс Музыку</code> - Открывает приложение Яндекс Музыка</li>
 </ul>
 <h3> Открывать сайты: </h3>
 <ul>
@@ -80,10 +90,13 @@ WakeWord, а с таким сложным именем было сложно к 
 
 <h1> Коды ошибок </h1>
 <ul>
-    <li><code>01</code> - Лео не удалось получить доступ к микрофону. Попробуйте разрешить приложению доступ к микрофону: Параметры Windows -&gt; Конфиденциальность -&gt; Разрешения -&gt; Микрофон</li>
+    <li><code>01</code> - Не удалось получить доступ к микрофону.</li>
     <li><code>02</code> - Не удалось создать запись в реестре</li>
     <li><code>03</code> - Не удалось изменить/удалить запись в реестре</li>
     <li><code>04</code> - Не удалось загрузить последние сообщения из чата</li>
+    <li><code>05</code> - Не удалось сохранить последние сообщения из чата</li>
+    <li><code>06</code> - Не удалось сохранить команды</li>
+    <li><code>07</code> - Не удалось загрузить команды</li>
 </ul>
 
 <h1> Связаться со мной </h1>

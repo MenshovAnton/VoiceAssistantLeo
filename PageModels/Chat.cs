@@ -66,7 +66,9 @@ namespace Leo.PageModels
 
             var isDateVisible = true;
             if (Properties.Settings.Default.nowDate == DateTime.Now.ToShortDateString())
-            { isDateVisible = false; }
+            {
+                isDateVisible = false;
+            }
             else
             {
                 Properties.Settings.Default.nowDate = DateTime.Now.ToShortDateString();
@@ -113,11 +115,11 @@ namespace Leo.PageModels
         {
             addMessageItem(TextBox.Text, "Right");
             
-            var vosk = new Classes.Vosk();
-            Classes.Vosk.RecognizedText = TextBox.Text.ToLower();
+            var vosk = new VoskRecognizer();
+            VoskRecognizer.RecognizedText = TextBox.Text.ToLower();
             vosk.speechRecognized();
 
-            Console.WriteLine($@"[INPUT] Input > {Classes.Vosk.RecognizedText}");
+            Console.WriteLine($@"[INPUT] Input > {VoskRecognizer.RecognizedText}");
 
             TextBox.Text = string.Empty;
             _textMessage = string.Empty;
@@ -155,6 +157,17 @@ namespace Leo.PageModels
             {
                 _textMessage = TextBox.Text;
             }
+        }
+        
+        public static void initialMessage(string message)
+        {
+            var recognizedText = VoskRecognizer.RecognizedText![..1].ToUpper() + (VoskRecognizer.RecognizedText.Length > 1 ? VoskRecognizer.RecognizedText[1..] : "");
+            
+            _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
+            {
+                addMessageItem(recognizedText, "Right");
+                addMessageItem(message, "Left");
+            });
         }
     }
 }

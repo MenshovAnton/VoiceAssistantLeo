@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="950" d:DesignWidth="850"
       Title="Settings"
-      Background="#FF151515">
-    <ScrollViewer >
+      Background="#ff131313">
+    <ScrollViewer x:Name="Viewer" VirtualizingPanel.ScrollUnit="Pixel">
         <Grid Height="950">
             <Image Margin="-40,65,637,0" VerticalAlignment="Top" Width="40" Height="40" Source="/assets/images/functions.png"/>
             <Label Content="{x:Static res:Resources.settingsPage_groupLabel_general}" HorizontalAlignment="Left" Margin="110,71,0,0" 
@@ -64,7 +64,7 @@
             </Grid>
               
             <ComboBox x:Name="ProgramLanguageComboBox" HorizontalAlignment="Left" Margin="499,139,0,0" VerticalAlignment="Top" Width="234"
-                      Height="23" FontFamily="Montserrat Alternates" SelectionChanged="changeLanguage" DropDownClosed="programLanguageComboboxClose" IsEditable="False">
+                      Height="23" FontFamily="Montserrat Alternates" SelectionChanged="changeLanguage" IsEditable="False">
                    <TextBlock Text="Русский, Россия"/>
                    <TextBlock Text="English, US"/>
             </ComboBox>
@@ -90,7 +90,7 @@
                       ToolTip="Разрешить ассистенту открывать приложения на вашем устройстве по запросу" 
                       HorizontalAlignment="Left" VerticalAlignment="Top"
                       BorderBrush="White" Checked="appStartBoxChecked" Unchecked="appStartBoxUnchecked" 
-                      Content="{x:Static res:Resources.settingsPage_toggleSwitch_runProgramms}" 
+                      Content="{x:Static res:Resources.settingsPage_toggleSwitch_runPrograms}" 
                       FontFamily="Montserrat Alternates" Foreground="White"/>
                 
                 <CheckBox Grid.Row="1" x:Name="BrowserStartBox" Style="{StaticResource ToggleSwitchStyle}" 
@@ -115,13 +115,13 @@
             </Grid >
     
             <Slider x:Name="SoundVolumeSlider" HorizontalAlignment="Left" Margin="68,470,0,0" VerticalAlignment="Top" Width="236"
-                    Maximum="100" SmallChange="1" 
-                    AutoToolTipPlacement="TopLeft" ValueChanged="soundVolumeSliderValueChanged" PreviewMouseUp="soundVolumeTest"/>
+                    Maximum="100" SmallChange="1" IsEnabled="False"
+                    AutoToolTipPlacement="TopLeft" ValueChanged="soundVolumeSliderValueChanged"/>
             <Label Content="{x:Static res:Resources.settingsPage_slider_notificationsVolume}" FontFamily="Montserrat Alternates"  
                    HorizontalAlignment="Left" Margin="68,445,0,0" VerticalAlignment="Top" Foreground="White"/>
             
             <Slider x:Name="VoiceVolumeSlider" HorizontalAlignment="Left" Margin="68,515,0,0" VerticalAlignment="Top" Width="236" Maximum="100" 
-                    SmallChange="1" AutoToolTipPlacement="TopLeft" ValueChanged="voiceVolumeSliderValueChanged" PreviewMouseUp="voiceVolumeTest"/>
+                    SmallChange="1" AutoToolTipPlacement="TopLeft" ValueChanged="voiceVolumeSliderValueChanged"/>
             <Label Content="{x:Static res:Resources.settingsPage_slider_assistantVoiceVolume}" FontFamily="Montserrat Alternates"  
                    HorizontalAlignment="Left" Margin="68,490,0,0" VerticalAlignment="Top" Foreground="White"/>
             
@@ -145,7 +145,7 @@
                            HorizontalAlignment="Left" Click="openLogs"/>
                    <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
                            Content="{x:Static res:Resources.settingsPage_button_voskSettings}" FontFamily="Montserrat Alternates"
-                           HorizontalAlignment="Left" Click="voskSettings" IsEnabled="False"/>
+                           HorizontalAlignment="Left" Click="voskSettings"/>
                    <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
                            Content="{x:Static res:Resources.settingsPage_button_settingsReset}" FontFamily="Montserrat Alternates"
                            HorizontalAlignment="Left" Click="settingsReset"/>

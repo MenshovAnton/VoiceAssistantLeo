@@ -7,13 +7,13 @@ using Newtonsoft.Json;
 
 namespace Leo.Classes
 {
-    public class CommandManager
+    public abstract class CommandDataManager
     {
         private const string Path = @".\commands.json";
         private static readonly Logger Logger = new();
         private static readonly MessageBox MessageBox = new();
 
-        public CommandManager()
+        protected CommandDataManager()
         {
             if (Properties.Settings.Default.notSaveMessages == false)
             {
@@ -50,23 +50,32 @@ namespace Leo.Classes
         private static async void serialize(string? id, string? name, string? description, string phrase, string? type, 
             string? reference, string? voiceFile, string? errorNumber, string? replyMessage)
         {
-            await using var writer = new StreamWriter(Path, true);
-            var commandDataFormat = new CommandDataFormat()
+            try
             {
-                Id = id,
-                Name = name,
-                Description = description,
-                Phrase = phrase,
-                Type = type,
-                Reference = reference,
-                VoiceFile = voiceFile,
-                ErrorNumber = errorNumber,
-                ReplyMessage = replyMessage
-            };
-            var json = JsonConvert.SerializeObject(commandDataFormat, Formatting.Indented);
+                await using var writer = new StreamWriter(Path, true);
+                var commandDataFormat = new CommandDataFormat()
+                {
+                    Id = id,
+                    Name = name,
+                    Description = description,
+                    Phrase = phrase,
+                    Type = type,
+                    Reference = reference,
+                    VoiceFile = voiceFile,
+                    ErrorNumber = errorNumber,
+                    ReplyMessage = replyMessage
+                };
+                var json = JsonConvert.SerializeObject(commandDataFormat, Formatting.Indented);
             
-            await writer.WriteLineAsync(json);
-            writer.Close();
+                await writer.WriteLineAsync(json);
+                writer.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.error("Async error in serialize commands\n" + ex);
+                MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
 
         public static async void deserialize()
@@ -92,7 +101,7 @@ namespace Leo.Classes
             }
             catch (Exception ex)
             {
-                Logger.error("Leo failed to load commands " + ex);
+                Logger.error("Failed to load commands\n" + ex);
                 MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error7,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

@@ -41,15 +41,81 @@
             }
         }
         
+        public static string commandsEditorPage_addVoice_fileDialog_filter {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_addVoice_fileDialog_filter", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_button_addVoice {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_button_addVoice", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_button_cancel {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_button_cancel", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_button_openVoice {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_button_openVoice", resourceCulture);
+            }
+        }
+        
         public static string commandsEditorPage_button_save {
             get {
                 return ResourceManager.GetString("commandsEditorPage_button_save", resourceCulture);
             }
         }
         
-        public static string commandsEditor_fileDialog_filter {
+        public static string commandsEditorPage_fileDialog_filter {
             get {
-                return ResourceManager.GetString("commandsEditor_fileDialog_filter", resourceCulture);
+                return ResourceManager.GetString("commandsEditorPage_fileDialog_filter", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_description {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_description", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_name {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_name", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_phrase {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_phrase", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_ref {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_ref", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_reply {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_reply", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_type {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_type", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_inputField_voice {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_inputField_voice", resourceCulture);
             }
         }
         
@@ -101,9 +167,9 @@
             }
         }
         
-        public static string commandsView_import_fileDialog_filter {
+        public static string commandsViewerPage_import_fileDialog_filter {
             get {
-                return ResourceManager.GetString("commandsView_import_fileDialog_filter", resourceCulture);
+                return ResourceManager.GetString("commandsViewerPage_import_fileDialog_filter", resourceCulture);
             }
         }
         
@@ -299,9 +365,9 @@
             }
         }
         
-        public static string settingsPage_toggleSwitch_runProgramms {
+        public static string settingsPage_toggleSwitch_runPrograms {
             get {
-                return ResourceManager.GetString("settingsPage_toggleSwitch_runProgramms", resourceCulture);
+                return ResourceManager.GetString("settingsPage_toggleSwitch_runPrograms", resourceCulture);
             }
         }
         
@@ -362,6 +428,36 @@
         public static string system_message3 {
             get {
                 return ResourceManager.GetString("system_message3", resourceCulture);
+            }
+        }
+        
+        public static string system_message4 {
+            get {
+                return ResourceManager.GetString("system_message4", resourceCulture);
+            }
+        }
+        
+        public static string system_message5 {
+            get {
+                return ResourceManager.GetString("system_message5", resourceCulture);
+            }
+        }
+        
+        public static string voskSettingsPage_inputField_audioDevice {
+            get {
+                return ResourceManager.GetString("voskSettingsPage_inputField_audioDevice", resourceCulture);
+            }
+        }
+        
+        public static string voskSettingsPage_inputField_modelLocate {
+            get {
+                return ResourceManager.GetString("voskSettingsPage_inputField_modelLocate", resourceCulture);
+            }
+        }
+        
+        public static string voskSettingsPage_title {
+            get {
+                return ResourceManager.GetString("voskSettingsPage_title", resourceCulture);
             }
         }
     }

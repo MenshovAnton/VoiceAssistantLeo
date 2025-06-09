@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using Leo.Properties;
+using Leo.WindowModels;
 
 namespace Leo.Classes
 {
@@ -6,6 +8,7 @@ namespace Leo.Classes
     {
         private readonly string _path = @".\Logs\";
         private readonly DateTime _thisDay = DateTime.Now;
+        private readonly MessageBox _messageBox = new();
 
         public Logger()
         {
@@ -26,23 +29,47 @@ namespace Leo.Classes
         
         public async void message(string message)
         {
-            await using var writer = new StreamWriter(_path, true);
-            var str = $"[MESSAGE] {_thisDay:HH:mm:ss} - " + message;
-            await writer.WriteLineAsync(str);
+            try
+            {
+                await using var writer = new StreamWriter(_path, true);
+                var str = $"[MESSAGE] {_thisDay:HH:mm:ss} - " + message;
+                await writer.WriteLineAsync(str);
+            }
+            catch
+            {
+                _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
         
         public async void warn(string message)
         {
-            await using var writer = new StreamWriter(_path, true);
-            var str = $"[WARNING] {_thisDay:HH:mm:ss} -  " + message;
-            await writer.WriteLineAsync(str);
+            try
+            {
+                await using var writer = new StreamWriter(_path, true);
+                var str = $"[WARNING] {_thisDay:HH:mm:ss} -  " + message;
+                await writer.WriteLineAsync(str);
+            }
+            catch
+            {
+                _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
         
         public async void error(string message)
         {
-            await using var writer = new StreamWriter(_path, true);
-            var str = $"[ERROR] {_thisDay:HH:mm:ss} -  " + message;
-            await writer.WriteLineAsync(str);
+            try
+            {
+                await using var writer = new StreamWriter(_path, true);
+                var str = $"[ERROR] {_thisDay:HH:mm:ss} -  " + message;
+                await writer.WriteLineAsync(str);
+            }
+            catch
+            {
+                _messageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
     }
 }

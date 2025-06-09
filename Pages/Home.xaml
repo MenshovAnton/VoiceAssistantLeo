@@ -6,7 +6,7 @@
       xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="850"
-      Title="Home" Width="850" Height="560" Background="#FF161616">
+      Title="Home" Width="850" Height="560" Background="#ff131313">
     <Grid>
         <Image x:Name="Logo" HorizontalAlignment="Left" Height="213" VerticalAlignment="Top" Width="213" Margin="315,108,0,0" Source="/assets/images/dragon.png">
             <Image.Effect>

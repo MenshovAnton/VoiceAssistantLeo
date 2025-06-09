@@ -90,5 +90,21 @@ namespace Leo.PageModels
         {
             SkillsLink.Visibility = Visibility.Hidden;
         }
+        
+        private void telegramLinkMouseEnter(object sender, MouseEventArgs e)
+        {
+            TelegramTag.Visibility = Visibility.Visible;
+        }
+
+        private void telegramLinkClick(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo 
+                { FileName = "https://t.me/ant0nio_Way", UseShellExecute = true });
+        }
+
+        private void telegramLinkMouseLeave(object sender, MouseEventArgs e)
+        {
+            TelegramTag.Visibility = Visibility.Hidden;
+        }
     }
 }

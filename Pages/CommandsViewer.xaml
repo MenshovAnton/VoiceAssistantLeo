@@ -3,10 +3,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:Leo.PageModels"
       xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d"
-      Title="CommandsViewer" Width="850" Height="560" Background="#FF161616">
+      Title="CommandsViewer" Width="850" Height="560" Background="#ff131313">
     <Grid>
         <Button Margin="20,30,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
                 Content="{x:Static res:Resources.commandsViewerPage_button_add}" FontFamily="Montserrat Alternates"
@@ -24,10 +23,10 @@
                 Content="{x:Static res:Resources.commandsViewerPage_button_edit}" FontFamily="Montserrat Alternates"
                 HorizontalAlignment="Left" VerticalAlignment="Top" Click="editCommandAction" IsEnabled="False"/>
         <Grid Margin="0,135,0,40">
-            <ListBox x:Name="CommandsList" Background="#FF161616" BorderBrush="#FF161616" SelectionChanged="selectedNewItem">
+            <ListBox x:Name="CommandsList" Background="#ff131313" BorderBrush="#ff131313" SelectionChanged="selectedNewItem" VirtualizingPanel.ScrollUnit="Pixel">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="20,10,0,30">
+                        <Grid Margin="20,10,0,30" d:DataContext="{d:DesignInstance}">
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                                 <RowDefinition></RowDefinition>
@@ -39,7 +38,7 @@
                                 <ColumnDefinition MaxWidth="200"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Row="0" Grid.Column="0" Name="NameLabel" FontFamily="Montserrat Alternates" FontSize="14" 
-                                       Foreground="White" Text="{x:Static res:Resources.commandsViewerPage_label_name}"/>
+                                       Foreground="White" Text="{x:Static res:Resources.commandsViewerPage_label_name}" FontWeight="ExtraBold"/>
                             <TextBlock Grid.Row="0" Grid.Column="1" Name="CommandName" FontFamily="Montserrat Alternates" FontSize="14" 
                                        Foreground="White" Text="{Binding Path=Name}"/>
                             <TextBlock Grid.Row="1" Grid.Column="0" Name="DescriptionLabel" FontFamily="Montserrat Alternates" FontSize="14" 

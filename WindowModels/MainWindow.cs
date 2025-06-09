@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Forms;
@@ -8,8 +7,6 @@ using System.Windows.Media.Animation;
 using Leo.Classes;
 using Leo.PageModels;
 using Microsoft.Win32;
-using static Leo.PageModels.Chat;
-using CommandManager = Leo.Classes.CommandManager;
 using Control = System.Windows.Forms.Control;
 using Image = System.Windows.Controls.Image;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -22,9 +19,8 @@ namespace Leo.WindowModels
     {
         public static bool MicAccess = true;
 
-        private static readonly ChatManager ChatManager = new();
-        private static readonly CommandManager CommandManager = new();
-        private static MainWindow? Instance { get; set; }
+        private static readonly ChatDataManager ChatDataManager = new();
+        private static MainWindow? _instance;
 
         private static object _previousPage = new Home();
 
@@ -38,7 +34,7 @@ namespace Leo.WindowModels
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
                 }
 
-                if ((int)key?.GetValue("Language")! == 1)
+                if ((int)key.GetValue("Language")! == 1)
                 {
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
                 }
@@ -53,7 +49,7 @@ namespace Leo.WindowModels
             InitializeComponent();
             
             Command.CommandsCollection = [];
-            CommandManager.deserialize();
+            CommandDataManager.deserialize();
             
             if (CultureInfo.CurrentUICulture.Name == "en-US")
             {
@@ -61,10 +57,10 @@ namespace Leo.WindowModels
             }
             
             getChatPage(this, null);
-            ChatManager.deserialize();
+            ChatDataManager.deserialize();
             getHomePage(this, null);
             
-            Classes.Vosk.main();
+            VoskRecognizer.main();
 
             if (Properties.Settings.Default.isMuted)
             {
@@ -77,7 +73,7 @@ namespace Leo.WindowModels
                 TrayIconMuteBtn.Header = "Выкл. микрофон";
             }
 
-            Classes.Vosk.update();
+            VoskRecognizer.update();
             Message.MessagesCollection = [];
             Console.WriteLine(@"(C) Copyright Menshov Anton Romanovich (MenshovAnton) 2023-2025");
 
@@ -92,9 +88,11 @@ namespace Leo.WindowModels
                 TrayIconMuteBtn.Opacity = 0.5;
             }
             
-            Instance = this;
+            _instance = this;
+            
+            Sounds.updateVolume();
         }
-
+        
         private void windowLoaded(object sender, RoutedEventArgs e)
         {
             opacityAnimation(Name, 0, 1, 0.1, 2);
@@ -122,7 +120,7 @@ namespace Leo.WindowModels
         {
             if (MicAccess == false)
             {
-                Classes.Vosk.error1();
+                VoskRecognizer.error1();
                 return;
             }
 
@@ -143,7 +141,7 @@ namespace Leo.WindowModels
                 TrayIconMuteBtn.Header = "Вкл. микрофон";
             }
 
-            Classes.Vosk.update();
+            VoskRecognizer.update();
         }
 
         private void trayIconClose(object sender, RoutedEventArgs e)
@@ -219,7 +217,7 @@ namespace Leo.WindowModels
         {
             if (MicAccess == false)
             {
-                Classes.Vosk.error1();
+                VoskRecognizer.error1();
                 return;
             }
 
@@ -238,7 +236,7 @@ namespace Leo.WindowModels
                 Mute.Content = (Image)TryFindResource("MuteImage");
             }
 
-            Classes.Vosk.update();
+            VoskRecognizer.update();
         }
 
         private void getHomePage(object sender, MouseButtonEventArgs? e)
@@ -272,17 +270,17 @@ namespace Leo.WindowModels
 
         public static void getSkillsPage()
         {
-            Instance!.MainFrame.Content = new Skills();
+            _instance!.MainFrame.Content = new Skills();
         }
 
         public static void getVoskSettingsPage()
         {
-            Instance!.MainFrame.Content = new VoskSettings();
+            _instance!.MainFrame.Content = new VoskSettings();
         }
 
         public static void getCommandsEditorPage()
         {
-            Instance!.MainFrame.Content = new CommandsEditor();
+            _instance!.MainFrame.Content = new CommandsEditor();
         }
 
         private void getCommandsEditorPage(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -293,16 +291,16 @@ namespace Leo.WindowModels
             _previousPage = new CommandsViewer();
         }
         
-        public static void getCommandsEditorPage(int id, string name, string description, string Phrase, string Reference, string Reply)
+        public static void getCommandsEditorPage(int id, string name, string description, string phrase, string reference, string reply, int type, string? voiceFile)
         {
             CommandsEditor editor = new CommandsEditor();
-            Instance!.MainFrame.Content = editor;
-            editor.setCommandData(id, name, description, Phrase, Reference, Reply);
+            _instance!.MainFrame.Content = editor;
+            editor.setCommandData(id, name, description, phrase, reference, reply, type, voiceFile);
         }
 
         public static void backPage()
         {
-            Instance!.MainFrame.Content = _previousPage;
+            _instance!.MainFrame.Content = _previousPage;
         }
         
         private void removeMarkers()

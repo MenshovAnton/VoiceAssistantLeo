@@ -4,9 +4,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d" x:Name="LeoMessageBox"
-        Title="Ассистент Лео" Height="250" Width="450" Background="#FF1F1F1F" Foreground="White" 
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico" WindowStyle="None"
-        AllowsTransparency="True" Topmost="True">
+        Title="Ассистент Лео" Height="250" Width="450" MinHeight="250" MinWidth="450" MaxHeight="250" MaxWidth="450" Background="#FF1F1F1F" Foreground="White" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico" Topmost="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            GlassFrameThickness="1"
+            CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
     <Grid Background="#FF151515" d:DataContext="{d:DesignInstance }">
         <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="450" Fill="#FF111111" 
                    MouseLeftButtonDown="movingWindow"/>

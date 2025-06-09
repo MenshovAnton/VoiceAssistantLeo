@@ -1,10 +1,9 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using Leo.WindowModels;
 
 namespace Leo.PageModels;
 
-public partial class VoskSettings : Page
+public partial class VoskSettings
 {
     public VoskSettings()
     {

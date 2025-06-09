@@ -8,9 +8,14 @@
         mc:Ignorable="d"
         Name="AssistantLeo"
         Title="Ассистент Лео" Height="600" Width="1100" Background="#FF1F1F1F" Foreground="White" 
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico" 
+        WindowStartupLocation="CenterScreen" Icon="/assets/icon.ico"
         PreviewKeyDown="hotKeys" Loaded="windowLoaded" 
-        WindowStyle="None">
+        ResizeMode="NoResize">
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            GlassFrameThickness="1"
+            CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <!-- ReSharper disable Xaml.RedundantResource -->
         <Image x:Key="CloseImage" Source="/Assets/images/close.png"/>
@@ -20,8 +25,8 @@
         <Image x:Key="HomeImage" Source="/Assets/Images/Home.png"/>
         <!-- ReSharper restore Xaml.RedundantResource -->
     </Window.Resources>
-    <Grid Background="#FF151515">
-        <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="1100" Fill="#FF111111" 
+    <Grid Background="#FF111111">
+        <Rectangle HorizontalAlignment="Center" Height="40" VerticalAlignment="Top" Width="1100" Fill="#000000" 
                    MouseLeftButtonDown="movingWindow"/>
         <Image HorizontalAlignment="Left" Height="20" Margin="15,9,0,0" VerticalAlignment="Top" Width="20" Source="/Assets/icon.ico"/>
         <Label Content="{x:Static res:Resources.program_name}" HorizontalAlignment="Left" Margin="40,6,0,0" VerticalAlignment="Top" Foreground="White" 
@@ -55,8 +60,9 @@
 
         <Frame Name="MainFrame" Margin="250,40,0,0" NavigationUIVisibility="Hidden" IsTabStop="False"/>
 
-        <Grid Width="249" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0">
+        <Grid Width="249" Height="250" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0">
             <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>

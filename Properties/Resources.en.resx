@@ -39,7 +39,7 @@
         <value>Clear messages</value>
     </data>
     <data name="settingsPage_button_openLogsFolder" xml:space="preserve">
-        <value>Open logs folder</value>
+        <value>View logs</value>
     </data>
     <data name="settingsPage_button_settingsReset" xml:space="preserve">
         <value>Reset settings</value>
@@ -92,7 +92,7 @@
     <data name="settingsPage_toggleSwitch_openWebSites" xml:space="preserve">
         <value>Open Web-Sites</value>
     </data>
-    <data name="settingsPage_toggleSwitch_runProgramms" xml:space="preserve">
+    <data name="settingsPage_toggleSwitch_runPrograms" xml:space="preserve">
         <value>Run programms</value>
     </data>
     <data name="settingsPage_toggleSwitch_transparencyEffects" xml:space="preserve">
@@ -102,7 +102,7 @@
         <value>Use internet connection</value>
     </data>
     <data name="homePage_description" xml:space="preserve">
-        <value>Simple voice assistant for Windows</value>
+        <value>Your personal voice assistant</value>
     </data>
     <data name="messageBox_errorSign" xml:space="preserve">
         <value>Something went wrong...</value>
@@ -146,7 +146,7 @@
     <data name="commandsEditorPage_button_save" xml:space="preserve">
         <value>Save</value>
     </data>
-    <data name="commandsEditor_fileDialog_filter" xml:space="preserve">
+    <data name="commandsEditorPage_fileDialog_filter" xml:space="preserve">
         <value>Executable file</value>
     </data>
     <data name="system_message3" xml:space="preserve">
@@ -155,7 +155,49 @@
     <data name="system_message2" xml:space="preserve">
         <value>Please fill in all fields!</value>
     </data>
-    <data name="commandsView_import_fileDialog_filter" xml:space="preserve">
+    <data name="commandsViewerPage_import_fileDialog_filter" xml:space="preserve">
         <value>JSON-File</value>
+    </data>
+    <data name="commandsEditorPage_button_cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="commandsEditorPage_addVoice_fileDialog_filter" xml:space="preserve">
+        <value>Waveform Audio File</value>
+    </data>
+    <data name="commandsEditorPage_inputField_description" xml:space="preserve">
+        <value>Description</value>
+    </data>
+    <data name="commandsEditorPage_inputField_name" xml:space="preserve">
+        <value>Name</value>
+    </data>
+    <data name="commandsEditorPage_inputField_phrase" xml:space="preserve">
+        <value>Key-phrase</value>
+    </data>
+    <data name="commandsEditorPage_inputField_ref" xml:space="preserve">
+        <value>Path or link</value>
+    </data>
+    <data name="commandsEditorPage_inputField_reply" xml:space="preserve">
+        <value>Assistant reply</value>
+    </data>
+    <data name="commandsEditorPage_inputField_type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="commandsEditorPage_inputField_voice" xml:space="preserve">
+        <value>Voice file</value>
+    </data>
+    <data name="commandsEditorPage_button_openVoice" xml:space="preserve">
+        <value>Voices files</value>
+    </data>
+    <data name="commandsEditorPage_button_addVoice" xml:space="preserve">
+        <value>Add file</value>
+    </data>
+    <data name="voskSettingsPage_title" xml:space="preserve">
+        <value>Vosk settings</value>
+    </data>
+    <data name="voskSettingsPage_inputField_audioDevice" xml:space="preserve">
+        <value>Input device</value>
+    </data>
+    <data name="voskSettingsPage_inputField_modelLocate" xml:space="preserve">
+        <value>Model path</value>
     </data>
 </root>

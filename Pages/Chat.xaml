@@ -6,17 +6,22 @@
       xmlns:res="clr-namespace:Leo.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="850"
-      Background="#FF161616"
+      Background="#ff131313"
       Title="Chat" PreviewKeyDown="hotKeys">
     <Grid>
         <ScrollViewer Name="ScrollBox" Margin="0,20,0,80">
-            <ItemsControl x:Name="ChatList" Background="#FF161616" BorderBrush="#FF161616" >
+            <ItemsControl x:Name="ChatList" >
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="30,0,30,10" d:DataContext="{d:SampleData}">
-                            <TextBlock Name="DateMessage" FontFamily="Montserrat Alternates" Foreground="White" FontSize="12" 
-                                       Text="{Binding Path=DateMessage}" HorizontalAlignment="Center" 
-                                       Margin="0,2,0,0" Visibility="Hidden"/>
+                            <Grid Name="DateLabel" Visibility="Hidden">
+                                <Rectangle Name="dateCloud" RadiusX="5" RadiusY="5" Fill="White" StrokeThickness="3" 
+                                           HorizontalAlignment="Center" VerticalAlignment="Top" Stroke="White" Height="20" 
+                                           Width="75"/>
+                                <TextBlock Name="DateMessage" FontFamily="Montserrat Alternates" Foreground="Black" FontSize="12" 
+                                           Text="{Binding Path=Date}" HorizontalAlignment="Center" 
+                                           Margin="0,2,0,0"/>
+                            </Grid>
                             <Grid Name="Grid" Margin="0,0,0,0">
                                 <Rectangle Name="messageCloud" RadiusX="10" RadiusY="10" Fill="White" StrokeThickness="3" 
                                            HorizontalAlignment="{Binding Path=Alignment}" Stroke="White" Height="50" 
@@ -31,7 +36,7 @@
                         </Grid>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=IsDateVisible}" d:DataContext="{d:SampleData}" Value="true">
-                                <Setter TargetName="DateMessage" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="DateLabel" Property="Visibility" Value="Visible" />
                                 <Setter TargetName="Grid" Property="Margin" Value="0,30,0,0"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
@@ -42,8 +47,8 @@
 
         <Image HorizontalAlignment="Left" Height="356" Margin="-92,315,0,0" VerticalAlignment="Top" Width="319" Source="/assets/images/dragon.png" 
                Opacity="0.2" StretchDirection="DownOnly"/>
-        <Rectangle HorizontalAlignment="Left" Height="234" Margin="-67,332,0,0" VerticalAlignment="Top" Width="66" Fill="#FF151515"/>
-        <Border BorderThickness="1" Margin="25,495,25,20" Background="#FF0E0E0E" CornerRadius="10">
+        <Rectangle HorizontalAlignment="Left" Height="234" Margin="-67,332,0,0" VerticalAlignment="Top" Width="66" Fill="#FF111111"/>
+        <Border BorderThickness="1" Margin="25,495,25,20" Background="#ff000000" CornerRadius="10">
             <Grid>
                 <Border BorderThickness="1" Height="28" Margin="755,0,0,0" VerticalAlignment="Center" Width="28" HorizontalAlignment="Left" 
                         CornerRadius="50" MouseLeftButtonDown="send" MouseEnter="sendBtnMouseEnter" MouseLeave="sendBtnMouseLeave">

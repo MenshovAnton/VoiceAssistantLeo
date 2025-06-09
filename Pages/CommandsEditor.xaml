@@ -4,8 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:res="clr-namespace:Leo.Properties"
+      xmlns:system="clr-namespace:System;assembly=System.Runtime"
       mc:Ignorable="d"
-      Background="#FF161616"
+      Background="#ff131313"
       Title="CommandEditor" Height="560" Width="850">
     <Page.Resources>
         <Image x:Key="BackImage" Source="/Assets/images/back.png"/>
@@ -18,73 +19,144 @@
                FontSize="24" FontWeight="ExtraBold" Foreground="White" VerticalAlignment="Top"/>
         
         <Grid>
-            <Label Content="Название команды" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,120,0,0" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,150,25,20" 
-                    Background="#FF0E0E0E" CornerRadius="10" Height="20" Width="320">
-                <Grid>
-                    <TextBox Name="CommandNameTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" 
-                             TextWrapping="Wrap" VerticalAlignment="Center" Width="320" 
-                             Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="White" 
-                             CaretBrush="White"  BorderThickness="0,0,0,0" 
-                             SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
-                             FontFamily="Montserrat Alternates"/>
-                </Grid>
-            </Border>
-            
-            <Label Content="Описание команды" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,180,0,0" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,210,25,20" 
-                    Background="#FF0E0E0E" CornerRadius="10" Height="20" Width="320">
-                <Grid>
-                    <TextBox Name="CommandDescriptionTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
-                             VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" 
-                             SelectionBrush="White" CaretBrush="White"  BorderThickness="0,0,0,0" 
-                             SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
-                </Grid>
-            </Border>
-            
-            <Label Content="Ссылка на сайт или приложение" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,240,0,0" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Image Source="/Assets/Images/folder.png" Margin="360,270,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" 
-                   Height="20" MouseDown="openFile" Cursor="Hand"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,270,25,20" Background="#FF0E0E0E" 
-                    CornerRadius="10" Height="20" Width="290">
-                <Grid>
-                    <TextBox Name="CommandLinkTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" 
-                             Width="280" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="White" CaretBrush="White"  
-                             BorderThickness="0,0,0,0" SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
-                             FontFamily="Montserrat Alternates"/>
-                </Grid>
-            </Border>
-            
-            <Label Content="Активационная фраза" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,300,0,0" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,320,25,20" 
-                    Background="#FF0E0E0E" CornerRadius="10" Height="20" Width="320">
-                <Grid>
-                    <TextBox Name="CommandPhraseTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
-                             VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" 
-                             SelectionBrush="White" CaretBrush="White" BorderThickness="0,0,0,0" SelectionOpacity="1" 
-                             IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
-                </Grid>
-            </Border>
-            
-            <Label Content="Ответ ассистента" FontFamily="Montserrat Alternates" Foreground="White" Margin="60,360,0,0" 
-                   HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="60,380,25,20" 
-                    Background="#FF0E0E0E" CornerRadius="10" Height="20" Width="320">
-                <Grid>
-                    <TextBox Name="CommandReplyTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
-                             VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" 
-                             Foreground="White" SelectionBrush="White" CaretBrush="White"  BorderThickness="0,0,0,0" 
-                             SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
-                </Grid>
-            </Border>
+            <Grid Margin="60,120,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="730">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                    <RowDefinition Height="70"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Border Grid.Row="0" Grid.Column="0">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_name}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="0,30,0,0" 
+                                Background="#FF000000" CornerRadius="5" Height="30" Width="320">
+                            <Grid>
+                                <TextBox Name="CommandNameTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" 
+                                         TextWrapping="Wrap" VerticalAlignment="Center" Width="320" 
+                                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="#1AFFFFFF" 
+                                         CaretBrush="White"  BorderThickness="0,0,0,0" 
+                                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
+                                         FontFamily="Montserrat Alternates"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="1" Grid.Column="0">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_description}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="0,30,0,0" 
+                                Background="#FF000000" CornerRadius="5" Height="30" Width="320">
+                            <Grid>
+                                <TextBox Name="CommandDescriptionTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
+                                         VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" 
+                                         SelectionBrush="#1AFFFFFF" CaretBrush="White"  BorderThickness="0,0,0,0"
+                                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="2" Grid.Column="0">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_ref}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Image Source="/Assets/Images/folder.png" Margin="300,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" 
+                               Height="20" MouseDown="openFile" Cursor="Hand"/>
+                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="0,30,0,0" Background="#FF000000" 
+                                CornerRadius="5" Height="30" Width="290">
+                            <Grid>
+                                <TextBox Name="CommandLinkTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                         Width="280" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionBrush="#1AFFFFFF" CaretBrush="White"  
+                                         BorderThickness="0,0,0,0" SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" 
+                                         FontFamily="Montserrat Alternates"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="3" Grid.Column="0">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_phrase}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="0,30,0,0" 
+                                Background="#FF000000" CornerRadius="5" Height="30" Width="320">
+                            <Grid>
+                                <TextBox Name="CommandPhraseTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
+                                         VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" 
+                                         SelectionBrush="#1AFFFFFF" CaretBrush="White" BorderThickness="0,0,0,0" SelectionOpacity="1" 
+                                         IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="0" Grid.Column="1">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_reply}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" Margin="0,30,0,0" 
+                                Background="#FF000000" CornerRadius="5" Height="30" Width="320">
+                            <Grid>
+                                <TextBox Name="CommandReplyTextBox" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" 
+                                         VerticalAlignment="Center" Width="320" Background="{x:Null}" BorderBrush="{x:Null}" 
+                                         Foreground="White" SelectionBrush="#1AFFFFFF" CaretBrush="White"  BorderThickness="0,0,0,0" 
+                                         SelectionOpacity="1" IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="1" Grid.Column="1">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_type}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <ComboBox Name="CommandTypeComboBox" HorizontalAlignment="Left" Margin="0,30,0,0" 
+                                  VerticalAlignment="Top" Width="320" Height="30" BorderThickness="0,0,0,0" 
+                                  IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates">
+                            <system:String>1 - Открытие приложения</system:String>
+                            <system:String>2 - Открытие веб-сайта</system:String>
+                            <system:String>3 - Исполнение bat-скрипта</system:String>
+                        </ComboBox>
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="2" Grid.Column="1">
+                    <Grid>
+                        <Label Content="{x:Static res:Resources.commandsEditorPage_inputField_voice}" FontFamily="Montserrat Alternates" Foreground="White"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <ComboBox Name="CommandVoiceComboBox" Height="30" HorizontalAlignment="Left" Margin="0,30,0,0" 
+                                  VerticalAlignment="Top" Width="320" BorderThickness="0,0,0,0" 
+                                  IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"/>
+                    </Grid>
+                </Border>
             </Grid>
             
-            <Button Margin="70,440,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
+            <Button Style="{StaticResource LeoButtonStyle}" Height="20" Width="130" Margin="0, 330, 295, 0"
+                    Content="{x:Static res:Resources.commandsEditorPage_button_openVoice}" FontFamily="Montserrat Alternates"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Click="openVoices"/>
+            
+            <Button Style="{StaticResource LeoButtonStyle}" Height="20" Width="140" Margin="0, 330, 140, 0"
+                    Content="{x:Static res:Resources.commandsEditorPage_button_addVoice}" FontFamily="Montserrat Alternates"
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Click="addVoiceFile"/>
+            
+            </Grid>
+            
+            <Button Margin="60,450,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
                     Content="{x:Static res:Resources.commandsEditorPage_button_save}" FontFamily="Montserrat Alternates"
                     HorizontalAlignment="Left" VerticalAlignment="Top" Click="writeNewCommand"/>
+        
+        <Button Margin="260,450,0,0" Style="{StaticResource LeoButtonStyle}" Height="30" Width="180" 
+                Content="{x:Static res:Resources.commandsEditorPage_button_cancel}" FontFamily="Montserrat Alternates"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Click="back"/>
     </Grid>
 </Page>
