@@ -238,4 +238,16 @@
   <data name="voskSettingsPage_inputField_audioDevice" xml:space="preserve">
     <value>Устройство ввода</value>
   </data>
+  <data name="commandsEditorPage_typeCombobox_1" xml:space="preserve">
+    <value>1 - Открытие приложения</value>
+  </data>
+  <data name="commandsEditorPage_typeCombobox_2" xml:space="preserve">
+    <value>2 - Открытие веб-сайта</value>
+  </data>
+  <data name="commandsEditorPage_typeCombobox_3" xml:space="preserve">
+    <value>3 - Исполнение bat-скрипта</value>
+  </data>
+  <data name="system_error8" xml:space="preserve">
+    <value>Произошла ошибка во время выбора файла</value>
+  </data>
 </root>

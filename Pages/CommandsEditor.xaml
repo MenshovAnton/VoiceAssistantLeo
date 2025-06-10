@@ -4,10 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:res="clr-namespace:Leo.Properties"
-      xmlns:system="clr-namespace:System;assembly=System.Runtime"
       mc:Ignorable="d"
       Background="#ff131313"
-      Title="CommandEditor" Height="560" Width="850">
+      Title="CommandEditor" Height="560" Width="850" d:DataContext="{d:DesignInstance }">
     <Page.Resources>
         <Image x:Key="BackImage" Source="/Assets/images/back.png"/>
     </Page.Resources>
@@ -122,11 +121,8 @@
                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <ComboBox Name="CommandTypeComboBox" HorizontalAlignment="Left" Margin="0,30,0,0" 
                                   VerticalAlignment="Top" Width="320" Height="30" BorderThickness="0,0,0,0" 
-                                  IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates">
-                            <system:String>1 - Открытие приложения</system:String>
-                            <system:String>2 - Открытие веб-сайта</system:String>
-                            <system:String>3 - Исполнение bat-скрипта</system:String>
-                        </ComboBox>
+                                  IsTabStop="False" SpellCheck.IsEnabled="True" Language="ru-ru" FontFamily="Montserrat Alternates"
+                                  ItemsSource="{Binding _commandTypes}"/>
                     </Grid>
                 </Border>
                 

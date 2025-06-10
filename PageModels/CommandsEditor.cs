@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -25,7 +26,15 @@ namespace Leo.PageModels
             InitializeComponent();
             _instance = this;
             CommandVoiceComboBox.ItemsSource = VoicesManager.getVoiceFilesList();
+            CommandTypeComboBox.ItemsSource = _commandTypes;
         }
+
+        private readonly ObservableCollection<string> _commandTypes =
+        [
+            Properties.Resources.commandsEditorPage_typeCombobox_1,
+            Properties.Resources.commandsEditorPage_typeCombobox_2,
+            Properties.Resources.commandsEditorPage_typeCombobox_3
+        ];
 
         private void back(object sender, RoutedEventArgs e)
         {
@@ -143,34 +152,65 @@ namespace Leo.PageModels
 
         private void openFile(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
+            try
             {
-                DefaultExt = ".exe",
-                Filter = $"{Properties.Resources.commandsEditorPage_fileDialog_filter}|*.exe"
-            };
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    DefaultExt = ".exe",
+                    Filter = $"{Properties.Resources.commandsEditorPage_fileDialog_filter}|*.exe"
+                };
 
-            var result = dialog.ShowDialog();
-            
-            if (result == true)
+                var result = dialog.ShowDialog();
+
+                if (result == true)
+                {
+                    CommandLinkTextBox.Text = dialog.FileName;
+                }
+            }
+            catch (Exception ex)
             {
-                CommandLinkTextBox.Text = dialog.FileName;
+                _logger.error("File select fail\n" + ex);
+                _messageBox.showMessage(Properties.Resources.messageBox_errorSign, Properties.Resources.system_error8,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
         }
         
         private void addVoiceFile(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
+            try
             {
-                DefaultExt = ".wav",
-                Filter = $"{Properties.Resources.commandsEditorPage_addVoice_fileDialog_filter}|*.wav"
-            };
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    DefaultExt = ".wav",
+                    Filter = $"{Properties.Resources.commandsEditorPage_addVoice_fileDialog_filter}|*.wav"
+                };
 
-            var result = dialog.ShowDialog();
+                var result = dialog.ShowDialog();
+
+                if (result == true)
+                {
+                    File.Copy(dialog.FileName, @$".\Assets\Voices\custom\{dialog.SafeFileName}");
+                    VoicesManager.updateVoicesFilesList();
+                    updateVoiceCombobox(@$".\Assets\Voices\custom\{dialog.SafeFileName}");
+                }
+            }
+            catch (Exception ex)
+            { 
+                _logger.error("File select fail\n" + ex);
+                _messageBox.showMessage(Properties.Resources.messageBox_errorSign, Properties.Resources.system_error8,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
         
         private void openVoices(object sender, RoutedEventArgs e)
         {
             Process.Start("explorer.exe", @".\Assets\Voices");
+        }
+
+        private void updateVoiceCombobox(string voice)
+        {
+            CommandVoiceComboBox.ItemsSource = VoicesManager.getVoiceFilesList();
+            CommandVoiceComboBox.SelectedIndex = VoicesManager.getIndexOfVoiceFile(voice);
         }
     }
 }

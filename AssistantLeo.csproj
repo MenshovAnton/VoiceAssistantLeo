@@ -255,4 +255,8 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Voices\custom\" />
+  </ItemGroup>
+
 </Project>

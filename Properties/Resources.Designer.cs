@@ -119,6 +119,24 @@
             }
         }
         
+        public static string commandsEditorPage_typeCombobox_1 {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_typeCombobox_1", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_typeCombobox_2 {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_typeCombobox_2", resourceCulture);
+            }
+        }
+        
+        public static string commandsEditorPage_typeCombobox_3 {
+            get {
+                return ResourceManager.GetString("commandsEditorPage_typeCombobox_3", resourceCulture);
+            }
+        }
+        
         public static string commandsViewerPage_button_add {
             get {
                 return ResourceManager.GetString("commandsViewerPage_button_add", resourceCulture);
@@ -410,6 +428,12 @@
         public static string system_error7 {
             get {
                 return ResourceManager.GetString("system_error7", resourceCulture);
+            }
+        }
+        
+        public static string system_error8 {
+            get {
+                return ResourceManager.GetString("system_error8", resourceCulture);
             }
         }
         

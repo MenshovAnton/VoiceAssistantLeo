@@ -93,20 +93,29 @@ namespace Leo.PageModels
 
         private void importCommandsFromFile(object sender, RoutedEventArgs args)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog
+            try
             {
-                DefaultExt = ".json",
-                Filter = $"{Properties.Resources.commandsViewerPage_import_fileDialog_filter}|*.json"
-            };
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    DefaultExt = ".json",
+                    Filter = $"{Properties.Resources.commandsViewerPage_import_fileDialog_filter}|*.json"
+                };
 
-            var result = dialog.ShowDialog();
+                var result = dialog.ShowDialog();
 
-            if (result != true) return;
-            File.Delete(".\\commands.json");
-            Command.CommandsCollection = [];
-            File.Copy(dialog.FileName, ".\\commands.json");
-            CommandDataManager.deserialize();
-            CommandsList.ItemsSource = Command.CommandsCollection;
+                if (result != true) return;
+                File.Delete(".\\commands.json");
+                Command.CommandsCollection = [];
+                File.Copy(dialog.FileName, ".\\commands.json");
+                CommandDataManager.deserialize();
+                CommandsList.ItemsSource = Command.CommandsCollection;
+            }
+            catch (Exception ex)
+            {
+                _logger.error("File select fail\n" + ex);
+                _messageBox.showMessage(Properties.Resources.messageBox_errorSign, Properties.Resources.system_error8,
+                    MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+            }
         }
     }
 }

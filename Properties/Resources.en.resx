@@ -200,4 +200,13 @@
     <data name="voskSettingsPage_inputField_modelLocate" xml:space="preserve">
         <value>Model path</value>
     </data>
+    <data name="commandsEditorPage_typeCombobox_1" xml:space="preserve">
+        <value>1 - Start programm</value>
+    </data>
+    <data name="commandsEditorPage_typeCombobox_2" xml:space="preserve">
+        <value>2 - Open website</value>
+    </data>
+    <data name="commandsEditorPage_typeCombobox_3" xml:space="preserve">
+        <value>3 - Start bat-script</value>
+    </data>
 </root>
