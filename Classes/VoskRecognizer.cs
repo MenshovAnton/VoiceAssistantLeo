@@ -13,10 +13,11 @@ namespace Leo.Classes
 { 
     public class VoskRecognizer
     {
+        private static VoskRecognizer? _instance;
         private static Dispatcher? _dispatcher;
 
-        public static Vosk.VoskRecognizer? Recognizer; // Объект распознавания VOSK
-        private static WaveFileWriter? _writer; // Объект записи с микрофона
+        public static Vosk.VoskRecognizer? Recognizer;
+        private static WaveFileWriter? _writer;
         public static bool Busy;
 
         public static string? RecognizedText;
@@ -28,9 +29,11 @@ namespace Leo.Classes
         private static readonly WaveInEvent WaveIn = new();
         
         private enum RecycleFlags : uint;
-
-        public static void main()
+        
+        public void main()
         {
+            _instance = this;
+            
             var model = new Model(".\\VoskModel");
             Recognizer = new Vosk.VoskRecognizer(model, 16000f);
             
@@ -79,6 +82,11 @@ namespace Leo.Classes
             MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error1, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
         }
 
+        public static VoskRecognizer? getRecognizer()
+        {
+            return _instance;
+        }
+
         private static void WaveInOnDataAvailable(object? sender, WaveInEventArgs e)
         {
             _writer?.Write(e.Buffer, 0, e.BytesRecorded);
@@ -89,24 +97,28 @@ namespace Leo.Classes
             {
                 var pResult = JObject.Parse(Recognizer.Result());
                 RecognizedText = pResult["text"]!.ToString();
+                
                 vosk.speechRecognized();
             }
             else
             {
                 var pResult = JObject.Parse(Recognizer.PartialResult());
                 RecognizedText = pResult["partial"]!.ToString();
+                
                 vosk.speechRecognized();
             }
         }
         
         public void speechRecognized()
         {
+            if (Busy) return;
+            
             if (RecognizedText != string.Empty)
             {
                 Console.WriteLine($@"[VOSK] Recognized > {RecognizedText}");
             }
 
-            if (WakeTimer.Elapsed.Seconds >= 15 && _wakeWordStatus && Busy == false)
+            if (WakeTimer.Elapsed.Seconds >= 15 && _wakeWordStatus )
             {
                 Sounds.playMedia(@".\Assets\Sounds\stop.wav");
                 _wakeWordStatus = false;
@@ -146,7 +158,6 @@ namespace Leo.Classes
                 }
             }
             
-            // WAKE WORD
             if (RecognizedText!.Contains("лео") || RecognizedText == "лео")
             {
                 WakeTimer.Reset();
@@ -157,7 +168,7 @@ namespace Leo.Classes
                     Sounds.playMedia(@".\Assets\Sounds\start.wav");
                     _dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
                     {
-                        if (RecognizedText!.Length > 3)
+                        if (RecognizedText!.Length >= 3)
                         { Chat.addMessageItem("Лео", "Right"); }
                         Home.activateAnimation();
                     });
@@ -168,7 +179,24 @@ namespace Leo.Classes
                 Logger.message("Assistant activated");
             }
             
-            if (RecognizedText == "спасибо" && !Busy && _wakeWordStatus)
+            if (RecognizedText == "алиса")
+            {
+                incorrectWakeWord(@".\Assets\Voices\denial\alica.wav", "Алиса");
+            }
+
+            if (RecognizedText == "сири")
+            {
+                incorrectWakeWord(@".\Assets\Voices\denial\siri.wav", "Siri");
+            }
+
+            if (RecognizedText == "маруся")
+            {
+                incorrectWakeWord(@".\Assets\Voices\denial\marusa.wav", "Маруся");
+            }
+            
+            if (_wakeWordStatus == false) return;
+            
+            if (RecognizedText == "спасибо")
             {
                 Busy = true;
                 WakeTimer.Restart();
@@ -183,24 +211,8 @@ namespace Leo.Classes
                 Recognizer?.Reset();
                 Busy = false;
             }
-
-            if (RecognizedText == "алиса" && !Busy)
-            {
-                incorrectWakeWord(@".\Assets\Voices\denial\alica.wav", "Алиса");
-            }
-
-            if (RecognizedText == "сири" && !Busy)
-            {
-                incorrectWakeWord(@".\Assets\Voices\denial\siri.wav", "Siri");
-            }
-
-            if (RecognizedText == "маруся" && !Busy)
-            {
-                incorrectWakeWord(@".\Assets\Voices\denial\marusa.wav", "Маруся");
-            }
-
-            // Очистка корзины
-            if (RecognizedText.Contains("очисти корзину") && !Busy && _wakeWordStatus)
+            
+            if (RecognizedText.Contains("очисти корзину"))
             {
                 Busy = true;
                 WakeTimer.Restart();
@@ -229,7 +241,7 @@ namespace Leo.Classes
 
             }
             
-            if (RecognizedText.Contains("закрой") && !Busy && _wakeWordStatus)
+            if (RecognizedText.Contains("закрой"))
             {
                 Busy = true;
                 WakeTimer.Restart();
@@ -254,29 +266,29 @@ namespace Leo.Classes
                 Busy = false;
             }
 
-            if (RecognizedText.Contains("поставь на паузу") && !Busy && _wakeWordStatus)
+            if (RecognizedText.Contains("поставь на паузу"))
             {
                 Scripts.musicInteraction(Scripts.MusicInteractionVariations.Pause);
             }
 
-            if (RecognizedText.Contains("включи обратно") && !Busy && _wakeWordStatus)
+            if (RecognizedText.Contains("включи обратно"))
             {
                 Scripts.musicInteraction(Scripts.MusicInteractionVariations.Play);
             }
 
-            if (RecognizedText.Contains("предыдущий трек") && !Busy && _wakeWordStatus)
+            if (RecognizedText.Contains("предыдущий трек"))
             {
                 Scripts.musicInteraction(Scripts.MusicInteractionVariations.PreviousTrack);
             }
 
-            if (RecognizedText.Contains("следующий трек") && !Busy && _wakeWordStatus)
+            if (RecognizedText.Contains("следующий трек"))
             {
                 Scripts.musicInteraction(Scripts.MusicInteractionVariations.NextTrack);
             }
         }
         
 
-        private void incorrectWakeWord(string voiceFile, string wakeWord)
+        private static void incorrectWakeWord(string voiceFile, string wakeWord)
         {
             Busy = true;
             WakeTimer.Restart();

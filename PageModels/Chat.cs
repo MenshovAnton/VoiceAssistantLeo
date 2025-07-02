@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,9 +10,7 @@ namespace Leo.PageModels
     
     public partial class Chat
     {
-        private static Chat? _instance;
         private static string _textMessage = string.Empty;
-        public static bool NullMessages = true;
         private static ScrollViewer? _scrollViewer;
         private static Dispatcher? _dispatcher;
         
@@ -22,15 +19,10 @@ namespace Leo.PageModels
             InitializeComponent();
             TextBox.Text = _textMessage;
             ChatList.ItemsSource = Message.MessagesCollection;
-            _instance = this;
+            DataContext = this;
             
             var currentDispatcher = Dispatcher.CurrentDispatcher;
             _dispatcher = currentDispatcher;
-
-            if (!NullMessages)
-            {
-                HelloLabel.Visibility = Visibility.Hidden;
-            }
             
             ScrollBox.ScrollToEnd();
             _scrollViewer = ScrollBox;
@@ -45,11 +37,6 @@ namespace Leo.PageModels
                 return;
             }
 
-            if (NullMessages)
-            {
-                NullMessages = false;
-            }
-
             var ft = new FormattedText(text, 
                 CultureInfo.CurrentCulture, 
                 0, 
@@ -58,11 +45,6 @@ namespace Leo.PageModels
                 Brushes.White, 
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
-
-            if (_instance!.HelloLabel.Visibility == Visibility.Visible)
-            {
-                _dispatcher?.BeginInvoke(DispatcherPriority.Normal, () => _instance.HelloLabel.Visibility = Visibility.Hidden);
-            }
 
             var isDateVisible = true;
             if (Properties.Settings.Default.nowDate == DateTime.Now.ToShortDateString())
@@ -76,7 +58,7 @@ namespace Leo.PageModels
             }
 
             Message.addMessage(text, length, alignment, isDateVisible);
-            
+
             _scrollViewer?.ScrollToEnd();
         }
         
@@ -87,11 +69,6 @@ namespace Leo.PageModels
                 return;
             }
 
-            if (NullMessages)
-            {
-                NullMessages = false;
-            }
-
             var ft = new FormattedText(text, 
                 CultureInfo.CurrentCulture, 
                 0, 
@@ -100,11 +77,6 @@ namespace Leo.PageModels
                 Brushes.White, 
                 96);
             var length = (int)ft.WidthIncludingTrailingWhitespace + 20;
-
-            if (_instance!.HelloLabel.Visibility == Visibility.Visible)
-            {
-                _instance.HelloLabel.Visibility = Visibility.Hidden;
-            }
             
             Message.addMessage(text!, time!, length, alignment!, date!, isDateVisible);
             
@@ -113,11 +85,9 @@ namespace Leo.PageModels
 
         private void send(object sender, MouseButtonEventArgs? e)
         {
-            addMessageItem(TextBox.Text, "Right");
-            
-            var vosk = new VoskRecognizer();
+            var vosk = VoskRecognizer.getRecognizer();
             VoskRecognizer.RecognizedText = TextBox.Text.ToLower();
-            vosk.speechRecognized();
+            vosk!.speechRecognized();
 
             Console.WriteLine($@"[INPUT] Input > {VoskRecognizer.RecognizedText}");
 
@@ -168,6 +138,11 @@ namespace Leo.PageModels
                 addMessageItem(recognizedText, "Right");
                 addMessageItem(message, "Left");
             });
+        }
+
+        public static void scrollToEnd()
+        {
+            _scrollViewer?.ScrollToEnd();
         }
     }
 }

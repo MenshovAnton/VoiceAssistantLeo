@@ -34,6 +34,7 @@ namespace Leo.PageModels
             catch (Exception ex)
             {
                 Logger.error("Async error in activation animation\n" + ex);
+                
                 MessageBox.showMessage( Properties.Resources.messageBox_errorSign, Properties.Resources.system_message5,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
@@ -54,6 +55,7 @@ namespace Leo.PageModels
             catch (Exception ex)
             {
                 Logger.error("Async error in deactivation animation\n" + ex);
+                
                 MessageBox.showMessage( Properties.Resources.messageBox_errorSign, Properties.Resources.system_message5,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

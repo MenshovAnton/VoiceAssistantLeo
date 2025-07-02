@@ -104,15 +104,20 @@ namespace Leo.PageModels
                 var result = dialog.ShowDialog();
 
                 if (result != true) return;
+                
                 File.Delete(".\\commands.json");
+                
                 Command.CommandsCollection = [];
+                
                 File.Copy(dialog.FileName, ".\\commands.json");
+                
                 CommandDataManager.deserialize();
                 CommandsList.ItemsSource = Command.CommandsCollection;
             }
             catch (Exception ex)
             {
                 _logger.error("File select fail\n" + ex);
+                
                 _messageBox.showMessage(Properties.Resources.messageBox_errorSign, Properties.Resources.system_error8,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

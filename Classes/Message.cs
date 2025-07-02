@@ -10,8 +10,7 @@ public class MessageDataFormat
     public string? MessageText { get; init; }
     public string? Time { get; init; }
     public string? Date { get; init; }
-    // ReSharper disable once UnusedAutoPropertyAccessor.Global
-    public int Length { get; set; }
+    public int Length { init; get; }
     public string? Alignment { get; init; }
     public bool IsDateVisible { get; init; }
 }
@@ -59,10 +58,12 @@ public abstract class Message
         Properties.Settings.Default.messagesId = 0;
         Properties.Settings.Default.nowDate = "01.01.2001";
         Properties.Settings.Default.Save();
+        
         File.Delete(ChatDataManager.getFilePath());
+        
         var file = File.Create(ChatDataManager.getFilePath());
         file.Close();
+        
         MessagesCollection = [];
-        Chat.NullMessages = true;
     }
 }

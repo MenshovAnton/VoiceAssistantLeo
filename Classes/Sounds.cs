@@ -13,10 +13,9 @@ public abstract class Sounds
     {
         try
         {
-            Dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
-            {
+            Dispatcher?.BeginInvoke(new Action(() => {
                 Player.Volume = Properties.Settings.Default.voiceVol / 100f;
-            });
+            }));
         }
         catch (Exception ex)
         {
@@ -28,16 +27,14 @@ public abstract class Sounds
     {
         try
         {
-            Dispatcher?.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate
-            {
+            Dispatcher?.BeginInvoke(new Action(() => {
                 Player.Open(new Uri(source, UriKind.Relative));
                 Player.Play();
-            });
+            }));
         }
         catch (Exception ex)
         {
             Logger.error("Failed to play media:\n" + ex.Message);
         }
-        
     }
 }

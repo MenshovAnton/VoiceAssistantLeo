@@ -145,7 +145,7 @@
                            HorizontalAlignment="Left" Click="openLogs"/>
                    <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
                            Content="{x:Static res:Resources.settingsPage_button_voskSettings}" FontFamily="Montserrat Alternates"
-                           HorizontalAlignment="Left" Click="voskSettings"/>
+                           HorizontalAlignment="Left" Click="voskSettings" IsEnabled="False"/>
                    <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource LeoButtonStyle}" Height="20" Width="160" 
                            Content="{x:Static res:Resources.settingsPage_button_settingsReset}" FontFamily="Montserrat Alternates"
                            HorizontalAlignment="Left" Click="settingsReset"/>

@@ -143,7 +143,10 @@ public abstract class Scripts
         if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
             return true;
         
-        if (Directory.Exists(Environment.ExpandEnvironmentVariables(input)))
+        if (File.Exists(Environment.ExpandEnvironmentVariables(input)))
+            return true;
+        
+        if (input == "cmd.exe")
             return true;
 
         return false;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Leo.PageModels;
 
 namespace Leo.Classes;
 
@@ -34,6 +35,8 @@ public abstract class Command
             ErrorNumber = errorNumber,
             ReplyMessage = replyMessage
         });
+        
+        Chat.scrollToEnd();
     }
     
     public static void deleteCommand(int id)

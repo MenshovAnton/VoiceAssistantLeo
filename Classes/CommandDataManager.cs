@@ -31,15 +31,16 @@ namespace Leo.Classes
             else
             {
                 Command.CommandsCollection = [];
-                Chat.NullMessages = true;
             }
         }
 
         public static void saveCommands(Collection<CommandDataFormat> commands)
         {
             File.Delete(Path);
+            
             var file = File.Open(Path, FileMode.Create);
             file.Close();
+            
             foreach (var command in commands)
             {
                 serialize(command.Id, command.Name, command.Description, command.Phrase!, command.Type, command.Reference, 
@@ -73,6 +74,7 @@ namespace Leo.Classes
             catch (Exception ex)
             {
                 Logger.error("Async error in serialize commands\n" + ex);
+                
                 MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
@@ -86,15 +88,19 @@ namespace Leo.Classes
                 while (true)
                 {
                     var line = "";
+                    
                     for (var i = 0; i <= 10; i++)
                     {
                         line += await reader.ReadLineAsync();
                     }
+                    
                     if (string.IsNullOrEmpty(line))
                     {
                         break;
                     }
+                    
                     var md = JsonConvert.DeserializeObject<CommandDataFormat>(line);
+                    
                     Command.addCommand(md?.Id!, md?.Name, md?.Description, md?.Type!, md?.Reference!, 
                         md?.Phrase, md?.VoiceFile!, md?.ErrorNumber!, md?.ReplyMessage!);
                 }
@@ -102,6 +108,7 @@ namespace Leo.Classes
             catch (Exception ex)
             {
                 Logger.error("Failed to load commands\n" + ex);
+                
                 MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error7,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

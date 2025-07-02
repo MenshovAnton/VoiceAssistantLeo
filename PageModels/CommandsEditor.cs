@@ -190,6 +190,7 @@ namespace Leo.PageModels
                 if (result == true)
                 {
                     File.Copy(dialog.FileName, @$".\Assets\Voices\custom\{dialog.SafeFileName}");
+                    
                     VoicesManager.updateVoicesFilesList();
                     updateVoiceCombobox(@$".\Assets\Voices\custom\{dialog.SafeFileName}");
                 }
@@ -197,6 +198,7 @@ namespace Leo.PageModels
             catch (Exception ex)
             { 
                 _logger.error("File select fail\n" + ex);
+                
                 _messageBox.showMessage(Properties.Resources.messageBox_errorSign, Properties.Resources.system_error8,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

@@ -19,8 +19,8 @@ namespace Leo.WindowModels
     {
         public static bool MicAccess = true;
 
-        private static readonly ChatDataManager ChatDataManager = new();
         private static MainWindow? _instance;
+        private readonly VoskRecognizer _voskRecognizer = new();
 
         private static object _previousPage = new Home();
 
@@ -60,7 +60,7 @@ namespace Leo.WindowModels
             ChatDataManager.deserialize();
             getHomePage(this, null);
             
-            VoskRecognizer.main();
+            _voskRecognizer.main();
 
             if (Properties.Settings.Default.isMuted)
             {
@@ -253,6 +253,7 @@ namespace Leo.WindowModels
             SettingsBtnMarker.Opacity = 1;
             _previousPage = new Settings();
         }
+
         private void getChatPage(object sender, MouseButtonEventArgs? e)
         { 
             removeMarkers();

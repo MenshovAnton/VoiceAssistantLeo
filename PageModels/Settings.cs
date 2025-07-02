@@ -154,6 +154,7 @@ namespace Leo.PageModels
             {
                 WshShell shell = new WshShell();
                 IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(ShortcutPath);
+                
                 shortcut.TargetPath = Application.ExecutablePath;
                 shortcut.WorkingDirectory = Path.GetDirectoryName(Application.ExecutablePath);
                 shortcut.Save();
@@ -162,6 +163,7 @@ namespace Leo.PageModels
             {
                 _messageBox.showMessage(label, message, MessageBox.MessageBoxType.Error,
                     MessageBox.MessageBoxButtons.Ok);
+                
                 _logger.error("Leo was unable to add himself from startup.");
                 _logger.error(ex.Message);
             }
@@ -183,6 +185,7 @@ namespace Leo.PageModels
             catch
             {
                 _messageBox.showMessage(message, label, MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
+                
                 _logger.error("Leo was unable to remove himself from startup.");
             }
 

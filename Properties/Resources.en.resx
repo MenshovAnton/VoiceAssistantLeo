@@ -111,7 +111,7 @@
         <value>Pay attention</value>
     </data>
     <data name="chatPage_welcomeLabel" xml:space="preserve">
-        <value>Start communicating right now...</value>
+        <value>Hello! I'm Leo! What's about help?</value>
     </data>
     <data name="settingsPage_toggleSwitch_limitMessageWarn" xml:space="preserve">
         <value>Disable message limit warning</value>

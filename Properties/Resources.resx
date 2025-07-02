@@ -64,7 +64,8 @@
     <value>Ваш персональный голосовой помощник</value>
   </data>
   <data name="chatPage_welcomeLabel" xml:space="preserve">
-    <value>Начните общение прямо сейчас...</value>
+    <value>Привет, я Лео!
+Чем могу помочь?</value>
   </data>
   <data name="settingsPage_groupLabel_general" xml:space="preserve">
     <value>Основные</value>

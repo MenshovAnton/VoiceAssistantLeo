@@ -25,17 +25,17 @@ namespace Leo.Classes
                 {
                     var file = File.Create(Path);
                     file.Close();
+                    
                     Properties.Settings.Default.messagesId = 0;
                     Properties.Settings.Default.nowDate = "01.01.01";
                     Properties.Settings.Default.Save();
+                    
                     Message.MessagesCollection = [];
-                    Chat.NullMessages = true;
                 }
             }
             else
             {
                 Message.MessagesCollection = [];
-                Chat.NullMessages = true;
             }
         }
 
@@ -70,12 +70,13 @@ namespace Leo.Classes
             catch (Exception ex)
             {
                 Logger.error("Async error in serialize messages\n" + ex);
+                
                 MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }
         }
 
-        public async void deserialize()
+        public static async void deserialize()
         {
             try
             {
@@ -90,20 +91,26 @@ namespace Leo.Classes
                     while (true)
                     {
                         var line = "";
+                        
                         for (var i = 0; i <= 8; i++)
                         {
                             line += await reader.ReadLineAsync();
                         }
+                        
                         if (string.IsNullOrEmpty(line))
                         {
                             break;
                         }
+                        
                         var md = JsonConvert.DeserializeObject<MessageDataFormat>(line);
+                        
                         if (int.Parse(md?.Id!) >= 10000 && Properties.Settings.Default.offLotMessageWarn == false)
                         {
                             Logger.message("Chat messages have reached 10,000 and need clearing");
+                            
                             MessageBox.showMessage(Resources.messageBox_messageSign, Resources.system_message1,
                                 MessageBox.MessageBoxType.Info, MessageBox.MessageBoxButtons.OkCancel);
+                            
                             await Task.Run(() =>
                             {
                                 while (MessageBox.IsOpened)
@@ -120,6 +127,7 @@ namespace Leo.Classes
                                     break;
                                 }
                             });
+                            
                             if (MessageBox.Results == 0)
                             {
                                 Chat.addMessageItem(md?.MessageText, md?.Alignment, md?.Time, md?.Date, md!.IsDateVisible);
@@ -139,6 +147,7 @@ namespace Leo.Classes
                 catch (Exception ex)
                 {
                     Logger.error("Failed to load recent messages\n" + ex);
+                    
                     MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_error4,
                         MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
                 }
@@ -146,6 +155,7 @@ namespace Leo.Classes
             catch (Exception ex)
             {
                 Logger.error("Async error in deserialize messages\n" + ex);
+                
                 MessageBox.showMessage(Resources.messageBox_errorSign, Resources.system_message5,
                     MessageBox.MessageBoxType.Error, MessageBox.MessageBoxButtons.Ok);
             }

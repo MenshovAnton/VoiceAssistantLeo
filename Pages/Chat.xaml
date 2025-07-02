@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:res="clr-namespace:Leo.Properties"
+      xmlns:sys="clr-namespace:System;assembly=System.Runtime"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="850"
       Background="#ff131313"
@@ -65,8 +66,26 @@
                          TextChanged="messageBuffer" FontFamily="Montserrat Alternates"/>
             </Grid>
         </Border>
-        <Label x:Name="HelloLabel" Content="{x:Static res:Resources.chatPage_welcomeLabel}" HorizontalAlignment="Center" 
-               Margin="0,253,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Montserrat Alternates" 
-               FontStyle="Italic" Visibility="Visible"/>
+        <Border Height="220" Width="220" Background="Black" CornerRadius="10" VerticalAlignment="Top" HorizontalAlignment="Center"
+                Margin="0,130,0,0">
+            <Grid>
+                <Image Height="120" Width="120" VerticalAlignment="Top" HorizontalAlignment="Center" Source="/assets/images/dragon.png"
+                       Margin="0,25,0,0" RenderOptions.BitmapScalingMode="Fant"/>
+                <TextBlock Text="{x:Static res:Resources.chatPage_welcomeLabel}" HorizontalAlignment="Center"
+                           VerticalAlignment="Bottom" Foreground="White" FontFamily="Montserrat Alternates" 
+                           Margin="0,0,0,20" TextAlignment="Center"
+                           Height="35" Width="150" FontSize="14"/>
+            </Grid>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Items.Count, ElementName=ChatList}" Value="0">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
     </Grid>
 </Page>

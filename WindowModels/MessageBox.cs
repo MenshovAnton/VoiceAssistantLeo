@@ -21,8 +21,7 @@ namespace Leo.WindowModels
         public enum MessageBoxType
         {
             Info,
-            Error,
-            Warn
+            Error
         }
         
         public enum MessageBoxButtons
@@ -92,6 +91,7 @@ namespace Leo.WindowModels
 
                 Storyboard.SetTargetName(animation, target);
                 Storyboard.SetTargetProperty(animation, new PropertyPath(OpacityProperty));
+                
                 storyboardFade.FillBehavior = FillBehavior.Stop;
                 storyboardFade.Children.Add(animation);
 
